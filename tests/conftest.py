@@ -6,7 +6,7 @@ from reactpy.testing import BackendFixture, DisplayFixture
 
 from reactpy.config import REACTPY_TESTING_DEFAULT_TIMEOUT
 
-HEADLESS = True
+HEADLESS = False
 
 @pytest.fixture(scope="session")
 def anyio_backend():
@@ -19,9 +19,9 @@ def event_loop(_request) -> Generator:  # : indirect usage
     loop.close()
 
 @pytest.fixture(scope="session")
-async def browser():
+async def browser(pytestconfig):
     async with async_playwright() as pw:
-        yield await pw.chromium.launch(headless=HEADLESS)
+        yield await pw.chromium.launch(headless= not pytestconfig.getoption('--headed'))
 
 
 @pytest.fixture(scope="session")

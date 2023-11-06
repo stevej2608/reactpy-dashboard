@@ -26,7 +26,7 @@
       "request": "launch",
       "stopOnEntry": false,
       "module": "pytest",
-      "args": ["-o log_cli=1","-sv"],
+      "args": ["-o log_cli=1","-sv", "--headed"],
       "cwd": "${workspaceRoot}",
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart",
