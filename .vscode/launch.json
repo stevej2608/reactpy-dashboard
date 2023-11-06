@@ -10,7 +10,7 @@
       "request": "launch",
       "cwd": "${workspaceRoot}",
       "program": "usage.py",
-      "args": ["runserver", "port","85"],
+      "args": ["runserver", "--port","3000"],
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart",
       "justMyCode": false,
