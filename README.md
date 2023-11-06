@@ -1,4 +1,9 @@
-## TODO-APP
+## reactpy-dashboard
+
+![](https://www.admin-dashboards.com/content/images/size/w2000/2021/11/windster-tailwind-css-dashboard.jpg)
+
+This project is a port of the Themesberg [tailwind-dashboard-windster] project to [reactpy].
+
 
     poetry install
 
@@ -10,5 +15,12 @@
 
     playwright install
 
+    pytest
+
+    pytest --headed
+
+
+[reactpy]: https://github.com/reactive-python/reactpy
+[tailwind-dashboard-windster]: https://demo.themesberg.com/windster/
  
 
