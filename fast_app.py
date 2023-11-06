@@ -5,6 +5,4 @@ from app_main import MainApp
 
 app = FastAPI(description="ReactPy", version="0.1.0")
 
-
-def init_fastapp():
-    configure(app, MainApp)
+configure(app, MainApp)

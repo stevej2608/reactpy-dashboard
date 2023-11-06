@@ -1,6 +1,5 @@
 import uvicorn
 from manager import cli
-from fast_app import init_fastapp
 from utils.logger import log, logging
 
 LOGS = [
@@ -51,8 +50,6 @@ def runserver(**kwargs):
 
     if "log_level" not in kwargs:
         kwargs["log_level"] = logging.WARNING
-
-    init_fastapp()
 
     log.info(f"Uvicorn running on  http://%s:%s/ (Press CTRL+C to quit)", kwargs['host'], kwargs['port'])
 
