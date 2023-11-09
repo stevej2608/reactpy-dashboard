@@ -15,9 +15,9 @@
       "internalConsoleOptions": "openOnSessionStart",
       "justMyCode": false,
       "serverReadyAction": {
-        "pattern": "Uvicorn running on http://127.0.0.1:8000(.*)",
-        "uriFormat": "http://127.0.0.1:8000/%s",
-        "action": "openExternally"
+        "pattern": "Uvicorn running on (.*)/",
+        "uriFormat": "%s/",
+        "action": "debugWithChrome"
       }
     },
     {

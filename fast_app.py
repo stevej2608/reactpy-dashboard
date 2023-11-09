@@ -1,10 +1,24 @@
 import uvicorn
 from fastapi import FastAPI
-from reactpy.backend.fastapi import configure
+from reactpy import html
+from reactpy.backend.fastapi import configure, Options
 
-from app_main import MainApp
+from app_main import AppMain
+
+from modules.assets import assets_api
+from modules.tailwind import TAILWIND_CSS
 
 app = FastAPI(description="ReactPy", version="0.1.0")
+
+
+PAGE_HEADER_TITLE  = 'ReactPy Dashboard'
+
+options=Options(
+    head=html.head(
+        html.link(TAILWIND_CSS),
+        html.title(PAGE_HEADER_TITLE)
+    )
+)
 
 def init_fastapp(**kwargs) -> str:
     """Called once, just before server is started"""
@@ -12,10 +26,11 @@ def init_fastapp(**kwargs) -> str:
     def package_prefix():
         return __package__ + '.' if __package__ else ''
 
-    configure(app, MainApp)
+    # Mount any fastapi end points here
 
-    # Mount any fastapi end points here, eg:
-    #   app.mount('/client', client_api)
+    app.mount('/static', assets_api)
+
+    configure(app, AppMain, options=options)
 
     app_path = f"{package_prefix()}{__name__}:app"
     uvicorn.run(app_path, **kwargs)
