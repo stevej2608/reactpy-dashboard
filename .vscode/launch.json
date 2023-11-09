@@ -10,15 +10,29 @@
       "request": "launch",
       "cwd": "${workspaceRoot}",
       "program": "usage.py",
-      "args": ["runserver", "--port","3000"],
+      "args": [
+        "runserver",
+        "--port",
+        "3000"
+      ],
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart",
       "justMyCode": false,
-      "serverReadyAction": {
-        "pattern": "Uvicorn running on (.*)/",
-        "uriFormat": "%s/",
-        "action": "debugWithChrome"
-      }
+      // "serverReadyAction": {
+      //   "pattern": "Uvicorn running on (.*)/",
+      //   "uriFormat": "%s/",
+      //   "action": "debugWithChrome"
+      // }
+    },
+    {
+      "name": "1a. app_main.py",
+      "type": "python",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "program": "app_main.py",
+     "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false
     },
     {
       "name": "2a. PyTest (all)",
@@ -26,12 +40,15 @@
       "request": "launch",
       "stopOnEntry": false,
       "module": "pytest",
-      "args": ["-o log_cli=1","-sv", "--headed"],
+      "args": [
+        "-o log_cli=1",
+        "-sv",
+        "--headed"
+      ],
       "cwd": "${workspaceRoot}",
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart",
       "justMyCode": false
     },
-
   ]
 }

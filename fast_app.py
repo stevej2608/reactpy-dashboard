@@ -1,9 +1,9 @@
 import uvicorn
 from fastapi import FastAPI
-from reactpy import html
+from reactpy import html, run
 from reactpy.backend.fastapi import configure, Options
 
-from app_main import AppMain
+from pages.app_main import AppMain
 
 from modules.assets import assets_api
 from modules.tailwind import TAILWIND_CSS
