@@ -230,6 +230,6 @@ def Icon_Sun():
 
 @component
 def Icon_Gem():
-    return svg({'fill': 'currentColor', 'stroke-width': '0', 'xmlns': 'http://www.w3.org/2000/svg', 'viewbox': '0 0 512 512', 'style': 'overflow: visible; color: currentcolor;', 'height': '1em', 'width': '1em'},
-        path({'d': 'M116.7 33.8c4.5-6.1 11.7-9.8 19.3-9.8h240c7.6 0 14.8 3.6 19.3 9.8l112 152c6.8 9.2 6.1 21.9-1.5 30.4l-232 256c-4.5 5-11 7.9-17.8 7.9s-13.2-2.9-17.8-7.9l-232-256c-7.7-8.5-8.3-21.2-1.5-30.4l112-152zm38.5 39.8c-3.3 2.5-4.2 7-2.1 10.5l57.4 95.6L63.3 192c-4.1.3-7.3 3.8-7.3 8s3.2 7.6 7.3 8l192 16h1.3l192-16c4.1-.3 7.3-3.8 7.3-8s-3.2-7.6-7.3-8l-147.1-12.2 57.4-95.6c2.1-3.5 1.2-8.1-2.1-10.5s-7.9-2-10.7 1L256 172.2l-90.1-97.6c-2.8-3-7.4-3.4-10.7-1z'})
+    return svg({'class_name': 'svg-inline--fa fa-gem -ml-1 mr-2 h-4 w-4', 'aria-hidden': 'true', 'focusable': 'false', 'data-prefix': 'fas', 'data-icon': 'gem', 'role': 'img', 'xmlns': 'http://www.w3.org/2000/svg', 'viewbox': '0 0 512 512'},
+        path({'fill': 'currentColor', 'd': 'M378.7 32H133.3L256 182.7L378.7 32zM512 192l-107.4-141.3L289.6 192H512zM107.4 50.67L0 192h222.4L107.4 50.67zM244.3 474.9C247.3 478.2 251.6 480 256 480s8.653-1.828 11.67-5.062L510.6 224H1.365L244.3 474.9z'})
     )

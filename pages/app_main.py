@@ -23,7 +23,6 @@ from .components.dark_mode_provider import DarkModeProvider
 @component
 def PageContainer(page, **props):
     return html.div(
-    html.div(
         TopBar(),
         html.div({'class_name': 'flex overflow-hidden bg-white pt-16'},
             SideBar(),
@@ -34,8 +33,8 @@ def PageContainer(page, **props):
                 Copyright()
             )
         )
+
     )
-)
 
 
 def page_route(path, page):
@@ -45,16 +44,15 @@ def page_route(path, page):
 
 @component
 def AppMain():
-    return html.div(
-        DarkModeProvider(dark_mode(),
-            html.div({'class_name': 'bg-gray-50 text-gray-800'},
-                simple.router(
-                    page_route("/",Dashboard),
-                    page_route("/users", Users),
-                    page_route("/products",Products),
-                    route("/sign-in", SignIn()),
-                    route("/sign-up", SignUp())
-                )
+    return DarkModeProvider(dark_mode(),
+        html.div({'class_name': 'bg-gray-50 text-gray-800'},
+            simple.router(
+                page_route("/",Dashboard),
+                page_route("/users", Users),
+                page_route("/products",Products),
+                route("/sign-in", SignIn()),
+                route("/sign-up", SignUp())
             )
         )
     )
+

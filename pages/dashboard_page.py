@@ -13,7 +13,7 @@ from .components.icon import Icon_UpArrow
 def TopRow():
     return html.div(
     html.div({'class_name': 'grid w-full grid-cols-1 gap-4 xl:grid-cols-2 2xl:grid-cols-3'},
-        "{/* Sales this week */}",
+        # Sales this week,
         html.div({'class_name': 'rounded-lg bg-white p-4 shadow sm:p-6 xl:p-8 2xl:col-span-2'},
             html.div({'class_name': 'mb-4 flex items-center justify-between'},
                 html.div({'class_name': 'flex-shrink-0'},
@@ -29,7 +29,9 @@ def TopRow():
                 SalesChart()
             )
         ),
-        "{/* Latest Transactions */}",
+
+        # Latest Transactions
+
         html.div({'class_name': 'rounded-lg bg-white p-4 shadow sm:p-6 xl:p-8'},
             html.div({'class_name': 'mb-4 flex items-center justify-between'},
                 html.div(

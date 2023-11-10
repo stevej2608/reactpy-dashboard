@@ -72,8 +72,7 @@ def Search():
 
 @component
 def TopBar():
-   return html.div(
-    html.nav({'class_name': 'fixed z-30 w-full border-b border-gray-200 bg-white'},
+   return html.nav({'class_name': 'fixed z-30 w-full border-b border-gray-200 bg-white'},
         html.div({'class_name': 'px-3 py-3 lg:px-5 lg:pl-3'},
             html.div({'class_name': 'flex items-center justify-between'},
                 html.div({'class_name': 'flex items-center justify-start'},
@@ -90,4 +89,4 @@ def TopBar():
             )
         )
     )
-)
+
