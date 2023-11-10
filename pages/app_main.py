@@ -29,7 +29,7 @@ def PageContainer(page, **props):
             SideBarBackdrop(),
             html.div({'id': 'main-content', 'class_name': 'relative h-full w-full overflow-y-auto bg-gray-50 lg:ml-64'},
                 page(**props),
-                html.footer(),
+                Footer(),
                 Copyright()
             )
         )
