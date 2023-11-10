@@ -16,40 +16,35 @@ from .icon import (
 
 @component
 def Pro():
-    return html.div(
-    html.span({'class_name': 'ml-3 inline-flex items-center justify-center rounded-full bg-gray-200 px-2 text-sm font-medium text-gray-800'}, "Pro")
-)
+    return html.span({'class_name': 'ml-3 inline-flex items-center justify-center rounded-full bg-gray-200 px-2 text-sm font-medium text-gray-800'}, "Pro")
+
 
 @component
 def SideBarItem(text, icon, path, pro=False):
 
     pro = Pro() if pro else ''
 
-    return html.div(
-    html.li(
+    return html.li(
         html.link({'href': path, 'class_name': 'group flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100'},
             icon(),
             html.span({'class_name': 'ml-3 flex-1 whitespace-nowrap'}, text),
             # pro
         )
     )
-)
+
 
 
 @component
 def SideBarLink(text, icon, path):
-    return html.div(
-    html.a({'href': path, 'class_name': 'group flex items-center rounded-lg p-2 text-base font-normal text-gray-900 transition duration-75 hover:bg-gray-100', 'target': '_blank'},
+    return html.a({'href': path, 'class_name': 'group flex items-center rounded-lg p-2 text-base font-normal text-gray-900 transition duration-75 hover:bg-gray-100', 'target': '_blank'},
         icon(),
         html.span({'class_name': 'ml-3'}, text)
     )
-)
 
 
 @component
 def MobileSearch():
-    return html.div(
-    html.li(
+    return html.li(
         html.form({'action': '#', 'method': 'GET', 'class_name': 'lg:hidden'},
             html.label({'html_for': 'mobile-search', 'class_name': 'sr-only'}, "Search"),
             html.div({'class_name': 'relative'},
@@ -60,13 +55,11 @@ def MobileSearch():
             )
         )
     )
-)
 
 
 @component
 def SideBar():
-    return html.div(
-    html.aside({'id': 'sidebar', 'class_name': 'fixed left-0 top-0 z-20 flex hidden h-full w-64 flex-shrink-0 flex-col pt-16 transition-width duration-75 lg:flex', 'aria-label': 'Sidebar'},
+    return html.aside({'id': 'sidebar', 'class_name': 'fixed left-0 top-0 z-20 flex hidden h-full w-64 flex-shrink-0 flex-col pt-16 transition-width duration-75 lg:flex', 'aria-label': 'Sidebar'},
         html.div({'class_name': 'relative flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white pt-0'},
             html.div({'class_name': 'flex flex-1 flex-col overflow-y-auto pb-4 pt-5'},
                 html.div({'class_name': 'flex-1 space-y-1 divide-gray-200 divide-y bg-white px-3'},
@@ -90,5 +83,3 @@ def SideBar():
             )
         )
     )
-)
-
