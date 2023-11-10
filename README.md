@@ -5,7 +5,7 @@
 This project is a port of the Themesberg [tailwind-dashboard-windster] project to [reactpy].
 
 
-    poetry install
+    poetry install  --no-root
 
     uvicorn fast_app:app --port 3000
 

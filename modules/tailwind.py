@@ -1,7 +1,7 @@
 
-
 TAILWIND_CSS = {
         'rel': 'stylesheet',
-        'href': '/static/css/tailwindcss-2.2.19.css',
+        'href': '/static/css/tailwindcss-3.3.1.css',
         'crossorigin': 'anonymous'
     }
+

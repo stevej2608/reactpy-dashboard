@@ -27,4 +27,11 @@ def MobileSearch():
 
 @component
 def SideBarBackdrop():
-    raise NotImplementedError()
+
+    def toggleSidebarMobile():
+        print('toggleSidebarMobile')
+
+    return html.div(
+    html.div({'id': 'sidebarBackdrop', 'class_name': 'fixed inset-0 z-10 hidden bg-gray-900 opacity-50', 'onclick': toggleSidebarMobile})
+)
+

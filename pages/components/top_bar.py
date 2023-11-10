@@ -1,7 +1,7 @@
 from reactpy import component, html
 
 from .logo import Logo
-from .icon import Icon_Search, Icon_Diamond
+from .icon import Icon_Search, Icon_Gem
 from .gitHub_button import GitHubButton
 
 from .mobile_logic import ToggleSidebarMobile, MobileSearch
@@ -51,7 +51,7 @@ def OpenSource():
 def ProUpgrade():
     return html.div(
     html.a({'href': 'https://demo.themesberg.com/windster/pricing/', 'class_name': 'ml-5 mr-3 hidden items-center rounded-lg bg-cyan-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 sm:inline-flex'},
-        Icon_Diamond(),
+        Icon_Gem(),
         "Upgrade to Pro"
     )
 )
