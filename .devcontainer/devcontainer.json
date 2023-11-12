@@ -1,0 +1,61 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+{
+  "name": "${localWorkspaceFolderBasename}",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+
+	// Set *default* container specific settings.json values on container create.
+
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.pythonPath": "/usr/local/bin/python"
+      },
+
+      // Add the IDs of extensions you want installed when the container is created.
+
+      "extensions": [
+        "Arjun.swagger-viewer",
+        "ms-python.isort",
+        "ms-python.pylint",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "njpwerner.autodocstring",
+        "redhat.vscode-yaml",
+        "ritwickdey.liveserver",
+        "TrungNgo.autoflake",
+        "uctakeoff.vscode-counter"
+      ]
+    }
+  },
+
+  "runArgs": [
+        "--name=${localWorkspaceFolderBasename}",
+        "--add-host=debian-server:192.168.2.196",
+        "--env-file",".devcontainer/devcontainer.env"
+  ],
+
+  //
+	// https://code.visualstudio.com/docs/devcontainers/containers#_publishing-a-port
+  //
+  // Make sure the requested host port is avalable. If it's allready allocated
+  // to the VSCODE container build will fail.
+  //
+  // Make sure .devcontainer/devcontainer.env:HOST_HOSTPORT matchest the port
+  // defined here.
+
+  "appPort": [
+    "82:8000"  // host:container.
+  ],
+
+  "postCreateCommand": "chmod +x .devcontainer/pip-init.sh && .devcontainer/pip-init.sh",
+
+
+  // The following mount assumes the env variable $VSCODE_WORKSPACE_ROOT
+  // has been defined.
+
+	"workspaceMount": "source=${localEnv:VSCODE_WORKSPACE_ROOT}/${localWorkspaceFolderBasename},target=/workspace/${localWorkspaceFolderBasename},type=bind,consistency=cached",
+  "workspaceFolder": "/workspace/${localWorkspaceFolderBasename}"
+
+}
