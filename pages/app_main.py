@@ -1,4 +1,5 @@
 from reactpy import component, html
+from reactpy.backend.hooks import use_location
 from reactpy_router import route, simple
 
 # import { Component, splitProps } from 'solid-js'
@@ -18,6 +19,8 @@ from .sign_up import SignUp
 from .components.mobile_logic import SideBarBackdrop
 from .settings.dark_mode import dark_mode
 from .components.dark_mode_provider import DarkModeProvider
+
+from utils.logger import log
 
 
 @component
@@ -44,6 +47,8 @@ def page_route(path, page):
 
 @component
 def AppMain():
+    location = use_location()
+    log.info('location %s', location)
     return DarkModeProvider(dark_mode(),
         html.div({'class_name': 'bg-gray-50 text-gray-800'},
             simple.router(

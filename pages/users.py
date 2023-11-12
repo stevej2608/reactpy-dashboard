@@ -2,4 +2,4 @@ from reactpy import component, html
 
 @component
 def Users():
-    raise NotImplementedError()
+    return html.h1("Users")

@@ -21,6 +21,7 @@ This project is a port of the Themesberg [tailwind-dashboard-windster] project t
 
 
 [reactpy]: https://github.com/reactive-python/reactpy
+[reactpy-router]: https://github.com/reactive-python/reactpy-router
 [tailwind-dashboard-windster]: https://demo.themesberg.com/windster/
  
 

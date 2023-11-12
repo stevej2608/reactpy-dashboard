@@ -2,4 +2,4 @@ from reactpy import component, html
 
 @component
 def SignUp():
-    raise NotImplementedError()
+    return html.h1("Sign Up")

@@ -1,4 +1,5 @@
 from reactpy import component, html
+from reactpy_router import link
 
 from .icon import (
     Icon_RightFromLine,
@@ -14,25 +15,30 @@ from .icon import (
     Icon_Help,
 )
 
+
 @component
 def Pro():
-    return html.span({'class_name': 'ml-3 inline-flex items-center justify-center rounded-full bg-gray-200 px-2 text-sm font-medium text-gray-800'}, "Pro")
+    return html.span(
+        {
+            "class_name": "ml-3 inline-flex items-center justify-center rounded-full bg-gray-200 px-2 text-sm font-medium text-gray-800"
+        },
+        "Pro",
+    )
 
 
 @component
 def SideBarItem(text, icon, path, pro=False):
+    pro = Pro() if pro else ""
 
-    pro = Pro() if pro else ''
-
-    return html.li(
-        html.link({'href': path, 'class_name': 'group flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100'},
+    button = html.button({'class_name': 'group flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100'},
             icon(),
-            html.span({'class_name': 'ml-3 flex-1 whitespace-nowrap'}, text),
+            html.span({'class_name': 'ml-3 flex-1 whitespace-nowrap'}, text)
             # pro
         )
-    )
 
-
+    return html.li(
+        link(button, to=path)
+        )
 
 @component
 def SideBarLink(text, icon, path):
@@ -40,7 +46,6 @@ def SideBarLink(text, icon, path):
         icon(),
         html.span({'class_name': 'ml-3'}, text)
     )
-
 
 @component
 def MobileSearch():
@@ -56,7 +61,6 @@ def MobileSearch():
         )
     )
 
-
 @component
 def SideBar():
     return html.aside({'id': 'sidebar', 'class_name': 'fixed left-0 top-0 z-20 flex hidden h-full w-64 flex-shrink-0 flex-col pt-16 transition-width duration-75 lg:flex', 'aria-label': 'Sidebar'},
@@ -68,16 +72,16 @@ def SideBar():
                         SideBarItem(text="Dashboard", icon=Icon_Dashboard, path="/"),
                         # SideBarItem(text="Kanban", pro=True, icon=Icon_Squares2x2Bold, path="/kanban"),
                         # SideBarItem(text="Inbox", pro=True, icon=Icon_Inbox, path="/inbox"),
-                        SideBarItem(text="Users", icon=Icon_User, path="/users"),
-                        SideBarItem(text="Products", icon=Icon_Bag, path="/products"),
-                        SideBarItem(text="Sign In", icon=Icon_RightFromLine, path="/sign-in"),
-                        SideBarItem(text="Sign Up", icon=Icon_SignUp, path="/sign-up")
+                        # SideBarItem(text="Users", icon=Icon_User, path="/users"),
+                        # SideBarItem(text="Products", icon=Icon_Bag, path="/products"),
+                        # SideBarItem(text="Sign In", icon=Icon_RightFromLine, path="/sign-in"),
+                        # SideBarItem(text="Sign Up", icon=Icon_SignUp, path="/sign-up")
                     ),
                     html.div({'class_name': 'space-y-2 pt-2'},
-                        SideBarLink(text="Upgrade to Pro", icon=Icon_Upgrade, path="/sign-up"),
-                        SideBarLink(text="Documentation", icon=Icon_Documentation, path="/sign-up"),
-                        SideBarLink(text="Components", icon=Icon_Components, path="/sign-up"),
-                        SideBarLink(text="Help", icon=Icon_Help, path="/sign-up")
+                        SideBarLink(text="Upgrade to Pro", icon=Icon_Upgrade, path="https://demo.themesberg.com/windster/pricing/"),
+                        SideBarLink(text="Documentation", icon=Icon_Documentation, path="https://flowbite.com/docs/getting-started/introduction/"),
+                        SideBarLink(text="Components", icon=Icon_Components, path="https://flowbite.com/docs/components/alerts/"),
+                        SideBarLink(text="Help", icon=Icon_Help, path="https://github.com/themesberg/windster-tailwind-css-dashboard/issues")
                     )
                 )
             )

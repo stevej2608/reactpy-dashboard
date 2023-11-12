@@ -2,4 +2,4 @@ from reactpy import component, html
 
 @component
 def Products():
-    raise NotImplementedError()
+    return html.h1("Products")
