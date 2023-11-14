@@ -982,6 +982,26 @@ testing = ["playwright"]
 tornado = ["tornado"]
 
 [[package]]
+name = "reactpy-router"
+version = "0.1.1"
+description = "A URL router for ReactPy"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "reactpy_router-0.1.1-py2.py3-none-any.whl", hash = "sha256:2cdb5dd76338c270e6207f73fac1ab493d09710349ebc025e7cf4c2b567b52e2"},
+    {file = "reactpy_router-0.1.1.tar.gz", hash = "sha256:6bf261906b8e36d42add077d535b2d0906deb753d2e4b5904a2319fd46c006d4"},
+]
+
+[package.dependencies]
+reactpy = ">=1"
+typing-extensions = "*"
+
+[package.source]
+type = "legacy"
+url = "http://debian-server:6543/simple"
+reference = "pypicloud"
+
+[[package]]
 name = "requests"
 version = "2.31.0"
 description = "Python HTTP for Humans."
@@ -1309,4 +1329,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "0203cc8e61948a0ff6163bc0036cabd635505384fcdc258219326499d620f460"
+content-hash = "2330c68abc8f3ec88a32ceb3367ca743e65c5ceb649787b1f506ea0d890419e0"
