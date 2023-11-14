@@ -1,5 +1,6 @@
+from typing import Any
 from reactpy import component, html
-from reactpy_router import link, route, simple
+from reactpy_router import link
 
 from .icon import (
     Icon_RightFromLine,
@@ -16,6 +17,7 @@ from .icon import (
 )
 
 
+
 @component
 def Pro():
     return html.span({"class_name": "ml-3 inline-flex items-center justify-center rounded-full bg-gray-200 px-2 text-sm font-medium text-gray-800"},
@@ -27,8 +29,8 @@ def Pro():
 def SideBarItem(text, icon, path, pro=False):
 
     if pro:
-        pro = Pro()
-        pro = pro.type()
+        pro: Any = Pro()
+        pro = pro.type() # pylint: disable=no-member
     else:
         pro = ""
 
