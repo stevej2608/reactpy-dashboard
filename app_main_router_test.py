@@ -19,12 +19,15 @@ def SimpleButton(text:str):
 
 @component
 def SideBarItem(text, icon):
-    return html.div({'class_name': 'group flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100'},
 
-        svg({'class_name': 'h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900', 'fill': 'currentColor', 'viewBox': '0 0 20 20', 'xmlns': 'http://www.w3.org/2000/svg'},
-                path({'d': 'M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z'}),
-                path({'d': 'M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z'})
-            ),
+    icon = icon().type()
+
+    return html.div({'class_name': 'group flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100'},
+        icon,
+        # svg({'class_name': 'h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900', 'fill': 'currentColor', 'viewBox': '0 0 20 20', 'xmlns': 'http://www.w3.org/2000/svg'},
+        #         path({'d': 'M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z'}),
+        #         path({'d': 'M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z'})
+        #     ),
 
         html.span({'class_name': 'ml-3 flex-1 whitespace-nowrap'}, text)
     )

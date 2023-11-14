@@ -27,7 +27,7 @@
     },
 
     {
-      "name": "1. usage.py",
+      "name": "1a. usage.py",
       "type": "python",
       "request": "launch",
       "cwd": "${workspaceRoot}",
@@ -40,14 +40,14 @@
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart",
       "justMyCode": false,
-      "serverReadyAction": {
-        "pattern": "Uvicorn running on (.*)/",
-        "uriFormat": "%s/",
-        "action": "debugWithChrome"
-      }
+      // "serverReadyAction": {
+      //   "pattern": "Uvicorn running on (.*)/",
+      //   "uriFormat": "%s/",
+      //   "action": "debugWithChrome"
+      // }
     },
     {
-      "name": "1a. app_main_router_test.py",
+      "name": "1b. app_main_router_test.py",
       "type": "python",
       "request": "launch",
       "cwd": "${workspaceRoot}",
