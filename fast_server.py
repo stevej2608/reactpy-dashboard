@@ -1,9 +1,8 @@
 import uvicorn
 from fastapi import FastAPI
-from reactpy import html, run
+from reactpy import html
+from reactpy.core.component import Component
 from reactpy.backend.fastapi import configure, Options
-
-from pages.app_main import AppMain
 
 from modules.assets import assets_api
 from modules.tailwind import TAILWIND_CSS
@@ -53,8 +52,8 @@ options=Options(
 )
 
 
-def init_fastapp(**kwargs) -> str:
-    """Called once, just before server is started"""
+def run(AppMain: Component, **kwargs) -> str:
+    """Called once to run the server"""
 
     def package_prefix():
         return __package__ + '.' if __package__ else ''

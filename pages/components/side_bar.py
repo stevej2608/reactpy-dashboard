@@ -30,14 +30,17 @@ def Pro():
 def SideBarItem(text, icon, path, pro=False):
     pro = Pro() if pro else ""
 
-    button = html.button({'class_name': 'group flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100'},
+    @component
+    def ui():
+        return html.div({'class_name': 'group flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100'},
             icon(),
             html.span({'class_name': 'ml-3 flex-1 whitespace-nowrap'}, text)
             # pro
         )
 
     return html.li(
-        link(button, to=path)
+        ui()
+        # link(ui(), to=path)
         )
 
 @component

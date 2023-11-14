@@ -2,7 +2,8 @@ import uvicorn
 from manager import cli
 from utils.logger import log, logging
 
-from fast_app import app, init_fastapp
+from fast_server import app, run
+from pages.app_main import AppMain
 
 LOGS = [
     "asgi-logger",
@@ -62,7 +63,7 @@ def runserver(**kwargs):
         disable_noisy_logs()
         log.info(f"Uvicorn running on  http://%s:%s/ (Press CTRL+C to quit)", kwargs['host'], kwargs['port'])
 
-    init_fastapp(**kwargs)
+    run(AppMain, **kwargs)
 
 
 
