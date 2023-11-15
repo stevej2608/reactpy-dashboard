@@ -1,8 +1,13 @@
+import sys
+import signal
+import multiprocessing
 import uvicorn
 from fastapi import FastAPI
 from reactpy import html
 from reactpy.core.component import Component
 from reactpy.backend.fastapi import configure, Options
+
+from utils.logger import log
 
 from modules.assets import assets_api
 from modules.tailwind import TAILWIND_CSS
@@ -51,7 +56,11 @@ options=Options(
     )
 )
 
-
+def handler(signum, frame):
+    active = multiprocessing.active_children()
+    for child in active:
+        child.terminate()
+ 
 def run(AppMain: Component, **kwargs) -> str:
     """Called once to run the server"""
 
@@ -66,4 +75,10 @@ def run(AppMain: Component, **kwargs) -> str:
 
     app_path = f"{package_prefix()}{__name__}:app"
 
-    uvicorn.run(app_path, **kwargs)
+    try:
+        signal.signal(signal.SIGINT, handler)
+        uvicorn.run(app_path, **kwargs)
+    finally:
+        print('\b\b')
+        log.info('Uvicorn server has shut down\n')
+        sys.exit(0)

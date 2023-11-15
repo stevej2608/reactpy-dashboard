@@ -10,6 +10,7 @@ This project is a port of the Themesberg [tailwind-dashboard-windster] project t
 
     python usage.py runserver --host "0.0.0.0" --port 8000
 
+
 ### reactpy-router
 
 This project uses a custom version of [reactpy-router@jonesst2608]. It's been built locally
@@ -19,6 +20,15 @@ and uploaded to pypicloud. To install it:
         poetry config http-basic.pypicloud jonesst2608@gmail.com passme99
         
         poetry add --source pypicloud reactpy-router
+
+### Killing off the server
+
+Terminating the application with crtl-c leaves 
+pyton exe's litted around. No clue why.
+
+Open a git-bash terminal in admin mode, then:
+
+        taskkill //F //IM python.exe
 
 ## Testing
 
