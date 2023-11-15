@@ -37,6 +37,9 @@
         "--host", "0.0.0.0",
         "--port", "8000"
       ],
+      "env": {
+        "REACTPY_DEBUG_MODE" : "1"
+      },
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart",
       "justMyCode": false,

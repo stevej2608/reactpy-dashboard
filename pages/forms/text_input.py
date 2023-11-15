@@ -4,7 +4,7 @@ from reactpy import component, html
 def clsx(*argv):
     result = {}
     for d in argv:
-        if isinstance(d, dict): 
+        if isinstance(d, dict):
             result.update(d)
     return result
 

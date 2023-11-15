@@ -65,4 +65,5 @@ def run(AppMain: Component, **kwargs) -> str:
     configure(app, AppMain, options=options)
 
     app_path = f"{package_prefix()}{__name__}:app"
+
     uvicorn.run(app_path, **kwargs)
