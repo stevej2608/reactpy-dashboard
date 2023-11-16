@@ -7,8 +7,8 @@ def StandardFormContainer(title:str, form: Component):
     return html.div({'class_name': 'pt:mt-0 mx-auto flex flex-col items-center justify-center px-6 pt-8 md:h-screen'},
         link(
             html.div({'class_name': 'mb-8 flex items-center justify-center text-2xl font-semibold lg:mb-10'},
-                html.img({'src': 'https://demo.themesberg.com/windster/images/logo.svg', 'class_name': 'mr-4 h-10', 'alt': 'Windster Logo'}),
-                html.span({'class_name': 'self-center whitespace-nowrap text-2xl font-bold'}, "Windster")
+                html.img({'src': 'https://demo.themesberg.com/windster/images/logo.svg', 'class_name': 'mr-4 h-10', 'alt': 'React/Py Logo'}),
+                html.span({'class_name': 'self-center whitespace-nowrap text-2xl font-bold'}, "React/Py")
             ),
             to='/'
         ),

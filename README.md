@@ -21,14 +21,12 @@ and uploaded to pypicloud. To install it:
         
         poetry add --source pypicloud reactpy-router
 
-### Killing off the server
+### DONE/TODO
 
-Terminating the application with crtl-c leaves 
-pyton exe's litted around. No clue why.
-
-Open a git-bash terminal in admin mode, then:
-
-        taskkill //F //IM python.exe
+- [X] Fix composite icons
+- [ ] Create a modulat forms solution
+- [ ] Work out how to access client-side storage
+- [ ] Stop the crazy python stack dump when the a user leaves the site.
 
 ## Testing
 
