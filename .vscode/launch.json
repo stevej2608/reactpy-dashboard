@@ -79,7 +79,7 @@
       "args": [
         "-o log_cli=1",
         "-sv",
-        "--headed"
+        // "--headed"
       ],
       "cwd": "${workspaceRoot}",
       "console": "internalConsole",

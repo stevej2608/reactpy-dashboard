@@ -1,4 +1,5 @@
 from reactpy import component, html, event
+from reactpy.core. component import Component
 from pages.forms.standard_form_container import StandardFormContainer
 from pages.forms.text_input import TextInput
 from pages.forms.password_input import PasswordInput
@@ -30,10 +31,15 @@ def NotRegisteredLink():
 
 
 @component
+def Field(name, field: Component):
+    return field
+
+
+@component
 def SignIn(**argc):
     log.info("SignIn")
 
-    @event(prevent_default=True)
+    # @event(prevent_default=True)
     def handleSubmit(event):
         log.info("SignIn - Submit")
 
@@ -41,9 +47,9 @@ def SignIn(**argc):
 
     return StandardFormContainer("Sign in to platform",
         html.div({'class_name': 'mt-8 space-y-6'},
-            TextInput(label="Your email", placeholder="name@company.com"),
-            PasswordInput(label="Your password", placeholder="••••••••", **argc),
-            RememberCheckbox(name='remember'),
+            Field("email", TextInput(label="Your email", placeholder="name@company.com")),
+            Field("password", PasswordInput(label="Your password", placeholder="••••••••", **argc)),
+            Field("remember", RememberCheckbox(name='remember')),
             SubmitButton(label="Login to your account", onclick=handleSubmit),
             NotRegisteredLink()
         )
