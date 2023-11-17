@@ -5,28 +5,6 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch Chrome",
-      "request": "launch",
-      "type": "chrome",
-      "url": "http://vscode-dev:82",
-      "webRoot": "${workspaceFolder}",
-      "sourceMaps": true,
-
-      // Chrome debugger address:
-      // http://vscode-dev:82/_reactpy/js/src/index.js
-      //
-      // js/src/index.js
-
-      "sourceMapPathOverrides": {
-        "/_reactpy/*": "${workspaceFolder}/*",
-        "\\workspace\\reactpy-dashboard\\_reactpy\\js\\src\\*" : "${workspaceFolder}/js/src/*",
-        "/workspace/reactpy-dashboard/_reactpy/js/src/*" : "${workspaceFolder}/js/src/*" 
-      },
-      "internalConsoleOptions": "openOnSessionStart",
-
-    },
-
-    {
       "name": "1a. usage.py",
       "type": "python",
       "request": "launch",
@@ -50,11 +28,11 @@
       // }
     },
     {
-      "name": "1b. app_main_router_test.py",
+      "name": "1b. examples/router_test.py",
       "type": "python",
       "request": "launch",
       "cwd": "${workspaceRoot}",
-      "program": "app_main_router_test.py",
+      "module": "examples.router_test",
       "args": [
         "runserver",
         "--host", "0.0.0.0",
@@ -63,13 +41,23 @@
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart",
       "justMyCode": false,
-      // "serverReadyAction": {
-      //   "pattern": "Running on (.*)/",
-      //   "uriFormat": "%s",
-      //   "action": "debugWithChrome",
-      //   "killOnServerStop": true
-      // }
     },
+    {
+      "name": "1c. examples/form_login.py",
+      "type": "python",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "module": "examples.form_login",
+      "args": [
+        "runserver",
+        "--host", "0.0.0.0",
+        "--port", "8000"
+      ],
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+    },
+
     {
       "name": "2a. PyTest (all)",
       "type": "python",
@@ -86,5 +74,46 @@
       "internalConsoleOptions": "openOnSessionStart",
       "justMyCode": false
     },
+    {
+      "name": "2b. PyTest (test_form.py)",
+      "type": "python",
+      "request": "launch",
+      "stopOnEntry": false,
+      "module": "pytest",
+      "args": [
+        "-o log_cli=1",
+        "-sv",
+        "tests/test_form.py"
+        // "--headed"
+      ],
+      "cwd": "${workspaceRoot}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false
+    },
+
+    {
+      "name": "3.a Launch Chrome",
+      "request": "launch",
+      "type": "chrome",
+      "url": "http://vscode-dev:82",
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true,
+
+      // Chrome debugger address:
+      // http://vscode-dev:82/_reactpy/js/src/index.js
+      //
+      // js/src/index.js
+
+      "sourceMapPathOverrides": {
+        "/_reactpy/*": "${workspaceFolder}/*",
+        "\\workspace\\reactpy-dashboard\\_reactpy\\js\\src\\*" : "${workspaceFolder}/js/src/*",
+        "/workspace/reactpy-dashboard/_reactpy/js/src/*" : "${workspaceFolder}/js/src/*" 
+      },
+      "internalConsoleOptions": "openOnSessionStart",
+
+    },
+
+
   ]
 }

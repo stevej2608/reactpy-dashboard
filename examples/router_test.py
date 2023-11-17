@@ -64,7 +64,7 @@ def AppMain():
         # route("*", page_404()),
     )
 
-# python examples/router_test.py
+# python -m examples.router_test
 #
 # Internally app is run by Uvicorn/starlette
 #
