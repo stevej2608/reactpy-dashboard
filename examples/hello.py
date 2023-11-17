@@ -9,10 +9,10 @@ def AppMain():
         element
     )
 
-# python app_main.py
-#
-# Internally app is run by Uvicorn/starlette
-#
+# python examples/hello.py
 
-# if __name__ == "__main__":
-#     run(AppMain, host="0.0.0.0", port=8000)
+# Internally app is run by Uvicorn/starlette
+
+
+if __name__ == "__main__":
+    run(AppMain, host="0.0.0.0", port=8000)

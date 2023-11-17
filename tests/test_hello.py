@@ -1,6 +1,7 @@
 import pytest
 from reactpy.testing import DisplayFixture
-from app_main import AppMain, GREETING
+
+from examples.hello  import AppMain, GREETING
 
 @pytest.mark.anyio
 async def test_sample(display: DisplayFixture):
