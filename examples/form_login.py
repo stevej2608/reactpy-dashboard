@@ -1,34 +1,56 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 from reactpy import component, html, run
 
 from utils.logger import log, logging
-from reactpy_forms import createForm
+from reactpy_forms import createForm, FieldData
 
 class LoginFormData(BaseModel):
-    email: str
-    password: str
+    email: str = None
+    password: str = None
+
+
+    @validator("email")
+    @classmethod
+    def validate_email(cls, value):
+        log.info('validate email=%s', value)
+        if "xxx" == value:
+            raise ValueError("xxx is an invalid email!")
+        return value
+
+
+@component
+def TextInput(label: str, field: FieldData, props: dict):
+    log.info('TextInput.%s', label)
+
+    if field.error:
+        error_msg = html.div(field.exception.message)
+    else:
+        error_msg='No Error'
+
+    return html.p(
+        html.label(
+            label + ' ',
+            html.input(props),
+            error_msg
+        )
+    )
+
 
 @component
 def AppMain():
 
     log.info('AppMain')
 
-    Form, Field, _ = createForm(LoginFormData)
+    form_data = LoginFormData(email="jones@gmail.com", password="passme99")
+
+
+    Form, Field, field_data = createForm(form_data)
     return Form(
         html.fieldset(
             html.legend("Login"),
-            html.p(
-                html.label(
-                    "email:",
-                    Field('email', lambda field, props: html.input(props({'type':'email'})))
-                )
-            ),
-            html.p(
-                html.label(
-                    "password:",
-                    Field('password', lambda field, props: html.input(props({'type':'password'})))
-                )
-            ),
+            Field('email', lambda field, props: TextInput('Email', field, props({'type':'email'}))),
+            # Field('password', lambda field, props: TextInput('Password', field, props({'type':'password'})))
+
         )
     )
 

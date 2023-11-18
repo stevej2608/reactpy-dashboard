@@ -82,7 +82,6 @@
       "module": "pytest",
       "args": [
         "-o log_cli=1",
-        "-sv",
         "tests/test_form.py"
         // "--headed"
       ],
