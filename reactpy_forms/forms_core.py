@@ -1,4 +1,4 @@
-from typing import Tuple, Callable, List, Any
+from typing import Tuple, Callable, List, Any, Dict
 from pydantic import BaseModel, ValidationError
 from reactpy import html, use_state
 from reactpy.core.component import Component
@@ -12,6 +12,7 @@ class FieldError(ValueError):
         super().__init__(self.message)
 
 class FieldModel(BaseModel):
+    name: str 
     value: str = None
     error: str = ''
 
@@ -21,72 +22,111 @@ Field = Callable[[str, FieldComponent], Component]
 Form = Callable[[*List[Component]], Component]
 
 
-def create_model(model:BaseModel) -> dict[str, FieldModel]:
-    fields = {}
+# class FormModel:
 
-    for name, value in model.dict().items():
-        fields[name] = [value, ""]
+#     def __init__(self, state: BaseModel):
+#         self.state = state
+#         self.fields = {}
 
-    return fields
+#         for name, value in state.dict().items():
+#             self.fields[name] = FieldModel(value=value)
+
+#     def get_field(self, name:str) -> FieldModel:
+#         return self.fields[name]
 
 
-def model_values(form_state: dict[str, FieldModel]) -> dict[str, Any]:
-    fields = {}
-    for name, state in form_state.items():
-        fields[name] = state[0]
-    return fields
+class FormModel(BaseModel):
+    state: BaseModel
+    fields: Dict[str, FieldModel] = []
+
+
+
+def create_model(state: BaseModel, fields: dict = None, update: FieldModel = None) -> FormModel:
+
+    # Create/update the internal files
+
+    fields = fields if fields else {}
+
+    for name, value in state.dict().items():
+
+        if name not in fields:
+            fields[name] = FieldModel(name=name, value=value)
+
+        if update and update.name == name:
+            fields[name] = update.copy()
+
+    # Update the user model
+
+    if update:
+        values = state.dict()
+        values[update.name] = update.value
+        state = type(state)(**values)
+
+    return FormModel(state=state, fields=fields)
+
+
+def form_state(state: BaseModel):
+    model = create_model(state)
+    form_model, set_model = use_state(model)
+    return [form_model, set_model]
 
 
 def createForm(model: BaseModel, set_model) -> Tuple[Form, Field]:
-
-    form_state, set_form_state = use_state(create_model(model))
 
     def _field(name, fn) -> Component:
 
         def onchange(event):
 
-            value, error = form_state[name]
-            value = event['currentTarget']['value']
+            field_model = model.fields[name]
 
-            log.info('onchange %s=%s', name, value)
+            field_model.value = event['currentTarget']['value']
+            field_model.error = ''
+
+            log.info('****** onchange %s: [%s] *****', name, field_model)
 
             try:
 
-                # Use the latest field value to create a new model. This
-                # will invoke any model field validators
+                # Save the new internal state
 
-                form_values = model_values(form_state)
-                form_values[name] = value
-                m = type(model)(**form_values)
+                set_model(model)
 
-                # No complaints from the validators, new data
-                # must be OK, update the user model and form values
+                # Update the user model (this my fail validation)
 
-                set_model(m)
+                new_model = create_model(model.state, model.fields, update=field_model)
+                set_model(new_model)
+
+                log.info('model updated %s: [%s]', name, new_model)
 
             except ValidationError as ex:
-                message = ex.args[0][0].exc.message
-                error = message
 
-            form_state[name] = [value, error]
+                log.info('validation error %s: [%s]', name, field_model)
 
-            log.info('set_form_state %s=%s', name, form_state)
-            set_form_state(form_state)
+                # Return the user model to its previous state and set the error
+
+                new_model = create_model(model.state, model.fields)
+
+                field_model.error = ex.args[0][0].exc.message
+                new_model.fields[name] = field_model
+
+                set_model(new_model)
+
+                log.info('model reverted %s: [%s]', name, new_model)
 
 
-        log.info('get_form_state %s=%s', name, form_state)
-        value, error = form_state[name]
+        field_state = model.fields[name]
+
+        log.info('get_field_state %s: [%s]', name, field_state)
 
         def _props(props):
             props['name'] = name
             props['onchange'] = onchange
 
-            if value is not None:
-                props['value'] = value
+            if field_state.value is not None:
+                props['value'] = field_state.value
 
             return props
 
-        form_input = fn(FieldModel(value=value, error=error), _props)
+        form_input = fn(field_state, _props)
         return form_input
 
     def _form(*children: List[Component]):
