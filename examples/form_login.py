@@ -12,7 +12,6 @@ class LoginFormData(BaseModel):
     @validator("email")
     @classmethod
     def validate_email(cls, value):
-        log.info('validate email=%s', value)
         if "xxx" == value:
             raise FieldError("xxx is an invalid email!")
         return value
@@ -20,7 +19,10 @@ class LoginFormData(BaseModel):
 
 @component
 def TextInput(label: str, field: FieldModel, props: dict):
-    log.info('TextInput.%s, error=%s', label, field.error)
+    # log.info('TextInput.%s, error=%s', label, field.error)
+    log.info('TextInput %s', field)
+
+    props['label'] = label
 
     return html.p(
         html.label(
