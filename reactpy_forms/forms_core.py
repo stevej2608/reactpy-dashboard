@@ -1,145 +1,91 @@
 from typing import Tuple, Callable, List, TypeVar
-from pydantic import BaseModel
+from pydantic import BaseModel, ValidationError
 from reactpy import html, use_state
 from reactpy.core.component import Component
 
 from utils.logger import log
+# from reactpy_forms.model import FieldModel, FormModel
 
 # Loosly based on modularforms:
 #       https://modularforms.dev/solid/guides/create-your-form
 
 # https://docs.pydantic.dev/1.10/usage/validators/
 
+class FieldError(ValueError):
 
-class FieldData:
+    def __init__(self, message:str):
+        self.message = message
+        super().__init__(self.message)
 
-    @property
-    def value(self):
-        model = self.model.todict()
-        return model[self.field_name]
-
-    def __init__(self, field_name:str, model: TypeVar('FormModel')):
-        self.field_name = field_name
-        self.model = model
-        self.error = False
-        self.exception = None
-
-    def update_model(self, value):
-        try:
-            # If this fails we have a validation error
-
-            self.model.copy_model(update={self.field_name : value})
-
-            # All OK, update the actual model
-
-            self.model.update_model(update={self.field_name : value})
-            self.error = False
-        except Exception as ex:
-            log.info('Field %s, value=%s - error %s', self.field_name, value, ex)
-            self.error = True
-            self.exception = ex
+class FieldModel(BaseModel):
+    value: str = None
+    error: str = ''
 
 
-class FormModel:
+FieldComponent = Callable[[FieldModel, dict,], Component]
 
-    def __init__(self, form: BaseModel):
-        self._model = form
-        self._fields = []
-
-    def todict(self) -> dict:
-        return self._model.dict()
-
-    def copy_model(self, *args, **kwargs) -> BaseModel:
-        return self._model.copy(*args, **kwargs)
-
-
-    def update_model(self, *args, **kwargs) -> None:
-        """Recreate the model using the current values. Any pydantic
-        validators will throw an exception if the data is invalid
-        """
-        model = self.copy_model(*args, **kwargs)
-        values = model.dict()
-
-        self._model = type(model)(**values)
-
-
-    def add_field(self, name: str):
-
-        if self.has_field(name):
-            raise ValueError(f"Field name={name} allready exists")
-
-        if name in self._model.dict():
-            field = FieldData(name, self)
-            self._fields.append(field)
-            return field
-        else:
-            raise ValueError(f"Field name={name} is not in data model")
-
-
-    def has_field(self, name: str):
-        for field in self._fields:
-            if field.field_name == name:
-                return True
-        return False
-    
-    def __repr__(self): 
-        return str(self._model)
-
-FieldComponent = Callable[[FieldData, dict,], Component]
 
 Field = Callable[[str, FieldComponent], Component]
 
 Form = Callable[[*List[Component]], Component]
 
 
-def createForm(form: BaseModel) -> Tuple[Form, Field, FormModel]:
-    """
-    
-    The returned Form, Field and FieldArray component are connected with the store of 
-    your form. They are aware of your fields and their data types, which 
-    gives you the benefit of type safety and autocompletion
-
-    Args:
-        form (BaseModel): _description_
-
-    Returns:
-        Tuple[str, Component, float]: _description_
-    """
+def createForm(model: BaseModel, set_model) -> Tuple[Form, Field]:
 
     log.info('createForm')
 
-    form_model = FormModel(form)
+    form_values, set_form_values = use_state(model.dict())
 
-    _field = None
 
     def _field(name, fn) -> Component:
 
-        log.info('_field %s', name)
+        field_model, set_field_model = use_state(FieldModel(value=form_values[name]))
 
-        field_data = form_model.add_field(name)
-
-        field_value, set_field = use_state(field_data.value)
+        log.info('_field %s=%s', name, field_model.value)
 
         def onchange(event):
+
+            # Update the internal model values state
+
             value = event['currentTarget']['value']
-            log.info('%s.onchange(value=%s)', name, value)
-            field_data.update_model(value)
-            set_field(field_data.value)
+            error = ''
+
+            try:
+
+                # Use the latest field values to create a new model. This
+                # will invoke the model field validators
+
+                form_values[name] = value
+                m = type(model)(**form_values)
+
+                # No complaints from the validators, new data
+                # must be OK update the user model and form values
+
+                set_model(m)
+                set_form_values(m.dict())
+
+            except ValidationError as ex:
+                message = ex.args[0][0].exc.message
+                log.info('Field %s, value=%s - error %s', name, value, message)
+                error = message
+
+            set_field_model(FieldModel(value=value, error=error))
+
 
         def _props(props):
             log.info('_props %s', name)
             props['name'] = name
             props['onchange'] = onchange
 
-            if field_value is not None:
-                props['value'] = field_value
+            if field_model.value is not None:
+                props['value'] = field_model.value
 
             return props
 
-        form_input = fn(field_data, _props)
+        form_input = fn(field_model, _props)
         return form_input
 
     def _form(*children: List[Component]):
         return html.form(*children)
 
-    return [_form, _field, form_model]
+    return [_form, _field]
