@@ -1,6 +1,7 @@
 from typing import Tuple, Callable, List, Dict, overload, TypeVar
 from pydantic import BaseModel, ValidationError
-from reactpy import html, use_state
+from reactpy import html
+from reactpy.core.hooks import _use_const, _CurrentState
 from reactpy.core.component import Component
 from reactpy.core.types import State
 
@@ -115,9 +116,9 @@ def use_form_state(initial_value: _Type | Callable[[], _Type]) -> State[_Type]:
     Returns:
         A tuple containing the current state and a function to update it.
     """
-    model = FormModel.create_model(initial_value)
-    form_model, set_model = use_state(model)
-    return [form_model, set_model]
+    initial_model = FormModel.create_model(initial_value)
+    current_state = _use_const(lambda: _CurrentState(initial_model))
+    return State(current_state.value, current_state.dispatch)
 
 
 def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
