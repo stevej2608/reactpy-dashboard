@@ -29,6 +29,14 @@ class FormModel(BaseModel):
     """Container for the Pydantic form model supplied by the 
     user and a field model that is created and 
     managed internally. 
+
+    The form_model and the field_model are updated with the inputs from 
+    the UI. The form_model values are the last fully validated inputs. 
+    
+    The field_model holds the unvalidated input. When a validation error
+    occurs the field_model will hold the erroneous value. Erroneous values
+    are not propagated to the user accessible form_model.
+
     """
     form_model: BaseModel
     field_model: Dict[str, FieldModel] = []
@@ -41,7 +49,7 @@ class FormModel(BaseModel):
             form_model (BaseModel): The user model..
 
         Returns:
-            FormModel:The composite form & firld modle
+            FormModel:The composite form & field model
         """
 
         field_model = {}
@@ -61,7 +69,7 @@ class FormModel(BaseModel):
             model (BaseModel): The model to be updated
 
         Returns:
-            FormModel:The composite form & firld modle
+            FormModel:The composite form & field model
         """
 
         form_model = model.form_model
@@ -133,7 +141,7 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
             password: str = None
 
 
-        model, set_model = use_form_state(LoginFormData(email="jones@gmail.com", password="passme99"))
+        model, set_model = use_form_state(LoginFormData(email="joe@gmail.com", password="1234"))
 
         Form, Field = createForm(model, set_model)
         return Form(
