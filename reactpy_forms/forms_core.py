@@ -34,26 +34,43 @@ class FormModel(BaseModel):
     field_model: Dict[str, FieldModel] = []
 
     @staticmethod
-    def create_model(form_model: BaseModel, field_model: Dict[str, FieldModel] = None, update: FieldModel = None) -> TypeVar('FormModel'):
-        """Create an initial FieldModel or copy/update the existing internal FieldModel
+    def create_model(form_model: BaseModel) -> TypeVar('FormModel'):
+        """Create an initial FieldModel
 
         Args:
             form_model (BaseModel): The user model..
-            field_model  Dict[str, FieldModel]): The internal mfield
 
         Returns:
             FormModel:The composite form & firld modle
         """
 
-        field_model = field_model if field_model else {}
+        field_model = {}
 
         for name, value in form_model.dict().items():
+            field_model[name] = FieldModel(name=name, value=value)
+
+
+        return FormModel(form_model=form_model, field_model=field_model)
+
+
+    @staticmethod
+    def update_model(model: TypeVar('FormModel'), update: FieldModel= None) -> TypeVar('FormModel'):
+        """Copy and update the existing internal FieldModel
+
+        Args:
+            model (BaseModel): The model to be updated
+
+        Returns:
+            FormModel:The composite form & firld modle
+        """
+
+        form_model = model.form_model
+        field_model = model.field_model
+
+        for name in form_model.dict():
 
             if update and update.name == name:
                 field_model[name] = update.copy()
-
-            if name not in field_model:
-                field_model[name] = FieldModel(name=name, value=value)
 
         # Update the user model
 
@@ -142,7 +159,7 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
 
                 # Update the user model (this may fail validation)
 
-                new_model = FormModel.create_model(model.form_model, model.field_model, update=field_model)
+                new_model = FormModel.update_model(model, update=field_model)
                 set_model(new_model)
 
                 log.info('model updated %s: [%s]', name, new_model)
@@ -153,7 +170,7 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
 
                 # Return the user model to its previous state and set the error
 
-                new_model = FormModel.create_model(model.form_model, model.field_model)
+                new_model = FormModel.update_model(model)
 
                 field_model.error = ex.args[0][0].exc.message
                 new_model.field_model[name] = field_model
