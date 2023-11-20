@@ -30,32 +30,39 @@ class FormModel(BaseModel):
     user and a field model that is created and 
     managed internally. 
     """
-    state: BaseModel
-    fields: Dict[str, FieldModel] = []
+    form_model: BaseModel
+    field_model: Dict[str, FieldModel] = []
 
+    @staticmethod
+    def create_model(form_model: BaseModel, field_model: Dict[str, FieldModel] = None, update: FieldModel = None) -> TypeVar('FormModel'):
+        """Create an initial FieldModel or copy/update the existing internal FieldModel
 
-def _create_model(state: BaseModel, fields: dict = None, update: FieldModel = None) -> FormModel:
+        Args:
+            form_model (BaseModel): The user model..
+            field_model  Dict[str, FieldModel]): The internal mfield
 
-    # Create/update the internal files
+        Returns:
+            FormModel:The composite form & firld modle
+        """
 
-    fields = fields if fields else {}
+        field_model = field_model if field_model else {}
 
-    for name, value in state.dict().items():
+        for name, value in form_model.dict().items():
 
-        if name not in fields:
-            fields[name] = FieldModel(name=name, value=value)
+            if update and update.name == name:
+                field_model[name] = update.copy()
 
-        if update and update.name == name:
-            fields[name] = update.copy()
+            if name not in field_model:
+                field_model[name] = FieldModel(name=name, value=value)
 
-    # Update the user model
+        # Update the user model
 
-    if update:
-        values = state.dict()
-        values[update.name] = update.value
-        state = type(state)(**values)
+        if update:
+            values = form_model.dict()
+            values[update.name] = update.value
+            form_model = type(form_model)(**values)
 
-    return FormModel(state=state, fields=fields)
+        return FormModel(form_model=form_model, field_model=field_model)
 
 
 _Type = TypeVar("_Type")
@@ -83,17 +90,17 @@ def use_form_state(initial_value: _Type | Callable[[], _Type]) -> State[_Type]:
     Returns:
         A tuple containing the current state and a function to update it.
     """
-    model = _create_model(initial_value)
+    model = FormModel.create_model(initial_value)
     form_model, set_model = use_state(model)
     return [form_model, set_model]
 
 
-def createForm(model: BaseModel, set_model) -> Tuple[Form, Field]:
+def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
     """Accept the model and setter created by use_form_state() and return
     the Form & Field HOC's that will be used to wrap the form elements
 
     Args:
-        model (BaseModel): Form model created by use_form_state()
+        model (FormModel): Form model created by use_form_state()
         set_model (Callable): Model setter created by use_form_state()
 
     Returns:
@@ -124,7 +131,7 @@ def createForm(model: BaseModel, set_model) -> Tuple[Form, Field]:
 
         def onchange(event):
 
-            field_model = model.fields[name]
+            field_model = model.field_model[name]
 
             field_model.value = event['currentTarget']['value']
             field_model.error = ''
@@ -135,7 +142,7 @@ def createForm(model: BaseModel, set_model) -> Tuple[Form, Field]:
 
                 # Update the user model (this may fail validation)
 
-                new_model = _create_model(model.state, model.fields, update=field_model)
+                new_model = FormModel.create_model(model.form_model, model.field_model, update=field_model)
                 set_model(new_model)
 
                 log.info('model updated %s: [%s]', name, new_model)
@@ -146,17 +153,17 @@ def createForm(model: BaseModel, set_model) -> Tuple[Form, Field]:
 
                 # Return the user model to its previous state and set the error
 
-                new_model = _create_model(model.state, model.fields)
+                new_model = FormModel.create_model(model.form_model, model.field_model)
 
                 field_model.error = ex.args[0][0].exc.message
-                new_model.fields[name] = field_model
+                new_model.field_model[name] = field_model
 
                 set_model(new_model)
 
                 log.info('model reverted %s: [%s]', name, new_model)
 
 
-        field_state = model.fields[name]
+        field_state = model.field_model[name]
 
         log.info('get_field_state %s: [%s]', name, field_state)
 
