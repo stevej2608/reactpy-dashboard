@@ -19,8 +19,8 @@ class LoginFormData(BaseModel):
 
 @component
 def TextInput(label: str, field: FieldModel, props: dict):
-    # log.info('TextInput.%s, error=%s', label, field.error)
-    log.info('TextInput [%s]', field)
+
+    # log.info('TextInput [%s]', field)
 
     return html.p(
         html.label(
