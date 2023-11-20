@@ -146,7 +146,7 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
 
         Form, Field = createForm(model, set_model)
         return Form(
-            Field('email', lambda field, props: html.input(field, props({'type':'email'}))),
+            Field('email', lambda field, props: html.input(props({'type':'email'}))),
             Field('password', lambda field, props: html.input(props({'type': 'password'})))
             )
 
@@ -157,41 +157,44 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
 
         def onchange(event):
 
-            field_model = model.field_model[name]
+            field_model = model.field_model[name].copy()
 
             field_model.value = event['currentTarget']['value']
             field_model.error = ''
 
-            log.info('****** onchange %s: [%s] *****', name, field_model)
+            log.info('onchange [%s]', field_model)
 
             try:
 
-                # Update the user model (this may fail validation)
+                # Update the model (this may fail validation)
 
                 new_model = FormModel.update_model(model, update=field_model)
-                set_model(new_model)
 
-                log.info('model updated %s: [%s]', name, new_model)
+                # Inputs must be valid, update the external model
+
+                set_model(new_model)
 
             except ValidationError as ex:
 
-                log.info('validation error %s: [%s]', name, field_model)
+                log.info('validation error [%s]', field_model)
 
-                # Return the user model to its previous state and set the error
+                # Return the model to its previous state and set the error
 
                 new_model = FormModel.update_model(model)
+
+                # Update the field model with the value and the validation error.
 
                 field_model.error = ex.args[0][0].exc.message
                 new_model.field_model[name] = field_model
 
-                set_model(new_model)
+                # Update the external state
 
-                log.info('model reverted %s: [%s]', name, new_model)
+                set_model(new_model)
 
 
         field_state = model.field_model[name]
 
-        log.info('get_field_state %s: [%s]', name, field_state)
+        log.info('get_field_state [%s]', field_state)
 
         def _props(props):
             props['name'] = name
