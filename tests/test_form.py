@@ -4,17 +4,24 @@ from reactpy.testing import DisplayFixture
 
 from examples.form_login import AppMain
 
-class Selector:
 
-    @property
-    async def selector(self):
-        await self._page.wait_for_load_state("networkidle")
-        element = await self._page.wait_for_selector(self._selector)
-        return element
+def input_field(display, name: str):
 
-    def __init__(self, display, sel):
-        self._page = display.page
-        self._selector = sel
+    async def wait_for_selector():
+        await display.page.wait_for_load_state("networkidle")
+        selector = await display.page.wait_for_selector(name)
+        return selector
+
+    async def get_input():
+        element = await wait_for_selector()
+        value = await element.input_value()
+        return value
+
+    async def set_input(value):
+        element = await wait_for_selector()
+        await element.fill(value)
+
+    return [get_input, set_input]
 
 
 # pytest -o log_cli=1 -sv tests/test_form.py
@@ -24,27 +31,17 @@ async def test_form(display: DisplayFixture):
 
     await display.show(AppMain)
 
-    async def wait_for_selector(selector):
-        await display.page.wait_for_load_state("networkidle")
-        selector = await display.page.wait_for_selector(selector)
-        return selector
+    get_email, set_email = input_field(display, '#email')
+    get_password, set_password = input_field(display, '#password')
 
-    async def get_input(selector):
-        element = await wait_for_selector(selector)
-        value = await element.input_value()
-        return value
+    assert (await get_email()) == 'joe@gmail.com'
+    assert (await get_password()) == '1234'
 
-    async def set_input(selector, value):
-        element = await wait_for_selector(selector)
-        await element.fill(value)
+    await set_email('bigjoe@gmail.com')
+    assert (await  get_email()) == 'bigjoe@gmail.com'
 
-    assert (await get_input("#email")) == 'joe@gmail.com'
-
-    await set_input("#email", 'bigjoe@gmail.com')
-    assert (await get_input("#email")) == 'bigjoe@gmail.com'
-
-    await set_input("#email", 'xxx')
-    assert (await get_input("#email")) == 'xxx'
+    await set_email('xxx')
+    assert (await  get_email()) == 'xxx'
 
 
 
