@@ -2,7 +2,7 @@ from pydantic import BaseModel, validator
 from reactpy import component, html, use_state, run
 
 from utils.logger import log, logging
-from reactpy_forms import createForm, FieldModel, FieldError, form_state
+from reactpy_forms import createForm, FieldModel, FieldValidationError, use_form_state
 
 class LoginFormData(BaseModel):
     email: str = None
@@ -13,7 +13,7 @@ class LoginFormData(BaseModel):
     @classmethod
     def validate_email(cls, value):
         if "xxx" == value:
-            raise FieldError("xxx is an invalid email!")
+            raise FieldValidationError("xxx is an invalid email!")
         return value
 
 
@@ -35,9 +35,9 @@ def TextInput(label: str, field: FieldModel, props: dict):
 def AppMain():
     log.info('AppMain')
 
-    form_model, set_model = form_state(LoginFormData(email="jones@gmail.com", password="passme99"))
+    model, set_model = use_form_state(LoginFormData(email="jones@gmail.com", password="passme99"))
 
-    Form, Field = createForm(form_model, set_model)
+    Form, Field = createForm(model, set_model)
     return Form(
         html.fieldset(
             html.legend("Login"),

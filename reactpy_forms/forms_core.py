@@ -1,18 +1,21 @@
-from typing import Tuple, Callable, List, Any, Dict
+from typing import Tuple, Callable, List, Dict, overload, TypeVar
 from pydantic import BaseModel, ValidationError
 from reactpy import html, use_state
 from reactpy.core.component import Component
+from reactpy.core.types import State
+
 
 from utils.logger import log
 
 
-class FieldError(ValueError):
+class FieldValidationError(ValueError):
     def __init__(self, message:str):
         self.message = message
         super().__init__(self.message)
 
+
 class FieldModel(BaseModel):
-    name: str 
+    name: str
     value: str = None
     error: str = ''
 
@@ -22,26 +25,16 @@ Field = Callable[[str, FieldComponent], Component]
 Form = Callable[[*List[Component]], Component]
 
 
-# class FormModel:
-
-#     def __init__(self, state: BaseModel):
-#         self.state = state
-#         self.fields = {}
-
-#         for name, value in state.dict().items():
-#             self.fields[name] = FieldModel(value=value)
-
-#     def get_field(self, name:str) -> FieldModel:
-#         return self.fields[name]
-
-
 class FormModel(BaseModel):
+    """Container for the Pydantic form model supplied by the 
+    user and a field model that is created and 
+    managed internally. 
+    """
     state: BaseModel
     fields: Dict[str, FieldModel] = []
 
 
-
-def create_model(state: BaseModel, fields: dict = None, update: FieldModel = None) -> FormModel:
+def _create_model(state: BaseModel, fields: dict = None, update: FieldModel = None) -> FormModel:
 
     # Create/update the internal files
 
@@ -65,13 +58,67 @@ def create_model(state: BaseModel, fields: dict = None, update: FieldModel = Non
     return FormModel(state=state, fields=fields)
 
 
-def form_state(state: BaseModel):
-    model = create_model(state)
+_Type = TypeVar("_Type")
+
+@overload
+def use_form_state(initial_value: Callable[[], _Type]) -> State[_Type]:
+    ...
+
+
+@overload
+def use_form_state(initial_value: _Type) -> State[_Type]:
+    ...
+
+
+def use_form_state(initial_value: _Type | Callable[[], _Type]) -> State[_Type]:
+    """Create a form state model. Used in the same way
+    as the reactpy hooks.use_state
+
+    Parameters:
+        initial_value:
+            Defines the initial value of the state. A callable (accepting no arguments)
+            can be used as a constructor function to avoid re-creating the initial value
+            on each render.
+
+    Returns:
+        A tuple containing the current state and a function to update it.
+    """
+    model = _create_model(initial_value)
     form_model, set_model = use_state(model)
     return [form_model, set_model]
 
 
 def createForm(model: BaseModel, set_model) -> Tuple[Form, Field]:
+    """Accept the model and setter created by use_form_state() and return
+    the Form & Field HOC's that will be used to wrap the form elements
+
+    Args:
+        model (BaseModel): Form model created by use_form_state()
+        set_model (Callable): Model setter created by use_form_state()
+
+    Returns:
+        Tuple[Form, Field]: Form & Field HOC's that will be used to wrap the form elements
+
+
+    Usage:
+    ```
+        from pydantic import BaseModel
+
+        class LoginFormData(BaseModel):
+            email: str = None
+            password: str = None
+
+
+        model, set_model = use_form_state(LoginFormData(email="jones@gmail.com", password="passme99"))
+
+        Form, Field = createForm(model, set_model)
+        return Form(
+            Field('email', lambda field, props: html.input(field, props({'type':'email'}))),
+            Field('password', lambda field, props: html.input(props({'type': 'password'})))
+            )
+
+    ```
+    """
 
     def _field(name, fn) -> Component:
 
@@ -86,13 +133,9 @@ def createForm(model: BaseModel, set_model) -> Tuple[Form, Field]:
 
             try:
 
-                # Save the new internal state
+                # Update the user model (this may fail validation)
 
-                set_model(model)
-
-                # Update the user model (this my fail validation)
-
-                new_model = create_model(model.state, model.fields, update=field_model)
+                new_model = _create_model(model.state, model.fields, update=field_model)
                 set_model(new_model)
 
                 log.info('model updated %s: [%s]', name, new_model)
@@ -103,7 +146,7 @@ def createForm(model: BaseModel, set_model) -> Tuple[Form, Field]:
 
                 # Return the user model to its previous state and set the error
 
-                new_model = create_model(model.state, model.fields)
+                new_model = _create_model(model.state, model.fields)
 
                 field_model.error = ex.args[0][0].exc.message
                 new_model.fields[name] = field_model
