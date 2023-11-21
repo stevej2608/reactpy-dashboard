@@ -59,6 +59,22 @@
     },
 
     {
+      "name": "1d. examples/form_complex.py",
+      "type": "python",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "module": "examples.form_complex",
+      "args": [
+        "runserver",
+        "--host", "0.0.0.0",
+        "--port", "8000"
+      ],
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+    },
+
+    {
       "name": "2a. PyTest (all)",
       "type": "python",
       "request": "launch",

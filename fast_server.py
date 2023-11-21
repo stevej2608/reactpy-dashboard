@@ -44,7 +44,7 @@ META_COLOR = {
     'content': "#000000"
     }
 
-options=Options(
+DASHBOARD_OPTIONS=Options(
     head=html.head(
         html.meta(META_VIEWPORT),
         html.meta(META_COLOR),
@@ -61,7 +61,7 @@ def handler(signum, frame):
     for child in active:
         child.terminate()
  
-def run(AppMain: Component, **kwargs) -> str:
+def run(AppMain: Component, options=DASHBOARD_OPTIONS, **kwargs) -> str:
     """Called once to run the server"""
 
     def package_prefix():
