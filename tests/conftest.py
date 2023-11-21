@@ -9,9 +9,9 @@ from utils.logger import log
 
 HEADLESS = False
 
-# Injected into page class
+# Injected into page class, see below
 
-async def wait_page_stable(self):
+async def _wait_page_stable(self):
     await self.wait_for_load_state("networkidle")
     await self.wait_for_load_state("domcontentloaded")
 
@@ -24,7 +24,7 @@ def anyio_backend():
 @pytest.fixture(scope="session")
 async def display(server, page):
     async with DisplayFixture(server, page) as display:
-        type(page).wait_page_stable = wait_page_stable
+        type(page).wait_page_stable = _wait_page_stable
         yield display
 
 
