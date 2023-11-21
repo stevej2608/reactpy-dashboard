@@ -67,7 +67,7 @@
       "args": [
         "-o log_cli=1",
         "-sv",
-        // "--headed"
+        "--headed"
       ],
       "cwd": "${workspaceRoot}",
       "console": "internalConsole",
@@ -82,8 +82,8 @@
       "module": "pytest",
       "args": [
         "-o log_cli=1",
-        "tests/test_form.py"
-        // "--headed"
+        "tests/test_form.py",
+        "--headed"
       ],
       "cwd": "${workspaceRoot}",
       "console": "internalConsole",

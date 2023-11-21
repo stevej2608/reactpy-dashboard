@@ -12,7 +12,7 @@ reactpy = "^1.0.2"
 reactpy-router = {version = "^0.1.1", source = "pypicloud"}
 fastapi = "0.96.0"
 uvicorn = "0.22.0"
-pydantic - " 1.10.13"
+pydantic = " 1.10.13"
 
 [tool.poetry.group.dev.dependencies]
 
@@ -26,6 +26,7 @@ python-dotenv = "1.0.0"
 responses = "0.24.1"
 sanic-cors = "2.2.0"
 sanic-testing = "23.6.0"
+pytest-playwright = "^0.4.3"
 
 
 [[tool.poetry.source]]

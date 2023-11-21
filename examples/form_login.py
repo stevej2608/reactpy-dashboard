@@ -26,7 +26,7 @@ def TextInput(label: str, field: FieldModel, props: dict):
         html.label(
             label + ' ',
             html.input(props),
-            html.div({'id': 'error'}, field.error)
+            html.div({'id': f'{field.name}-error'}, field.error)
         )
     )
 
