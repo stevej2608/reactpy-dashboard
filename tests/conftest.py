@@ -11,24 +11,9 @@ HEADLESS = False
 
 # Injected into page class
 
-
-async def custom_wait_for_selector(self, name):
-
-    # TODO: See if a better way can be found for detecting the dom is stable
-
-    async def wait_reactpy_stable():
-        await self.wait_for_load_state("networkidle")
-        await self.wait_for_load_state("domcontentloaded")
-
-    element_handle = None
-    while not element_handle:
-        try:
-            await wait_reactpy_stable()
-            element_handle = await self.query_selector(name)
-            await wait_reactpy_stable()
-        except Exception as ex:
-            log.info('Unable to resolve selector %s', name)
-    return element_handle
+async def wait_page_stable(self):
+    await self.wait_for_load_state("networkidle")
+    await self.wait_for_load_state("domcontentloaded")
 
 
 @pytest.fixture(scope="session")
@@ -39,7 +24,7 @@ def anyio_backend():
 @pytest.fixture(scope="session")
 async def display(server, page):
     async with DisplayFixture(server, page) as display:
-        type(page).custom_wait_for_selector = custom_wait_for_selector
+        type(page).wait_page_stable = wait_page_stable
         yield display
 
 

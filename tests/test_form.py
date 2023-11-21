@@ -8,7 +8,7 @@ from examples.form_login import AppMain
 def error_field(page, name: str):
 
     async def get_text():
-        element = await page.custom_wait_for_selector(name)
+        element = await page.query_selector(name)
         value = await element.text_content()
         return value
 
@@ -17,20 +17,20 @@ def error_field(page, name: str):
 
 def input_field(page, name: str):
 
-
     async def get_input():
-        element = await page.custom_wait_for_selector(name)
+        element = await page.query_selector(name)
         value = await element.input_value()
         return value
     
     async def set_input(value):
-        element = await page.custom_wait_for_selector(name)
+        element = await page.query_selector(name)
         await element.fill(value)
+        await page.wait_page_stable()
 
     return [get_input, set_input]
 
 
-# pytest -o log_cli=1 -sv tests/test_form.py
+# pytest -o log_cli=1 --headed tests/test_form.py
 
 @pytest.mark.anyio
 async def test_form(display: DisplayFixture, page):
