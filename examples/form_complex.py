@@ -1,4 +1,4 @@
-from typing import *
+from typing import Literal
 from reactpy import component, html
 from reactpy.core.types import VdomChildren
 from modules.pico import PICO_CSS
@@ -30,8 +30,20 @@ InputTypes = Literal[
 
 
 @component
-def Input(label:str='', id:str=None, type:InputTypes='text', name:str=None, placeholder:str=None, value:str=None):
-    input_props = props(exclude="label")
+def Input(label:str='', id:str=None, type:InputTypes='text',
+          name:str=None, placeholder:str=None, value:str=None, role:str=None,
+          invalid:bool=None, disabled:bool=None):
+
+    input_props = props(include='id, type, name, placeholder, role, value, disabled')
+
+    if invalid is not None:
+        input_props['aria-invalid'] = invalid
+
+    if type in ['checkbox', 'radio']:
+        return html.div(
+            html.input(input_props),
+            html.label({'html_for': id}, label )
+        )
 
     return html.div(
         html.label({'html_for': id}, label ),
@@ -54,6 +66,14 @@ def Select(options: VdomChildren, name:str='', label:str=''):
             options
         )
     )
+
+@component
+def FieldSet(legend:str=None, children: VdomChildren = None):
+    return html.fieldset(
+        html.legend(html.strong(legend)),
+        children
+    )
+
 
 
 @component
@@ -85,91 +105,54 @@ def ComplexForm():
 
         RangeSlider(min=0, max=100, value=50, id='range', name='range', label='Range Slider'),
 
-
-
-        html.label({'html_for': 'range'},
-            "Range slider",
-            html.input({'type': 'range', 'min': '0', 'max': '100', 'value': '50', 'id': 'range', 'name': 'range'})
-        ),
         # States,
         html.div({'class_name': 'grid'},
-            html.label({'html_for': 'valid'},
-                "Valid",
-                html.input({'type': 'text', 'id': 'valid', 'name': 'valid', 'placeholder': 'Valid', 'aria-invalid': 'false'})
-            ),
-            html.label({'html_for': 'invalid'},
-                "Invalid",
-                html.input({'type': 'text', 'id': 'invalid', 'name': 'invalid', 'placeholder': 'Invalid', 'aria-invalid': 'true'})
-            ),
-            html.label({'html_for': 'disabled'},
-                "Disabled",
-                html.input({'type': 'text', 'id': 'disabled', 'name': 'disabled', 'placeholder': 'Disabled', 'disabled': ''})
-            )
+            Input(type='text', id='valid', name='valid', placeholder='valid', label='Valid', invalid=False),
+            Input(type='text', id='invalid', name='invalid', placeholder='invalid', label='Invalid', invalid=True),
+            Input(type='text', id='disabled', name='disabled',placeholder='disabled' ,label='Disabled', disabled=True),
+
         ),
         html.div({'class_name': 'grid'},
             # Date,
-            html.label({'html_for': 'date'},
-                "Date",
-                html.input({'type': 'date', 'id': 'date', 'name': 'date'})
-            ),
-            # Time,
-            html.label({'html_for': 'time'},
-                "Time",
-                html.input({'type': 'time', 'id': 'time', 'name': 'time'})
-            ),
-            # Color,
-            html.label({'html_for': 'color'},
-                "Color",
-                html.input({'type': 'color', 'id': 'color', 'name': 'color', 'value': '#0eaaaa'})
-            )
+            Input(type='date', id='date', name='date', label='Date'),
+            # Time
+            Input(type='time', id='time', name='time', label='Time'),
+            # Color
+            Input(type='color', id='color', name='color', label='Color')
+
         ),
         html.div({'class_name': 'grid'},
             # Checkboxes,
-            html.fieldset(
-                html.legend(
-                    html.strong("Checkboxes")
-                ),
-                html.label({'html_for': 'checkbox-1'},
-                    html.input({'type': 'checkbox', 'id': 'checkbox-1', 'name': 'checkbox-1', 'checked': ''}),
-                    "Checkbox"
-                ),
-                html.label({'html_for': 'checkbox-2'},
-                    html.input({'type': 'checkbox', 'id': 'checkbox-2', 'name': 'checkbox-2'}),
-                    "Checkbox"
+            FieldSet(legend='Checkboxes',
+                children=html._(
+                    Input(type='checkbox', id='checkbox-1', name='checkbox-1', label='Checkbox'),
+                    Input(type='checkbox', id='checkbox-2', name='checkbox-2', label='Checkbox')
                 )
             ),
+
             # Radio buttons,
-            html.fieldset(
-                html.legend(
-                    html.strong("Radio buttons")
-                ),
-                html.label({'html_for': 'radio-1'},
-                    html.input({'type': 'radio', 'id': 'radio-1', 'name': 'radio', 'value': 'radio-1', 'checked': ''}),
-                    "Radio button"
-                ),
-                html.label({'html_for': 'radio-2'},
-                    html.input({'type': 'radio', 'id': 'radio-2', 'name': 'radio', 'value': 'radio-2'}),
-                    "Radio button"
+
+            FieldSet(legend='Radio buttons',
+                children=html._(
+                    Input(type='radio', id='radio-1', name='radio-1', label='Radio'),
+                    Input(type='radio', id='radio-2', name='radio-2', label='Radio')
                 )
             ),
+
+
             # Switch,
-            html.fieldset(
-                html.legend(
-                    html.strong("Switches")
-                ),
-                html.label({'html_for': 'switch-1'},
-                    html.input({'type': 'checkbox', 'id': 'switch-1', 'name': 'switch-1', 'role': 'switch', 'checked': ''}),
-                    "Switch"
-                ),
-                html.label({'html_for': 'switch-2'},
-                    html.input({'type': 'checkbox', 'id': 'switch-2', 'name': 'switch-2', 'role': 'switch'}),
-                    "Switch"
+
+            FieldSet(legend='Switches',
+                children=html._(
+                    Input(type='checkbox', id='switch-1', name='switch-1', role='switch', label='Switch'),
+                    Input(type='checkbox', id='switch-2', name='switch-2', role='switch', label='Switch')
                 )
-            )
+            ),
+
         ),
         # Buttons,
-        html.input({'type': 'reset', 'value': 'Reset', 'onclick': 'event.preventDefault()'}),
-        html.input({'type': 'submit', 'value': 'Submit', 'onclick': 'event.preventDefault()'})
+        Input(type='reset', value='Reset'),
+        Input(type='submit', value='Submit')
     )
 
 
