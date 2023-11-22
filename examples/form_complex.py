@@ -1,29 +1,55 @@
+from typing import *
 from reactpy import component, html
 from reactpy.core.types import VdomChildren
 from modules.pico import PICO_CSS
+from utils.props import props
 
 from fast_server import run
 
-@component
-def Input(label=None, id=None, type=None, name=None, placeholder=None, value=None):
+InputTypes = Literal[
+    'button'
+    'checkbox',
+    'date',
+    'datetime-local',
+    'email',
+    'file',
+    'image',
+    'month',
+    'number',
+    'password',
+    'radio',
+    'reset',
+    'search',
+    'submit',
+    'tel',
+    'text', 
+    'time',
+    'url',
+    'week', 
+]
 
-    input_props = {
-        'type': 'search', 
-        'id': f'{id}', 
-        'name': f'{name}', 
-        'placeholder': f'{placeholder}', 
-        'value': value
-        }
+
+@component
+def Input(label:str='', id:str=None, type:InputTypes='text', name:str=None, placeholder:str=None, value:str=None):
+    input_props = props(exclude="label")
 
     return html.div(
-        html.label({'html_for': f'{id}'}, label ),
-        html.input(input_props)     
+        html.label({'html_for': id}, label ),
+        html.input(input_props)
     )
 
 @component
-def Select(options: VdomChildren, name: str = None, label:str = None):
+def RangeSlider(min:int=0, max:int=100, value:int=0, id:str=None, name:str=None, label:str=None):
+    input_props = {'type': 'range', **props(include="min, max, value, id, name")}
     return html.div(
-        html.label({'html_for': name}, label),
+        html.label({'html_for': id}, label ),
+        html.input(input_props)
+    )
+
+@component
+def Select(options: VdomChildren, name:str='', label:str=''):
+    return html.div(
+        html.label({'html_for': id}, label),
         html.select({'id': id, 'name': name, 'required': ''},
             options
         )
@@ -51,18 +77,16 @@ def ComplexForm():
             name='select', label = 'Select'
         ),
 
-
-        html.label({'html_for': 'select'}, "Select"),
-        html.select({'id': 'select', 'name': 'select', 'required': ''},
-            html.option({'value': '', 'selected': ''}, "Select…"),
-            html.option("…")
-        ),
         # File browser,
-        html.label({'html_for': 'file'},
-            "File browser",
-            html.input({'type': 'file', 'id': 'file', 'name': 'file'})
-        ),
+
+        Input(type='file', id='file', name='file',label='File browser', value=''),
+
         # Range slider control,
+
+        RangeSlider(min=0, max=100, value=50, id='range', name='range', label='Range Slider'),
+
+
+
         html.label({'html_for': 'range'},
             "Range slider",
             html.input({'type': 'range', 'min': '0', 'max': '100', 'value': '50', 'id': 'range', 'name': 'range'})

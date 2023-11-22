@@ -102,6 +102,7 @@
       "internalConsoleOptions": "openOnSessionStart",
       "justMyCode": false
     },
+    
     {
       "name": "2b. PyTest (test_form.py)",
       "type": "python",
@@ -135,6 +136,23 @@
       "internalConsoleOptions": "openOnSessionStart",
       "justMyCode": false
     },
+
+    {
+      "name": "2c. PyTest (props.py)",
+      "type": "python",
+      "request": "launch",
+      "stopOnEntry": false,
+      "module": "pytest",
+      "args": [
+        "-o log_cli=1",
+        "tests/test_props.py"
+      ],
+      "cwd": "${workspaceRoot}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false
+    },
+
 
     {
       "name": "3.a Launch Chrome",
