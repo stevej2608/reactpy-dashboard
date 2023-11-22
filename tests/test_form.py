@@ -65,6 +65,3 @@ async def test_form(display: DisplayFixture, page):
     await set_email('bigjoe@gmail.com')
     assert (await  get_email()) == 'bigjoe@gmail.com'
     assert (await get_error()) == ''
-
-
-

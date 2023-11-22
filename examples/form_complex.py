@@ -1,7 +1,33 @@
 from reactpy import component, html
-from modules.pico import PICO_OPTIONS
+from reactpy.core.types import VdomChildren
+from modules.pico import PICO_CSS
 
 from fast_server import run
+
+@component
+def Input(label=None, id=None, type=None, name=None, placeholder=None, value=None):
+
+    input_props = {
+        'type': 'search', 
+        'id': f'{id}', 
+        'name': f'{name}', 
+        'placeholder': f'{placeholder}', 
+        'value': value
+        }
+
+    return html.div(
+        html.label({'html_for': f'{id}'}, label ),
+        html.input(input_props)     
+    )
+
+@component
+def Select(options: VdomChildren, name: str = None, label:str = None):
+    return html.div(
+        html.label({'html_for': name}, label),
+        html.select({'id': id, 'name': name, 'required': ''},
+            options
+        )
+    )
 
 
 @component
@@ -9,13 +35,23 @@ def ComplexForm():
     return html.form(
         html.h2("Form elements"),
         # Search,
-        html.label({'html_for': 'search'}, "Search"),
-        html.input({'type': 'search', 'id': 'search', 'name': 'search', 'placeholder': 'Search'}),
+        Input(type='search', id='search', name='search', placeholder='Search', label='Search', value=''),
+
         # Text,
-        html.label({'html_for': 'text'}, "Text"),
-        html.input({'type': 'text', 'id': 'text', 'name': 'text', 'placeholder': 'Text'}),
+        Input(type='text', id='text', name='text', placeholder='Text', label='Text', value=''),
         html.small("Curabitur consequat lacus at lacus porta finibus."),
+
         # Select,
+
+        Select(
+            html._(
+                html.option({'value': '', 'selected': ''}, "Select…"),
+                html.option("…")
+            ),
+            name='select', label = 'Select'
+        ),
+
+
         html.label({'html_for': 'select'}, "Select"),
         html.select({'id': 'select', 'name': 'select', 'required': ''},
             html.option({'value': '', 'selected': ''}, "Select…"),
@@ -113,11 +149,17 @@ def ComplexForm():
     )
 
 
+
 @component
 def AppMain():
-    return html.main({'class_name': 'container'},
-        html.section(
-            ComplexForm()
+    return html._(
+        html.head(
+            html.link(PICO_CSS)
+        ),
+        html.main({'class_name': 'container'},
+            html.section(
+                ComplexForm()
+            )
         )
     )
 
@@ -126,4 +168,4 @@ def AppMain():
 # Internally app is run by Uvicorn/starlette
 
 if __name__ == "__main__":
-    run(AppMain, options=PICO_OPTIONS)
+    run(AppMain)
