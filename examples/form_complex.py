@@ -1,9 +1,9 @@
 from reactpy import component, html, event
-from modules.pico import PICO_OPTIONS
-from pages.components.input import Input, Select, RangeSlider, FieldSet
-from fast_server import run
 
-from utils.logger import log
+
+from examples.pico_main import pico_run
+from pages.components.input import Input, Select, RangeSlider, FieldSet
+from utils.logger import log, logging
 
 
 @component
@@ -97,25 +97,8 @@ def ComplexForm():
         Input(type='submit', value='Submit')
     )
 
-# @component
-# def AppMainX():
-#     html.main({'class_name': 'container'},
-#         html.section(
-#             ComplexForm()
-#         )
-#     )
-
-@component
-def AppMain():
-    return html.div({'class_name': 'container'},
-        html.section(
-            ComplexForm()
-        )
-    )
-
 # python -m examples.form_complex
 
-# Internally app is run by Uvicorn/starlette
-
 if __name__ == "__main__":
-    run(AppMain, options=PICO_OPTIONS)
+    log.setLevel(logging.INFO)
+    pico_run(ComplexForm)

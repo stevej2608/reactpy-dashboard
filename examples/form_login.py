@@ -1,8 +1,9 @@
 from pydantic import BaseModel, validator
-from reactpy import component, html, run
+from reactpy import component, html
 
-from utils.logger import log, logging
 from reactpy_forms import createForm, FieldModel, FieldValidationError, use_form_state
+from utils.logger import log, logging
+from examples.pico_main import pico_run
 
 class LoginFormData(BaseModel):
     email: str = None
@@ -32,26 +33,21 @@ def TextInput(label: str, field: FieldModel, props: dict):
 
 
 @component
-def AppMain():
+def LoginForm():
     log.info('AppMain')
 
     model, set_model = use_form_state(LoginFormData(email="joe@gmail.com", password="1234"))
 
     Form, Field = createForm(model, set_model)
     return Form(
-        html.fieldset(
-            html.legend("Login"),
-            Field('email', lambda field, props: TextInput('Email', field, props({'id': 'email', 'type':'email'}))),
-            Field('password', lambda field, props: TextInput('Password', field, props({'id': 'password'})))
-
-        )
+        html.h2("Login"),
+        Field('email', lambda field, props: TextInput('Email', field, props({'id': 'email', 'type':'email'}))),
+        Field('password', lambda field, props: TextInput('Password', field, props({'id': 'password'})))
     )
 
 
 # python -m examples.form_login
 
-# Internally app is run by Uvicorn/starlette
-
 if __name__ == "__main__":
     log.setLevel(logging.INFO)
-    run(AppMain, host="0.0.0.0", port=8000)
+    pico_run(LoginForm())
