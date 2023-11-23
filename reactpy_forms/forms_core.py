@@ -1,6 +1,6 @@
-from typing import Tuple, Callable, List, Dict, overload, TypeVar
+from typing import Tuple, Callable, List, Dict, overload, TypeVar, Any
 from pydantic import BaseModel, ValidationError
-from reactpy import html
+from reactpy import html, event
 from reactpy.core.hooks import _use_const, _CurrentState
 from reactpy.core.component import Component
 from reactpy.core.types import State
@@ -17,7 +17,7 @@ class FieldValidationError(ValueError):
 
 class FieldModel(BaseModel):
     name: str
-    value: str = None
+    value: Any = None
     error: str = ''
 
 
@@ -155,6 +155,7 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
 
     def _field(name, fn) -> Component:
 
+        @event(prevent_default=True)
         def onchange(event):
 
             field_model = model.field_model[name].copy()
@@ -191,6 +192,27 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
 
                 set_model(new_model)
 
+        @event(prevent_default=True)
+        def onclick(event):
+            field_model = model.field_model[name].copy()
+            log.info('get_field_state [%s]', field_model)
+
+            field_model.value += 1
+
+            try:
+
+                # Update the model (this may fail validation)
+
+                new_model = FormModel.update_model(model, update=field_model)
+
+                # Inputs must be valid, update the external model
+
+                set_model(new_model)
+
+            except ValidationError:
+                log.info('validation error [%s]', field_model)
+
+
 
         field_state = model.field_model[name]
 
@@ -198,10 +220,13 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
 
         def _props(props):
             props['name'] = name
-            props['onchange'] = onchange
 
-            if field_state.value is not None:
-                props['value'] = field_state.value
+            if 'type' in props and props['type'] in ['button', 'checkbox','radio','reset','submit']:
+                props['onclick'] = onclick
+            else:
+                props['onchange'] = onchange
+                if field_state.value is not None:
+                    props['value'] = field_state.value
 
             return props
 

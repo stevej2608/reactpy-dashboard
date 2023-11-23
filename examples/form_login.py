@@ -1,5 +1,5 @@
 from pydantic import BaseModel, validator
-from reactpy import component, html
+from reactpy import component, html, event
 
 from reactpy_forms import createForm, FieldModel, FieldValidationError, use_form_state
 from utils.logger import log, logging
@@ -31,6 +31,10 @@ def TextInput(label: str, field: FieldModel, props: dict):
         )
     )
 
+@component
+def SubmitButton(label: str, onclick):
+    return html.input({'type': 'submit', 'value': label, 'onclick': onclick})
+
 
 @component
 def LoginForm():
@@ -39,10 +43,16 @@ def LoginForm():
     model, set_model = use_form_state(LoginFormData(email="joe@gmail.com", password="1234"))
 
     Form, Field = createForm(model, set_model)
+
+    @event(prevent_default=True)
+    def onclick(event):
+        log.info('SUBMIT [%s]', model.form_model)
+
     return Form(
         html.h2("Login"),
         Field('email', lambda field, props: TextInput('Email', field, props({'id': 'email', 'type':'email'}))),
-        Field('password', lambda field, props: TextInput('Password', field, props({'id': 'password'})))
+        Field('password', lambda field, props: TextInput('Password', field, props({'id': 'password'}))),
+        SubmitButton('Login', onclick=onclick)
     )
 
 
