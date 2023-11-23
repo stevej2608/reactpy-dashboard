@@ -1,3 +1,4 @@
+from types import FunctionType
 import pytest
 from _pytest.config import Config
 from playwright.async_api import async_playwright
@@ -37,13 +38,18 @@ async def pico_container(display):
 
         async def show(self, app:Component):
 
+            if isinstance(app, FunctionType):
+                children = app()
+            else:
+                children = app
+
             @component
             def AppContainer():
                 return html._(
                     html.head(
                         html.link(PICO_CSS)
                     ),
-                    app()
+                    children
                 )
 
             await display.show(AppContainer)
