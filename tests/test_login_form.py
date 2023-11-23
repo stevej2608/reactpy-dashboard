@@ -1,31 +1,30 @@
 import pytest
-from reactpy import component, html
-from reactpy.testing import DisplayFixture
-
-from examples.form_login import AppMain
+from examples.form_login import LoginForm
+from tests.wait_page import wait_page
 
 
 def error_field(page, name: str):
 
+    @wait_page(page)
     async def get_text():
         element = await page.query_selector(name)
         value = await element.text_content()
         return value
-
     return get_text
 
 
 def input_field(page, name: str):
 
+    @wait_page(page)
     async def get_input():
         element = await page.query_selector(name)
         value = await element.input_value()
         return value
-    
+
+    @wait_page(page)
     async def set_input(value):
         element = await page.query_selector(name)
         await element.fill(value)
-        await page.wait_page_stable()
 
     return [get_input, set_input]
 
@@ -33,9 +32,9 @@ def input_field(page, name: str):
 # pytest -o log_cli=1 --headed tests/test_form.py
 
 @pytest.mark.anyio
-async def test_form(display: DisplayFixture, page):
+async def test_form(pico_container, page):
 
-    await display.show(AppMain)
+    await pico_container.show(LoginForm)
 
     get_error = error_field(page, '#email-error')
 

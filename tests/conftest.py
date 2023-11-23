@@ -31,7 +31,7 @@ async def display(server, page):
 
 
 @pytest.fixture(scope="session")
-async def container(display):
+async def pico_container(display):
 
     class PicoContainer:
 

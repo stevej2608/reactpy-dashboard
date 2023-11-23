@@ -1,14 +1,10 @@
 import pytest
-from reactpy import component, html
-from reactpy.core.types import VdomChildren
-from reactpy.testing import DisplayFixture
-
-from examples.form_complex import AppMain
+from examples.form_complex import ComplexForm
 
 
 # pytest -o log_cli=1 --headed tests/test_complex_form.py
 
 @pytest.mark.anyio
-async def test_form(container):
-    await container.show(AppMain)
+async def test_form(pico_container):
+    await pico_container.show(ComplexForm)
     assert True

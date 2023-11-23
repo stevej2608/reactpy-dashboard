@@ -94,14 +94,14 @@
     },
     
     {
-      "name": "2b. PyTest (test_form.py)",
+      "name": "2b. PyTest (test_login_form.py)",
       "type": "python",
       "request": "launch",
       "stopOnEntry": false,
       "module": "pytest",
       "args": [
         "-o log_cli=1",
-        "tests/test_form.py",
+        "tests/test_login_form.py",
         "--headed"
       ],
       "cwd": "${workspaceRoot}",
