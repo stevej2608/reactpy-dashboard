@@ -37,6 +37,13 @@ and uploaded to pypicloud. To install it:
 
     pytest --headed
 
+
+## Links
+
+* [reactpy-crud]
+
+
+[reactpy-crud]: https://github.com/fazt/reactpy-crud
 [reactpy-router@jonesst2608]: https://github.com/stevej2608/reactpy-router
 [reactpy]: https://github.com/reactive-python/reactpy
 [reactpy-router]: https://github.com/reactive-python/reactpy-router

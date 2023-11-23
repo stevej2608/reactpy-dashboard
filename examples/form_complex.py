@@ -1,12 +1,20 @@
-from reactpy import component, html
-from modules.pico import PICO_CSS
+from reactpy import component, html, event
+from modules.pico import PICO_OPTIONS
 from pages.components.input import Input, Select, RangeSlider, FieldSet
 from fast_server import run
+
+from utils.logger import log
 
 
 @component
 def ComplexForm():
-    return html.form(
+
+    @event(prevent_default=True)
+    def handle_submit(e):
+        log.info('handle_submit %s', e)
+
+
+    return html.form({"on_submit": handle_submit},
         html.h2("Form elements"),
 
         # Search
@@ -89,18 +97,19 @@ def ComplexForm():
         Input(type='submit', value='Submit')
     )
 
-
+# @component
+# def AppMainX():
+#     html.main({'class_name': 'container'},
+#         html.section(
+#             ComplexForm()
+#         )
+#     )
 
 @component
 def AppMain():
-    return html._(
-        html.head(
-            html.link(PICO_CSS)
-        ),
-        html.main({'class_name': 'container'},
-            html.section(
-                ComplexForm()
-            )
+    return html.div({'class_name': 'container'},
+        html.section(
+            ComplexForm()
         )
     )
 
@@ -109,4 +118,4 @@ def AppMain():
 # Internally app is run by Uvicorn/starlette
 
 if __name__ == "__main__":
-    run(AppMain)
+    run(AppMain, options=PICO_OPTIONS)

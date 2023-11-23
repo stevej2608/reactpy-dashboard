@@ -1,10 +1,12 @@
 import pytest
 from _pytest.config import Config
 from playwright.async_api import async_playwright
+
+from reactpy import component, html
 from reactpy.testing import BackendFixture, DisplayFixture
-
+from reactpy.core.component import Component
 from reactpy.config import REACTPY_TESTING_DEFAULT_TIMEOUT
-
+from modules.pico import PICO_CSS
 from utils.logger import log
 
 HEADLESS = False
@@ -26,6 +28,27 @@ async def display(server, page):
     async with DisplayFixture(server, page) as display:
         type(page).wait_page_stable = _wait_page_stable
         yield display
+
+
+@pytest.fixture(scope="session")
+async def container(display):
+
+    class PicoContainer:
+
+        async def show(self, app:Component):
+
+            @component
+            def AppContainer():
+                return html._(
+                    html.head(
+                        html.link(PICO_CSS)
+                    ),
+                    app()
+                )
+
+            await display.show(AppContainer)
+
+    return PicoContainer()
 
 
 @pytest.fixture(scope="session")
