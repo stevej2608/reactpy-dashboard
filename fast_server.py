@@ -1,3 +1,4 @@
+from typing import Callable
 import sys
 import signal
 import multiprocessing
@@ -8,6 +9,7 @@ from reactpy.core.component import Component
 from reactpy.backend.fastapi import configure, Options
 
 from utils.logger import log
+from utils.var_name import var_name
 
 from modules.assets import assets_api
 from modules.tailwind import TAILWIND_CSS
@@ -61,11 +63,29 @@ def handler(signum, frame):
     for child in active:
         child.terminate()
  
-def run(AppMain: Component, options=DASHBOARD_OPTIONS, **kwargs) -> str:
-    """Called once to run the server"""
+def run(AppMain: Callable[[], Component], options:Options=DASHBOARD_OPTIONS, **kwargs) -> None:
+    """Called once to run reactpy application on the fastapi server
 
-    def package_prefix():
-        return __package__ + '.' if __package__ else ''
+    Args:
+        AppMain (Callable[[], Component]): Function that returns a reactpy Component
+        options (Options, optional): Server options. Defaults to DASHBOARD_OPTIONS.
+
+    Usage:
+    ```
+            @component
+            def AppMain():
+                return html.h2('Hello from reactPy!')
+                )
+
+            run(AppMain, options=PICO_OPTIONS)
+
+    ```
+    """
+
+    def _app_path(app: FastAPI) -> str:
+        app_str = var_name(app, globals())
+        package_prefix =  __package__ + '.' if __package__ else ''
+        return f"{package_prefix}{__name__}:{app_str}"
 
     # Mount any fastapi end points here
 
@@ -73,7 +93,7 @@ def run(AppMain: Component, options=DASHBOARD_OPTIONS, **kwargs) -> str:
 
     configure(app, AppMain, options=options)
 
-    app_path = f"{package_prefix()}{__name__}:app"
+    app_path = _app_path(app)
 
     try:
         signal.signal(signal.SIGINT, handler)

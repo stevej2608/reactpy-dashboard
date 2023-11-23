@@ -50,4 +50,4 @@ def LoginForm():
 
 if __name__ == "__main__":
     log.setLevel(logging.INFO)
-    pico_run(LoginForm())
+    pico_run(LoginForm)
