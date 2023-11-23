@@ -1,14 +1,11 @@
-from types import FunctionType
 import pytest
 from _pytest.config import Config
 from playwright.async_api import async_playwright
 
-from reactpy import component, html
 from reactpy.testing import BackendFixture, DisplayFixture
-from reactpy.core.component import Component
 from reactpy.config import REACTPY_TESTING_DEFAULT_TIMEOUT
-from modules.pico import PICO_CSS
-from utils.logger import log
+
+from tests.page_containers import PicoContainer
 
 HEADLESS = False
 
@@ -33,28 +30,7 @@ async def display(server, page):
 
 @pytest.fixture(scope="session")
 async def pico_container(display):
-
-    class PicoContainer:
-
-        async def show(self, app:Component):
-
-            if isinstance(app, FunctionType):
-                children = app()
-            else:
-                children = app
-
-            @component
-            def AppContainer():
-                return html._(
-                    html.head(
-                        html.link(PICO_CSS)
-                    ),
-                    children
-                )
-
-            await display.show(AppContainer)
-
-    return PicoContainer()
+    return PicoContainer(display)
 
 
 @pytest.fixture(scope="session")

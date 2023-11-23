@@ -1,7 +1,7 @@
 import pytest
 from examples.form_login import LoginForm
 from tests.wait_page import wait_page
-
+from tests.page_containers import PicoContainer
 
 def error_field(page, name: str):
 
@@ -32,7 +32,7 @@ def input_field(page, name: str):
 # pytest -o log_cli=1 --headed tests/test_form.py
 
 @pytest.mark.anyio
-async def test_form(pico_container, page):
+async def test_form(pico_container: PicoContainer, page):
 
     await pico_container.show(LoginForm)
 
