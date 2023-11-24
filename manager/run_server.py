@@ -73,9 +73,3 @@ def runserver(**kwargs):
 # in the cli/click help system
 
 cli.commands["runserver"].params = uvicorn.main.params[1:]
-
-
-# python -m manager.run_server
-
-if __name__ == "__main__":
-    run(AppMain, port=8000)

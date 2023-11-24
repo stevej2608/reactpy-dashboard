@@ -2,9 +2,6 @@ from reactpy import component, html
 from reactpy.backend.hooks import use_location
 from reactpy_router import route, simple
 
-# import { Component, splitProps } from 'solid-js'
-# import { Router, Routes, Route } from '@solidjs/router'
-
 from .components.side_bar import SideBar
 from .components.top_bar import TopBar
 from .components.footer import Footer

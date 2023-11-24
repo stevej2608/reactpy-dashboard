@@ -63,7 +63,7 @@ def MiddleRow():
 def BottomRow():
     return html.div({'class_name': 'my-4 grid grid-cols-1 xl:gap-4 2xl:grid-cols-2'},
         LatestCustomers(),
-        AcquisitionOverview()
+        # AcquisitionOverview()
     )
 
 

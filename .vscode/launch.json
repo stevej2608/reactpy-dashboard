@@ -5,11 +5,11 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "1a. usage.py",
+      "name": "1a. run_dashboard.py",
       "type": "python",
       "request": "launch",
       "cwd": "${workspaceRoot}",
-      "module": "manager.run_server",
+      "program": "run_dashboard.py",
       "env": {
         "REACTPY_DEBUG_MODE" : "1"
       },
