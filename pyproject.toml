@@ -27,6 +27,7 @@ responses = "0.24.1"
 sanic-cors = "2.2.0"
 sanic-testing = "23.6.0"
 pytest-playwright = "^0.4.3"
+autoflake = "^2.2.1"
 
 
 [[tool.poetry.source]]

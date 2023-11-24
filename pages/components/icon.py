@@ -1,4 +1,4 @@
-from reactpy import component, html
+from reactpy import component
 from reactpy.svg import svg, path
 
 @component

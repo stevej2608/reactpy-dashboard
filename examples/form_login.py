@@ -1,11 +1,11 @@
-from pydantic import BaseModel, validator
+from pydantic import validator
 from reactpy import component, html, event
 
-from reactpy_forms import createForm, FieldModel, FieldValidationError, use_form_state
+from reactpy_forms import createForm, FieldModel, FormModel, FieldValidationError, use_form_state
 from utils.logger import log, logging
 from examples.pico_main import pico_run
 
-class LoginFormData(BaseModel):
+class LoginFormData(FormModel):
     email: str = None
     password: str = None
 
@@ -46,7 +46,7 @@ def LoginForm():
 
     @event(prevent_default=True)
     def onclick(event):
-        log.info('SUBMIT [%s]', model.form_model)
+        log.info('SUBMIT [%s]', model)
 
     return Form(
         html.h2("Login"),

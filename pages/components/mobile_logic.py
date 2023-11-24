@@ -1,7 +1,7 @@
 from reactpy import component, html
 from reactpy.svg import svg, path
 
-from .icon import Icon_Search, Icon_Bars3CenterLeft, Icon_XMark
+from .icon import Icon_Bars3CenterLeft, Icon_XMark
                       
 @component
 def ToggleSidebarMobile():

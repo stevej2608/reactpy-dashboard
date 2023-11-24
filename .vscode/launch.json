@@ -68,6 +68,12 @@
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart",
       "justMyCode": false,
+      "serverReadyAction": {
+        "pattern": "Uvicorn running on http://127.0.0.1:8000(.*)",
+        "uriFormat": "http://127.0.0.1:8000/%s",
+        "action": "debugWithChrome",
+        "killOnServerStop": true
+      }
     },
 
     {

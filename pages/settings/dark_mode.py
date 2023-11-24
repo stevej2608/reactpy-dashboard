@@ -1,4 +1,3 @@
-from reactpy import component, html
 
 
 def toggle_dark_mode():

@@ -1,94 +1,17 @@
-from typing import Tuple, Callable, List, Dict, overload, TypeVar, Any
-from pydantic import BaseModel, ValidationError
-from reactpy import html, event
+from typing import Tuple, Callable, List, overload, TypeVar
+from pydantic import ValidationError
+from reactpy import html, event, use_state
 from reactpy.core.hooks import _use_const, _CurrentState
 from reactpy.core.component import Component
 from reactpy.core.types import State
-
-
 from utils.logger import log
 
-
-class FieldValidationError(ValueError):
-    def __init__(self, message:str):
-        self.message = message
-        super().__init__(self.message)
-
-
-class FieldModel(BaseModel):
-    name: str
-    value: Any = None
-    error: str = ''
-
+from reactpy_forms.field_model import FieldModel
+from reactpy_forms.form_model import FormModel
 
 FieldComponent = Callable[[FieldModel, dict,], Component]
 Field = Callable[[str, FieldComponent], Component]
 Form = Callable[[*List[Component]], Component]
-
-
-class FormModel(BaseModel):
-    """Container for the Pydantic form model supplied by the 
-    user and a field model that is created and 
-    managed internally. 
-
-    The form_model and the field_model are updated with the inputs from 
-    the UI. The form_model values are the last fully validated inputs. 
-    
-    The field_model holds the unvalidated input. When a validation error
-    occurs the field_model will hold the erroneous value. Erroneous values
-    are not propagated to the user accessible form_model.
-
-    """
-    form_model: BaseModel
-    field_model: Dict[str, FieldModel] = []
-
-    @staticmethod
-    def create_model(form_model: BaseModel) -> TypeVar('FormModel'):
-        """Create an initial FieldModel
-
-        Args:
-            form_model (BaseModel): The user model..
-
-        Returns:
-            FormModel:The composite form & field model
-        """
-
-        field_model = {}
-
-        for name, value in form_model.dict().items():
-            field_model[name] = FieldModel(name=name, value=value)
-
-
-        return FormModel(form_model=form_model, field_model=field_model)
-
-
-    @staticmethod
-    def update_model(model: TypeVar('FormModel'), update: FieldModel= None) -> TypeVar('FormModel'):
-        """Copy and update the existing internal FieldModel
-
-        Args:
-            model (BaseModel): The model to be updated
-
-        Returns:
-            FormModel:The composite form & field model
-        """
-
-        form_model = model.form_model
-        field_model = model.field_model
-
-        for name in form_model.dict():
-
-            if update and update.name == name:
-                field_model[name] = update.copy()
-
-        # Update the user model
-
-        if update:
-            values = form_model.dict()
-            values[update.name] = update.value
-            form_model = type(form_model)(**values)
-
-        return FormModel(form_model=form_model, field_model=field_model)
 
 
 _Type = TypeVar("_Type")
@@ -116,10 +39,15 @@ def use_form_state(initial_value: _Type | Callable[[], _Type]) -> State[_Type]:
     Returns:
         A tuple containing the current state and a function to update it.
     """
-    initial_model = FormModel.create_model(initial_value)
-    current_state = _use_const(lambda: _CurrentState(initial_model))
-    return State(current_state.value, current_state.dispatch)
 
+    model, dispatch = use_state(initial_value)
+
+    if model.is_empty():
+        model.init_field_model()
+
+    log.info('use_form_state [%s]', model)
+
+    return [model, dispatch]
 
 def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
     """Accept the model and setter created by use_form_state() and return
@@ -158,7 +86,7 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
         @event(prevent_default=True)
         def onchange(event):
 
-            field_model = model.field_model[name].copy()
+            field_model = model.get_field(name)
 
             field_model.value = event['currentTarget']['value']
             field_model.error = ''
@@ -173,7 +101,11 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
 
                 # Inputs must be valid, update the external model
 
+                log.info('onchange  new_model [%s]', new_model)
+
                 set_model(new_model)
+
+                log.info('onchange final model [%s]', model)
 
             except ValidationError as ex:
 
@@ -186,7 +118,7 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
                 # Update the field model with the value and the validation error.
 
                 field_model.error = ex.args[0][0].exc.message
-                new_model.field_model[name] = field_model
+                new_model.set_field(field_model)
 
                 # Update the external state
 
@@ -194,7 +126,7 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
 
         @event(prevent_default=True)
         def onclick(event):
-            field_model = model.field_model[name].copy()
+            field_model = model._field_model[name].copy()
             log.info('get_field_state [%s]', field_model)
 
             field_model.value += 1
@@ -214,7 +146,7 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
 
 
 
-        field_state = model.field_model[name]
+        field_state = model._field_model[name]
 
         log.info('get_field_state [%s]', field_state)
 
