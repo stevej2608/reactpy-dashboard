@@ -1,4 +1,4 @@
-from typing import Dict, TypeVar, Union
+from typing import Dict, TypeVar
 from pydantic import BaseModel
 
 from reactpy_forms.field_model import FieldModel
