@@ -21,8 +21,7 @@ def TableHead():
     )
 
 
-@component
-def TableRow(index, row):
+def table_row(index, row):
 
     channels, users, performance, color = row.values()
 
@@ -30,7 +29,7 @@ def TableRow(index, row):
     bar_class = f"{color} h-2 rounded-sm"
 
 
-    return html.tr({'class_name': 'text-gray-500'},
+    return html.tr({'class_name': 'text-gray-500', 'key': index},
         html.th({'class_name': 'whitespace-nowrap border-t-0 p-4 px-4 text-left align-middle text-sm font-normal'}, channels),
         html.td({'class_name': 'whitespace-nowrap border-t-0 p-4 px-4 align-middle text-xs font-medium text-gray-900'}, users),
         html.td({'class_name': 'whitespace-nowrap border-t-0 p-4 px-4 align-middle text-xs'},
@@ -50,7 +49,7 @@ def TableRow(index, row):
 @component
 def TableBody():
 
-    table_rows = [TableRow(index, row) for index, row in enumerate(ACQUISITIONS)]
+    table_rows = [table_row(index, row) for index, row in enumerate(ACQUISITIONS)]
 
     return html.tbody({'class_name': 'divide-y divide-gray-100'},
         table_rows

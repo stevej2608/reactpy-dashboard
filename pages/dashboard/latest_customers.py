@@ -8,12 +8,12 @@ CUSTOMERS = [
   { 'img_src': '/static/images/users/lana-byrd.png', 'name': 'Lana Byrd', 'email': 'email@windster.com', 'purchases': '$367' }
 ]
 
-@component
-def TableRow(index, row):
+
+def table_row(index, row):
 
     img_src, name, email, purchases = row.values()
 
-    return html.div({'class_name': 'flow-root'},
+    return html.div({'class_name': 'flow-root', 'key': index},
         html.ul({'role': 'list', 'class_name': 'divide-y divide-gray-200'},
             html.li({'class_name': 'py-3 sm:py-4'},
                 html.div({'class_name': 'flex items-center space-x-4'},
@@ -33,7 +33,7 @@ def TableRow(index, row):
 @component
 def LatestCustomers():
 
-    table_rows = [TableRow(index, row) for index, row in enumerate(CUSTOMERS)]
+    table_rows = [table_row(index, row) for index, row in enumerate(CUSTOMERS)]
 
 
     return html.div({'class_name': 'mb-4 h-full rounded-lg bg-white p-4 shadow sm:p-6'},

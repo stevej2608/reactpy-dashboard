@@ -21,11 +21,11 @@ def TableHead():
     )
 
 
-@component
-def TableRow(index, row):
+
+def table_row(index, row):
     action, item, date, value = row.values()
     rc = 'bg-gray-50' if index % 2 else ''
-    return html.tr({'class_name': rc},
+    return html.tr({'class_name': rc, 'key': index},
         html.td({'class_name': 'whitespace-nowrap p-4 text-sm font-normal text-gray-900'},
             action + ' ',
             html.span({'class_name': 'font-semibold'}, item)
@@ -37,7 +37,7 @@ def TableRow(index, row):
 @component
 def TableBody():
 
-    table_rows = [TableRow(index, row) for index, row in enumerate(TRANSACTIONS)]
+    table_rows = [table_row(index, row) for index, row in enumerate(TRANSACTIONS)]
 
     return html.tbody({'class_name': 'bg-white'},
         table_rows
