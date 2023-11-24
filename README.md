@@ -6,9 +6,9 @@ This project is a port of the Themesberg [tailwind-dashboard-windster] project t
 
     poetry install  --no-root
 
-    uvicorn fast_app:app --host "0.0.0.0" --port 8000
+    uvicorn fast_app:app --port 8000
 
-    python usage.py runserver --host "0.0.0.0" --port 8000
+    python usage.py runserver --port 8000
 
 
 ### reactpy-router

@@ -102,3 +102,4 @@ def run(AppMain: Callable[[], Component], options:Options=DASHBOARD_OPTIONS, **k
         print('\b\b')
         log.info('Uvicorn server has shut down\n')
         sys.exit(0)
+

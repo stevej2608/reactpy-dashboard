@@ -9,23 +9,19 @@
       "type": "python",
       "request": "launch",
       "cwd": "${workspaceRoot}",
-      "program": "usage.py",
-      "args": [
-        "runserver",
-        "--host", "0.0.0.0",
-        "--port", "8000"
-      ],
+      "module": "manager.run_server",
       "env": {
         "REACTPY_DEBUG_MODE" : "1"
       },
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart",
       "justMyCode": false,
-      // "serverReadyAction": {
-      //   "pattern": "Uvicorn running on (.*)/",
-      //   "uriFormat": "%s/",
-      //   "action": "debugWithChrome"
-      // }
+      "serverReadyAction": {
+        "pattern": "Uvicorn running on\\s+(https?://\\S+)",
+        "uriFormat": "%s",
+        "action": "debugWithChrome",
+        "killOnServerStop": true
+      }
     },
     {
       "name": "1b. examples/router_test.py",
@@ -33,11 +29,7 @@
       "request": "launch",
       "cwd": "${workspaceRoot}",
       "module": "examples.router_test",
-      "args": [
-        "runserver",
-        "--host", "0.0.0.0",
-        "--port", "8000"
-      ],
+      "args": ["runserver"],
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart",
       "justMyCode": false,
@@ -52,8 +44,8 @@
       "internalConsoleOptions": "openOnSessionStart",
       "justMyCode": false,
       "serverReadyAction": {
-        "pattern": "Uvicorn running on http://127.0.0.1:8000(.*)",
-        "uriFormat": "http://127.0.0.1:8000/%s",
+        "pattern": "Uvicorn running on\\s+(https?://\\S+)",
+        "uriFormat": "%s",
         "action": "debugWithChrome",
         "killOnServerStop": true
       }
@@ -69,8 +61,8 @@
       "internalConsoleOptions": "openOnSessionStart",
       "justMyCode": false,
       "serverReadyAction": {
-        "pattern": "Uvicorn running on http://127.0.0.1:8000(.*)",
-        "uriFormat": "http://127.0.0.1:8000/%s",
+        "pattern": "Uvicorn running on\\s+(https?://\\S+)",
+        "uriFormat": "%s",
         "action": "debugWithChrome",
         "killOnServerStop": true
       }
