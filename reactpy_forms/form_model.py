@@ -1,4 +1,4 @@
-from typing import Dict, TypeVar
+from typing import Dict, TypeVar, Union
 from pydantic import BaseModel
 
 from reactpy_forms.field_model import FieldModel
@@ -19,6 +19,13 @@ class FormModel(BaseModel):
     """
 
     _field_model: Dict[str, FieldModel] = {}
+
+
+    def has_errors(self) -> bool:
+        for value in self._field_model.values():
+            if value.error:
+                return True
+        return None
 
 
     def init_field_model(self) -> None:

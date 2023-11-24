@@ -32,13 +32,12 @@ def TextInput(label: str, field: FieldModel, props: dict):
     )
 
 @component
-def SubmitButton(label: str, onclick):
-    return html.input({'type': 'submit', 'value': label, 'onclick': onclick})
+def SubmitButton(label: str, model: FormModel, onclick):
+    return html.input({'type': 'submit', 'value': label, 'disabled': model.has_errors(), 'onclick': onclick})
 
 
 @component
 def LoginForm():
-    log.info('AppMain')
 
     model, set_model = use_form_state(LoginFormData(email="joe@gmail.com", password="1234"))
 
@@ -52,7 +51,7 @@ def LoginForm():
         html.h2("Login"),
         Field('email', lambda field, props: TextInput('Email', field, props({'id': 'email', 'type':'email'}))),
         Field('password', lambda field, props: TextInput('Password', field, props({'id': 'password'}))),
-        SubmitButton('Login', onclick=onclick)
+        SubmitButton('Login', model, onclick=onclick)
     )
 
 

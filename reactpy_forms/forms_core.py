@@ -45,8 +45,6 @@ def use_form_state(initial_value: _Type | Callable[[], _Type]) -> State[_Type]:
     if model.is_empty():
         model.init_field_model()
 
-    log.info('use_form_state [%s]', model)
-
     return [model, dispatch]
 
 def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
@@ -101,11 +99,8 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
 
                 # Inputs must be valid, update the external model
 
-                log.info('onchange  new_model [%s]', new_model)
-
                 set_model(new_model)
 
-                log.info('onchange final model [%s]', model)
 
             except ValidationError as ex:
 
@@ -126,7 +121,7 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
 
         @event(prevent_default=True)
         def onclick(event):
-            field_model = model._field_model[name].copy()
+            field_model = model.get_field(name)
             log.info('get_field_state [%s]', field_model)
 
             field_model.value += 1
@@ -145,10 +140,7 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
                 log.info('validation error [%s]', field_model)
 
 
-
-        field_state = model._field_model[name]
-
-        log.info('get_field_state [%s]', field_state)
+        field_state = model.get_field(name)
 
         def _props(props):
             props['name'] = name
