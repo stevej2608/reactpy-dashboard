@@ -8,7 +8,7 @@ from reactpy import html
 from reactpy.core.component import Component
 from reactpy.backend.fastapi import configure, Options
 
-from utils.logger import log
+from utils.logger import log, logging
 from utils.var_name import var_name
 
 from modules.assets import assets_api
@@ -58,12 +58,65 @@ DASHBOARD_OPTIONS=Options(
     )
 )
 
+
+LOGS = [
+    "asgi-logger",
+    "concurrent.futures",
+    "concurrent",
+    "asyncio",
+    "uvicorn.error",
+    "uvicorn",
+    "watchfiles.watcher",
+    "watchfiles",
+    "watchfiles.main",
+    "fastapi",
+    "reactpy.backend",
+    "reactpy",
+    "reactpy._option",
+    "reactpy.core.hooks",
+    "reactpy.core",
+    "urllib3.util.retry",
+    "urllib3.util",
+    "urllib3",
+    "urllib3.connection",
+    "urllib3.response",
+    "urllib3.connectionpool",
+    "urllib3.poolmanager",
+    "charset_normalizer",
+    "requests",
+    "reactpy.web.utils",
+    "reactpy.web",
+    "reactpy.web.module",
+    "reactpy.backend.utils",
+    "reactpy.core.layout",
+    "reactpy.core.serve",
+    "reactpy.backend.starlette",
+    "uvicorn.access",
+    "starlette",
+]
+
+
+def disable_noisy_logs():
+    # Turn off noisy logging
+
+    for log_id in LOGS:
+        _log = logging.getLogger(log_id)
+        _log.setLevel(logging.ERROR)
+
+
 def handler(signum, frame):
     active = multiprocessing.active_children()
     for child in active:
         child.terminate()
- 
-def run(AppMain: Callable[[], Component], options:Options=DASHBOARD_OPTIONS, **kwargs) -> None:
+
+
+def run(AppMain: Callable[[], Component],
+        options:Options=DASHBOARD_OPTIONS,
+        host='127.0.0.1',
+        port=8000,
+        disable_server_logs=False,
+        **kwargs) -> None:
+
     """Called once to run reactpy application on the fastapi server
 
     Args:
@@ -95,11 +148,18 @@ def run(AppMain: Callable[[], Component], options:Options=DASHBOARD_OPTIONS, **k
 
     app_path = _app_path(app)
 
+    if disable_server_logs:
+
+        @app.on_event('startup')
+        async def fastapi_startup():
+            disable_noisy_logs()
+            log.info(f"Uvicorn running on  http://%s:%s (Press CTRL+C to quit)", host, port)
+
     try:
+        log.setLevel(logging.INFO)
         signal.signal(signal.SIGINT, handler)
-        uvicorn.run(app_path, **kwargs)
+        uvicorn.run(app_path, host=host, port=port, **kwargs)
     finally:
         print('\b\b')
         log.info('Uvicorn server has shut down\n')
         sys.exit(0)
-
