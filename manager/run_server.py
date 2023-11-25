@@ -2,7 +2,7 @@ import uvicorn
 from manager import cli
 from utils.logger import log, logging
 
-from fast_server import app, run
+from fast_server import run
 from pages.app_main import AppMain
 
 
@@ -14,10 +14,6 @@ def runserver(**kwargs):
 
     if "log_level" not in kwargs:
         kwargs["log_level"] = logging.WARNING
-
-    @app.on_event('startup')
-    async def fastapi_startup():
-        log.info(f"Uvicorn running on  http://%s:%s/ (Press CTRL+C to quit)", kwargs['host'], kwargs['port'])
 
     run(AppMain, **kwargs)
 

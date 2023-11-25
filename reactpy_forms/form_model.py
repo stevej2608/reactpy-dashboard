@@ -51,6 +51,10 @@ class FormModel(BaseModel):
         self._field_model[field.name] = field
 
 
+    def has_field(self, name: str):
+        return name in self._field_model
+
+
     def is_empty(self) -> bool:
         return not self._field_model
 

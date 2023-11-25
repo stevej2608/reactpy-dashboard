@@ -18,7 +18,7 @@
       "justMyCode": false,
       "serverReadyAction": {
         "pattern": "Uvicorn running on\\s+(https?://\\S+)",
-        "uriFormat": "%s",
+        "uriFormat": "%s/sign-in",
         "action": "debugWithChrome",
         "killOnServerStop": true
       }

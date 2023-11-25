@@ -6,7 +6,7 @@ from reactpy.core.component import Component
 from reactpy.core.types import State
 from utils.logger import log
 
-from reactpy_forms.field_model import FieldModel
+from reactpy_forms.field_model import FieldModel, FieldValidationError
 from reactpy_forms.form_model import FormModel
 
 FieldComponent = Callable[[FieldModel, dict,], Component]
@@ -81,6 +81,9 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
 
     def _field(name, fn) -> Component:
 
+        if not model.has_field(name):
+            raise FieldValidationError(f'Field "{name}" is not defined in the form model')
+
         @event(prevent_default=True)
         def onchange(event):
 
@@ -124,7 +127,10 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
             field_model = model.get_field(name)
             log.info('get_field_state [%s]', field_model)
 
-            field_model.value += 1
+            if isinstance(field_model.value, bool):
+                field_model.value = not field_model.value
+            else:
+                raise FieldValidationError(f'Field "{name}" must be a bool type')
 
             try:
 
@@ -142,7 +148,11 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
 
         field_state = model.get_field(name)
 
-        def _props(props):
+        def _props(props=None):
+
+            if props is None:
+                props = {}
+
             props['name'] = name
 
             if 'type' in props and props['type'] in ['button', 'checkbox','radio','reset','submit']:

@@ -26,11 +26,8 @@ def Label(label: str):
 
 
 @component
-def TextInput(label: str, placeholder:str="", **argc):
-
-    attributes = {'placeholder': placeholder}
-
+def TextInput(label: str, props: dict):
     return html.div({'class_name': 'border-0'},
         Label(label),
-        Input(attributes, **argc)
+        Input(props)
     )
