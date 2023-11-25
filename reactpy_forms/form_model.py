@@ -26,7 +26,8 @@ class FormModel(BaseModel):
             if value.error:
                 return True
         return None
-
+    
+    # TODO: Create separate class to hide all this from user
 
     def init_field_model(self) -> None:
         """Create an initial FieldModel"""

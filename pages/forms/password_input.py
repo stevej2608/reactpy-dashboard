@@ -9,30 +9,28 @@ def DummyCallable(**argc):
     pass
 
 @component
-def PasswordInput(label: str, placeholder="", inputClass:str='', isPasswordVisible=False, set_password_visible=None, **argc):
+def PasswordInput(label: str, props: dict, password_visible=False):
 
-    log.info("PasswordInput")
-
-    password_visible, set_password_visible = use_state(isPasswordVisible)
+    _password_visible, set_password_visible = use_state(password_visible)
 
     @event(prevent_default=True)
     def toggle_password_visibility(event):
-        log.info("toggle_password_visibility %s", password_visible)
-        set_password_visible( not password_visible)
+        log.info("toggle_password_visibility %s", _password_visible)
+        set_password_visible( not _password_visible)
 
-    icon = Icon_EyeSlash if password_visible else Icon_Eye
+    icon = Icon_EyeSlash if _password_visible else Icon_Eye
 
-    attributes = {'class_name' : f"pr-8 {inputClass}",
-                  'type': 'input' if password_visible else 'password',
-                  'placeholder': placeholder
-                  }
+    _props = {'type': 'input' if _password_visible else 'password', **props}
 
-    log.info("PasswordInput - render")
+    if not 'class_name' in _props:
+        _props['class_name'] = ''
+
+    _props['class_name'] =  f"pr-8 {_props['class_name']}"
 
     return html.div(
         Label(label),
         html.div({'class_name': 'relative flex'},
-            Input(attributes, **argc),
+            Input(_props),
             html.span({'class_name': 'absolute inset-y-0 right-0 flex items-center pl-2'},
                 html.button({'type': 'submit', 'class_name': 'focus:shadow-outline p-1 focus:outline-none', 'onclick': toggle_password_visibility},
                     icon()

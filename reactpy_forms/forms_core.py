@@ -83,6 +83,8 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
 
         if not model.has_field(name):
             raise FieldValidationError(f'Field "{name}" is not defined in the form model')
+        
+        # TODO: extract common code from event handlers
 
         @event(prevent_default=True)
         def onchange(event):
@@ -92,7 +94,7 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
             field_model.value = event['currentTarget']['value']
             field_model.error = ''
 
-            log.info('onchange [%s]', field_model)
+            # log.info('onchange [%s]', field_model)
 
             try:
 
@@ -107,7 +109,7 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
 
             except ValidationError as ex:
 
-                log.info('validation error [%s]', field_model)
+                # log.info('validation error [%s]', field_model)
 
                 # Return the model to its previous state and set the error
 
@@ -125,7 +127,7 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
         @event(prevent_default=True)
         def onclick(event):
             field_model = model.get_field(name)
-            log.info('get_field_state [%s]', field_model)
+            # log.info('get_field_state [%s]', field_model)
 
             if isinstance(field_model.value, bool):
                 field_model.value = not field_model.value

@@ -1,7 +1,8 @@
-from reactpy import component, html, event
+from typing import Callable
+from reactpy import component, html
 from reactpy.core. component import Component
 
-from reactpy_forms import createForm, FieldModel, FormModel, FieldValidationError, use_form_state
+from reactpy_forms import createForm, FieldModel, FormModel, use_form_state
 
 from pages.forms.standard_form_container import StandardFormContainer
 from pages.forms.text_input import TextInput
@@ -17,7 +18,7 @@ class LoginFormData(FormModel):
 
 
 @component
-def RememberCheckbox(label=None, field: FieldModel=None, props = None):
+def RememberCheckbox(label=None, field: FieldModel=None, props: Callable = None):
 
     input_props = props({'type': 'checkbox', 'class_name': 'h-4 w-4 rounded border-gray-300 bg-gray-50', 'required': ''})
 
@@ -65,7 +66,7 @@ def SignIn(**argc):
     return StandardFormContainer("Sign in to platform",
         Form({'class_name': 'mt-8 space-y-6'},
             Field('email', lambda field, props: TextInput("Your email", props({'placeholder': 'name@company.com'}))),
-            Field('password', lambda field, props: TextInput("Your password", props({'placeholder': '••••••••'}))),
+            Field('password', lambda field, props: PasswordInput("Your password", props())),
             Field('remember', lambda field, props: RememberCheckbox('Remember Me', field, props)),
             SubmitButton(label="Login to your account", onclick=handleSubmit),
             NotRegisteredLink()
