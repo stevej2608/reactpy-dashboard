@@ -9,7 +9,7 @@ from .components.copyright import Copyright
 
 from .dashboard_page import Dashboard
 from .users import Users
-from .products import Products
+from .products_page import Products
 
 from .sign_in import SignIn
 from .sign_up import SignUp

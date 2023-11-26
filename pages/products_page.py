@@ -1,7 +1,7 @@
 from reactpy import component, html
 
 from .components import Breadcrumbs, PageTitle, TopPanel
-from .table import TableTools, AddButton
+from .components.table_tools import TableTools, AddButton
 from .products import ProductsTable, AddProductModal, EditProductModal, DeleteProductModal
 
 @component
