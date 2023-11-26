@@ -11,7 +11,7 @@ def AppMain():
         element
     )
 
-# python examples/hello.py
+# python -m examples.hello
 
 if __name__ == "__main__":
     log.setLevel(logging.INFO)
