@@ -15,7 +15,6 @@ def PasswordInput(label: str, props: dict, password_visible=False):
 
     @event(prevent_default=True)
     def toggle_password_visibility(event):
-        log.info("toggle_password_visibility %s", _password_visible)
         set_password_visible( not _password_visible)
 
     icon = Icon_EyeSlash if _password_visible else Icon_Eye

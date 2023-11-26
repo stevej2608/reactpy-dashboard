@@ -1,13 +1,9 @@
 from typing import Callable
-from reactpy import component, html
+from reactpy import component, html, event
 from reactpy.core. component import Component
 
 from reactpy_forms import createForm, FieldModel, FormModel, use_form_state
-
-from pages.forms.standard_form_container import StandardFormContainer
-from pages.forms.text_input import TextInput
-from pages.forms.password_input import PasswordInput
-from pages.forms.submit_button import SubmitButton
+from pages.forms import StandardFormContainer, TextInput, PasswordInput, SubmitButton
 
 from utils.logger import log
 
@@ -45,19 +41,14 @@ def NotRegisteredLink():
 
 
 @component
-def Field(name, field: Component):
-    return field
-
-
-@component
 def SignIn(**argc):
 
     model, set_model = use_form_state(LoginFormData(email="joe@gmail.com", password="1234"))
 
 
-    # @event(prevent_default=True)
+    @event(prevent_default=True)
     def handleSubmit(event):
-        log.info("SignIn - Submit")
+        log.info("Submit [%s]", model)
 
     Form, Field = createForm(model, set_model)
 
