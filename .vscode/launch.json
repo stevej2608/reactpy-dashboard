@@ -11,7 +11,7 @@
       "cwd": "${workspaceRoot}",
       "program": "run_dashboard.py",
       "env": {
-        "REACTPY_DEBUG_MODE" : "1"
+        "REACTPY_DEBUG_MODE": "1"
       },
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart",
@@ -29,7 +29,9 @@
       "request": "launch",
       "cwd": "${workspaceRoot}",
       "module": "examples.router_test",
-      "args": ["runserver"],
+      "args": [
+        "runserver"
+      ],
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart",
       "justMyCode": false,
@@ -50,7 +52,6 @@
         "killOnServerStop": true
       }
     },
-
     {
       "name": "1d. examples/form_complex.py",
       "type": "python",
@@ -67,19 +68,35 @@
         "killOnServerStop": true
       }
     },
-
     {
-      "name": "1e. tmp/args_test.py",
+      "name": "1e. hello.py",
       "type": "python",
       "request": "launch",
       "cwd": "${workspaceRoot}",
-      "module": "tmp.args_test",
+      "module": "examples.hello",
+      "env": {
+        "REACTPY_DEBUG_MODE": "1"
+      },
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "serverReadyAction": {
+        "pattern": "Uvicorn running on\\s+(https?://\\S+)",
+        "uriFormat": "%s/sign-in",
+        "action": "debugWithChrome",
+        "killOnServerStop": true
+      }
+    },
+    {
+      "name": "1z. Python: Current File",
+      "type": "python",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "program": "${currentFile}",
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart",
       "justMyCode": false,
     },
- 
-
     {
       "name": "2a. PyTest (all)",
       "type": "python",
@@ -96,7 +113,6 @@
       "internalConsoleOptions": "openOnSessionStart",
       "justMyCode": false
     },
-    
     {
       "name": "2b. PyTest (test_login_form.py)",
       "type": "python",
@@ -113,7 +129,6 @@
       "internalConsoleOptions": "openOnSessionStart",
       "justMyCode": false
     },
-
     {
       "name": "2c. PyTest (test_complex_form.py)",
       "type": "python",
@@ -130,7 +145,6 @@
       "internalConsoleOptions": "openOnSessionStart",
       "justMyCode": false
     },
-
     {
       "name": "2c. PyTest (props.py)",
       "type": "python",
@@ -146,8 +160,6 @@
       "internalConsoleOptions": "openOnSessionStart",
       "justMyCode": false
     },
-
-
     {
       "name": "3.a Launch Chrome",
       "request": "launch",
@@ -155,21 +167,16 @@
       "url": "http://vscode-dev:82",
       "webRoot": "${workspaceFolder}",
       "sourceMaps": true,
-
       // Chrome debugger address:
       // http://vscode-dev:82/_reactpy/js/src/index.js
       //
       // js/src/index.js
-
       "sourceMapPathOverrides": {
         "/_reactpy/*": "${workspaceFolder}/*",
-        "\\workspace\\reactpy-dashboard\\_reactpy\\js\\src\\*" : "${workspaceFolder}/js/src/*",
-        "/workspace/reactpy-dashboard/_reactpy/js/src/*" : "${workspaceFolder}/js/src/*" 
+        "\\workspace\\reactpy-dashboard\\_reactpy\\js\\src\\*": "${workspaceFolder}/js/src/*",
+        "/workspace/reactpy-dashboard/_reactpy/js/src/*": "${workspaceFolder}/js/src/*"
       },
       "internalConsoleOptions": "openOnSessionStart",
-
     },
-
-
   ]
 }

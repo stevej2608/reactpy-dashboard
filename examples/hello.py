@@ -1,4 +1,6 @@
-from reactpy import component, html, run
+from reactpy import component, html
+from utils.logger import log, logging
+from examples.pico_main import pico_run
 
 GREETING = 'Hello, World!'
 
@@ -11,8 +13,6 @@ def AppMain():
 
 # python examples/hello.py
 
-# Internally app is run by Uvicorn/starlette
-
-
 if __name__ == "__main__":
-    run(AppMain, host="0.0.0.0", port=8000)
+    log.setLevel(logging.INFO)
+    pico_run(AppMain)
