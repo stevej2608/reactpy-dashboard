@@ -83,7 +83,7 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
 
         if not model.has_field(name):
             raise FieldValidationError(f'Field "{name}" is not defined in the form model')
-        
+
         # TODO: extract common code from event handlers
 
         @event(prevent_default=True)

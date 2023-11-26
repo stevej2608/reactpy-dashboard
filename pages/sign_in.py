@@ -1,6 +1,5 @@
 from typing import Callable
 from reactpy import component, html, event
-from reactpy.core. component import Component
 
 from reactpy_forms import createForm, FieldModel, FormModel, use_form_state
 from pages.forms import StandardFormContainer, TextInput, PasswordInput, SubmitButton
