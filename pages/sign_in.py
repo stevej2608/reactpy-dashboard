@@ -40,7 +40,7 @@ def NotRegisteredLink():
 
 
 @component
-def SignIn(**argc):
+def SignIn(*args, **kwargs):
 
     model, set_model = use_form_state(LoginFormData(email="joe@gmail.com", password="1234"))
 

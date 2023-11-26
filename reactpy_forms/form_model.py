@@ -1,5 +1,6 @@
-from typing import Dict, TypeVar
+from typing import Dict, TypeVar, Any
 from pydantic import BaseModel
+from utils.logger import log
 
 from reactpy_forms.field_model import FieldModel
 
@@ -26,11 +27,13 @@ class FormModel(BaseModel):
             if value.error:
                 return True
         return None
-    
+
     # TODO: Create separate class to hide all this from user
 
     def init_field_model(self) -> None:
         """Create an initial FieldModel"""
+
+        self._field_model.clear()
 
         for name, value in self.dict().items():
             self._field_model[name] = FieldModel(name=name, value=value)

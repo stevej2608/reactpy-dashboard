@@ -26,7 +26,7 @@ def TermsCheckbox(label=None, field: FieldModel=None, props: Callable = None):
         ),
         html.div({'class_name': 'ml-3 text-sm'},
             html.label({'html_for': input_props['name'], 'class_name': 'font-medium text-gray-900'},
-                "I accept the{' '}",
+                "I accept the ",
                 html.a({'href': '#', 'class_name': 'text-teal-500 hover:underline'}, label)
             )
         )
@@ -35,12 +35,12 @@ def TermsCheckbox(label=None, field: FieldModel=None, props: Callable = None):
 @component
 def HaveAccountLink():
     return html.div({'class_name': 'text-sm font-medium text-gray-500'},
-        "{' '} 	Already have an account?{' '}",
+        " Already have an account? ",
         html.a({'href': '/sign-in/', 'class_name': 'text-teal-500 hover:underline'}, "Login here")
     )
 
 @component
-def SignUp():
+def SignUp(*args, **kwargs):
 
     model, set_model = use_form_state(RegisterFormData())
 
@@ -50,7 +50,7 @@ def SignUp():
 
     Form, Field = createForm(model, set_model)
 
-    log.info("SignIn model=[%s]", model)
+    log.info("SignUp model=[%s]", model)
 
 
     return StandardFormContainer("Create a Free Account",

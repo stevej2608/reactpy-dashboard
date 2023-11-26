@@ -1,8 +1,8 @@
 from typing import Tuple, Callable, List, overload, TypeVar
 from pydantic import ValidationError
 from reactpy import html, event, use_state
-from reactpy.core.hooks import _use_const, _CurrentState
 from reactpy.core.component import Component
+from reactpy.core.hooks import current_hook
 from reactpy.core.types import State
 from utils.logger import log
 
@@ -42,7 +42,10 @@ def use_form_state(initial_value: _Type | Callable[[], _Type]) -> State[_Type]:
 
     model, dispatch = use_state(initial_value)
 
-    if model.is_empty():
+    # TODO - change LifeCycleHook to make ._rendered_atleast_once accessible
+
+    # pylint: disable=protected-access
+    if not current_hook()._rendered_atleast_once:
         model.init_field_model()
 
     return [model, dispatch]
