@@ -1,7 +1,7 @@
 from reactpy import component, html, event
 
 
-from examples.pico_main import pico_run
+from examples.pico_run import pico_run
 from pages.components.input import Input, Select, RangeSlider, FieldSet
 from utils.logger import log, logging
 

@@ -5,11 +5,13 @@ from reactpy import event
 
 from utils.logger import log
 
-# https://solidjs-table.vercel.app/
+# https://tanstack.com/table/v8/docs/adapters/solid-table
 
 
 class Pagination(BaseModel):
+    page_page_size: int = 10
     page_index: int = 0
+    page_count: int = 0
 
 
 class TableState(BaseModel):
@@ -22,6 +24,7 @@ class ReactPyTable:
 
     def __init__(self, table):
         self.table = table
+        pagination=Pagination()
         self.state = TableState(pagination=Pagination())
 
 

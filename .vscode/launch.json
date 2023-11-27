@@ -4,6 +4,7 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
+    
     {
       "name": "1a. run_dashboard.py",
       "type": "python",
@@ -88,14 +89,32 @@
       }
     },
     {
-      "name": "1z. Python: Current File",
+      "name": "1y. Python: Current File",
       "type": "python",
       "request": "launch",
       "cwd": "${workspaceRoot}",
-      "program": "${currentFile}",
+      "program": "${file}",
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart",
       "justMyCode": false,
+    },
+
+    // https://stackoverflow.com/a/65292380/489239
+    {
+      "name": "1z. Python: Current Module",
+      "type": "python",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "module": "examples.table_example",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "serverReadyAction": {
+        "pattern": "Uvicorn running on\\s+(https?://\\S+)",
+        "uriFormat": "%s",
+        "action": "debugWithChrome",
+        "killOnServerStop": true
+      }
     },
     {
       "name": "2a. PyTest (all)",

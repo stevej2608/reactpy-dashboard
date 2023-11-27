@@ -3,7 +3,7 @@ from reactpy import component, html, event
 
 from reactpy_forms import createForm, FieldModel, FormModel, FieldValidationError, use_form_state
 from utils.logger import log, logging
-from examples.pico_main import pico_run
+from examples.pico_run import pico_run
 
 class LoginFormData(FormModel):
     email: str = None

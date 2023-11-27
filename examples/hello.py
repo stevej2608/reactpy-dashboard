@@ -1,6 +1,6 @@
 from reactpy import component, html
 from utils.logger import log, logging
-from examples.pico_main import pico_run
+from examples.pico_run import pico_run
 
 GREETING = 'Hello, World!'
 

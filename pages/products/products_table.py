@@ -41,7 +41,8 @@ def TableHead():
         )
     )
 
-def table_row(index, row: Product):
+@component
+def TableRow(index, row: Product):
 
     @component
     def Name(name:str):
@@ -64,7 +65,7 @@ def table_row(index, row: Product):
 @component
 def TableBody(table: List[Product]):
 
-    table_rows = [table_row(index, row) for index, row in enumerate(table.get_row_model().rows)]
+    table_rows = [TableRow(index, row) for index, row in enumerate(table.get_row_model().rows)]
 
     return TBody(ChildList(*table_rows))
 
