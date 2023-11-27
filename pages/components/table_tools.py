@@ -1,6 +1,7 @@
 from reactpy import component, html
 from reactpy.core.types import VdomChildren
 from .icon import Icon_Plus
+from utils.child_list import ChildList
 
 @component
 def AddButton(label:str):
@@ -12,4 +13,4 @@ def AddButton(label:str):
 
 @component
 def TableTools(*children: VdomChildren):
-    return html._(children)
+    return ChildList(*children)
