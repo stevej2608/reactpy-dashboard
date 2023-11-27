@@ -52,7 +52,6 @@ def table_row(index, row: Product):
 
 
     return TRow(
-        {'key': row.id},
         Checkbox(),
         Name(row.name),
         Text(value=row.technology),
@@ -65,9 +64,9 @@ def table_row(index, row: Product):
 @component
 def TableBody(table: List[Product]):
 
-    table_rows = [table_row(index, row) for index, row in enumerate(table)]
+    table_rows = [table_row(index, row) for index, row in enumerate(table.get_row_model().rows)]
 
-    return TBody(table_rows)
+    return TBody(ChildList(*table_rows))
 
 
 @component
@@ -75,12 +74,12 @@ def ProductsTable():
 
     table_data, set_table_data = use_state(make_products(999))
 
-    # table = create_reactpy_table(data, columns, get_core_row_model(), get_pagination_row_model())
+    table = create_reactpy_table(table_data, columns, get_core_row_model(), get_pagination_row_model())
 
     return html._(
         Table(
             TableHead(),
-            TableBody(table=table_data[0:20])
+            TableBody(table)
         ),
-        # TablePaginator(table=table_data)
+        TablePaginator(table)
     )

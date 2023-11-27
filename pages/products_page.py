@@ -15,7 +15,7 @@ def Products():
             )
         ),
         ProductsTable(),
-        AddProductModal(),
-        EditProductModal(),
-        DeleteProductModal()
+        # AddProductModal(),
+        # EditProductModal(),
+        # DeleteProductModal()
     )
