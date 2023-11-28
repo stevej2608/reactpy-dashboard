@@ -12,7 +12,7 @@ from utils.logger import log, logging
 from utils.var_name import var_name
 
 from modules.assets import assets_api
-from modules.tailwind import TAILWIND_CSS
+from modules.css_links import TAILWIND_CSS
 
 app = FastAPI(description="ReactPy", version="0.1.0")
 

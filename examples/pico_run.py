@@ -1,12 +1,12 @@
 from typing import Union, Callable
 from types import FunctionType
 from reactpy import component, html
-from reactpy.core.types import VdomChildren
-from modules.pico import PICO_OPTIONS
+from reactpy.core.component import Component
+from modules.server_options import ServerOptions
 from fast_server import run
 
 
-def pico_run(app: Union[VdomChildren, Callable]):
+def pico_run(app: Union[Component, Callable], head:Union[Component, Callable]=None):
 
     if isinstance(app, FunctionType):
         children = app()
@@ -15,10 +15,10 @@ def pico_run(app: Union[VdomChildren, Callable]):
 
     @component
     def AppMain():
-        return html.div({'class_name': 'container'},
+        return html.div({'class_name': 'container, display: flex'},
             html.section(
                 children
             )
         )
 
-    run(AppMain, options=PICO_OPTIONS)
+    run(AppMain, options=ServerOptions(head))
