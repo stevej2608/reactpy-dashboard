@@ -5,7 +5,7 @@ from reactpy.core.types import VdomChildren
 from reactpy.testing import DisplayFixture
 
 
-from modules.pico import PICO_CSS
+from modules.css_links import PICO_CSS
 
 
 class PicoContainer:

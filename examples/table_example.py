@@ -2,7 +2,7 @@ from typing import List, Dict
 from reactpy import component, html
 from utils.logger import log, logging
 from examples.pico_run import pico_run
-from modules.inline_style import InlineStyle
+from modules.inline_style import inline_style
 from modules.css_links import PICO_CSS
 
 # https://codesandbox.io/p/devbox/tanstack-table-example-expanding-jr4nn3?embed=1
@@ -36,6 +36,14 @@ tfoot th {
 }
 
 """
+
+@component
+def AppHead():
+    return html._(
+        html.link(PICO_CSS),
+        inline_style(CSS)
+    )
+
 
 PRODUCTS = [
     {"name": "Education Dashboard", "description": "Html templates", "technology": "Angular", "id": "#194556", "price": "$149"},
@@ -123,5 +131,6 @@ def AppMain():
 
 if __name__ == "__main__":
     log.setLevel(logging.INFO)
-    pico_run(AppMain, head=[html.link(PICO_CSS)])
     # pico_run(AppMain, head=[html.link(PICO_CSS), InlineStyle(CSS)])
+    # pico_run(AppMain, head=[html.link(PICO_CSS)])
+    pico_run(AppMain, head=AppHead)

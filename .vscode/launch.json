@@ -70,7 +70,7 @@
       }
     },
     {
-      "name": "1e. hello.py",
+      "name": "1e. examples/hello.py",
       "type": "python",
       "request": "launch",
       "cwd": "${workspaceRoot}",
@@ -89,19 +89,7 @@
       }
     },
     {
-      "name": "1y. Python: Current File",
-      "type": "python",
-      "request": "launch",
-      "cwd": "${workspaceRoot}",
-      "program": "${file}",
-      "console": "internalConsole",
-      "internalConsoleOptions": "openOnSessionStart",
-      "justMyCode": false,
-    },
-
-    // https://stackoverflow.com/a/65292380/489239
-    {
-      "name": "1z. Python: Current Module",
+      "name": "1f. examples/table_example",
       "type": "python",
       "request": "launch",
       "cwd": "${workspaceRoot}",
@@ -116,6 +104,19 @@
         "killOnServerStop": true
       }
     },
+
+    {
+      "name": "1z. Python: Current File",
+      "type": "python",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "program": "${file}",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+    },
+
+    // https://stackoverflow.com/a/65292380/489239
     {
       "name": "2a. PyTest (all)",
       "type": "python",
