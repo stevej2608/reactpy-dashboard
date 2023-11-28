@@ -41,7 +41,7 @@ tfoot th {
 def AppHead():
     return html._(
         html.link(PICO_CSS),
-        inline_style(CSS)
+        # inline_style(CSS)
     )
 
 
@@ -56,30 +56,24 @@ PRODUCTS = [
     {"name": "Wordpress", "description": "Content Management", "technology": "PHP", "id": "#192656", "price": "$55"}
 ]
 
-COLS = ['#', 'name', 'description', 'technology', 'ID', 'price']
+COLS = ['#', 'Name', 'Description', 'Technology', 'ID', 'Price']
 
 # https://medium.com/@jordammendes/build-powerfull-tables-in-reactjs-with-tanstack-9d57a3a63e35
 # https://tanstack.com/table/v8/docs/examples/react/expanding
 
 @component
 def TablePaginator():
-    return html.div({'class_name': 'flex items-center gap-2'},
-
-        html.button({'class_name': 'border rounded p-1', 'disabled': ''}, "<<"),
-        html.button({'class_name': 'border rounded p-1', 'disabled': ''}, "<"),
-        html.button({'class_name': 'border rounded p-1'}, ">"),
-        html.button({'class_name': 'border rounded p-1'}, ">>"),
-
-        html.span({'class_name': 'flex items-center gap-1'},
-            html.div("Page"),
+    return html.div({'class_name': 'grid', 'style': {'align-items': 'center','grid-template-columns': '2.5fr 1.5fr 1.5fr 2.5fr 4fr 1.2fr 2fr 3fr'}},
+        html.button("<<"),
+        html.button("<"),
+        html.button(">"),
+        html.button(">>"),
+        html.span({'style': 'margin-bottom: var(--spacing);'},
+            "Page",
             html.strong("1 of 10")
         ),
-
-        html.span({'class_name': 'flex items-center gap-1'},
-            "| Go to page:",
-            html.input({'type': 'number', 'class_name': 'border p-1 rounded w-16', 'value': '1'})
-        ),
-
+        html.span({'style': 'margin-bottom: var(--spacing);'}, "Go to page:"),
+        html.input({'type': 'number', 'value': 1}),
         html.select(
             html.option({'value': '10'}, "Show 10"),
             html.option({'value': '20'}, "Show 20"),
@@ -131,6 +125,4 @@ def AppMain():
 
 if __name__ == "__main__":
     log.setLevel(logging.INFO)
-    # pico_run(AppMain, head=[html.link(PICO_CSS), InlineStyle(CSS)])
-    # pico_run(AppMain, head=[html.link(PICO_CSS)])
     pico_run(AppMain, head=AppHead)

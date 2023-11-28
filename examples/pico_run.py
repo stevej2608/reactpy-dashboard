@@ -20,7 +20,7 @@ def pico_run(app: Union[Component, Callable], head:Union[Component, Callable]=No
 
     @component
     def AppMain():
-        return html.div({'class_name': 'container, display: flex'},
+        return html.div({'class_name': 'container'},
             html.section(
                 children
             )
