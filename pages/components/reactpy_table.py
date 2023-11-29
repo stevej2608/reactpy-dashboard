@@ -28,13 +28,28 @@ class ReactPyTable:
         self.state = TableState(pagination=Pagination())
 
 
-    @event
+    def first_page(self):
+        log.info('firsts_page')
+
+
     def previous_page(self):
         log.info('previous_page')
+        
 
-    @event
     def next_page(self):
         log.info('next_page')
+
+
+    def last_page(self):
+        log.info('last_page')
+
+
+    def set_page(self, page:int):
+        log.info('set_page')
+
+
+    def set_page_size(self, page:int):
+        log.info('set_page_size')
 
 
     def get_can_previous_page(self):
