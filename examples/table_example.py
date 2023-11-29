@@ -4,6 +4,7 @@ from utils.logger import log, logging
 from examples.pico_run import pico_run
 from modules.inline_style import inline_style
 from modules.css_links import PICO_CSS
+from modules.reactpy_helpers import For
 
 # https://codesandbox.io/p/devbox/tanstack-table-example-expanding-jr4nn3?embed=1
 
@@ -61,6 +62,14 @@ COLS = ['#', 'Name', 'Description', 'Technology', 'ID', 'Price']
 # https://medium.com/@jordammendes/build-powerfull-tables-in-reactjs-with-tanstack-9d57a3a63e35
 # https://tanstack.com/table/v8/docs/examples/react/expanding
 
+
+@component
+def Text(*children):
+    """Add the pico button margin to make the 
+    given text line up with the button text."""
+
+    return html.span({'style': 'margin-bottom: var(--spacing);'}, *children)
+
 @component
 def TablePaginator():
     return html.div({'class_name': 'grid', 'style': {'align-items': 'center','grid-template-columns': '2.5fr 1.5fr 1.5fr 2.5fr 4fr 1.2fr 2fr 3fr'}},
@@ -68,11 +77,8 @@ def TablePaginator():
         html.button("<"),
         html.button(">"),
         html.button(">>"),
-        html.span({'style': 'margin-bottom: var(--spacing);'},
-            "Page",
-            html.strong("1 of 10")
-        ),
-        html.span({'style': 'margin-bottom: var(--spacing);'}, "Go to page:"),
+        Text("Page",html.strong("1 of 10")),
+        Text("Go to page:"),
         html.input({'type': 'number', 'value': 1}),
         html.select(
             html.option({'value': '10'}, "Show 10"),
@@ -83,31 +89,30 @@ def TablePaginator():
         )
     )
 
-
 @component
 def THead(columns: List[str]):
     return html.thead(
-        *list(map(lambda name: html.th({'scope': 'col'}, name), columns))
+        For(html.th, iterator=columns)
     )
 
 
 def TRow(index: int, row: Dict):
     return  html.tr(
-        html.th({'scope': 'row'}, index),
-        *list(map(html.td, row.values()))
+        html.th(index),
+         For(html.td, iterator=row.values())
     )
 
 
 def TBody(data: List[dict]):
     return  html.tbody(
-        *[TRow(index, value) for index, value in enumerate(data)]
+        For(TRow, iterator=enumerate(data))
     )
 
 
 @component
 def TFoot(columns: List[str]):
     return html.tfoot(
-        *list(map(lambda name: html.td({'scope': 'col'}, name), columns))
+        For(html.td, columns)
     )
 
 @component
