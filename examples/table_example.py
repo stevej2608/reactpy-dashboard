@@ -115,18 +115,21 @@ def THead(columns: List[str]):
     )
 
 
-def TRow(index: int, row: Dict):
+def TRow(index: int, row: Product):
     return  html.tr(
         html.th(index),
-         For(html.td, iterator=row.values())
+        html.td(row.name),
+        html.td(row.description),
+        html.td(row.technology),
+        html.td(row.id),
+        html.td(row.price)
     )
 
 
-def TBody(data: List[dict]):
+def TBody(table: ReactPyTable):
     return  html.tbody(
-        For(TRow, iterator=enumerate(data))
+        For(TRow, iterator=enumerate(table.get_row_model().rows))
     )
-
 
 @component
 def TFoot(columns: List[str]):
@@ -146,7 +149,7 @@ def AppMain():
     return html.div(
         html.table({"role": "grid"},
             THead(COLS),
-            TBody(PRODUCTS),
+            TBody(table),
             TFoot(COLS),
         ),
         TablePaginator(table)
