@@ -106,6 +106,22 @@
     },
 
     {
+      "name": "1g. tmp/test.py",
+      "type": "python",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "module": "tmp.test",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "justMyCode": false,
+      "serverReadyAction": {
+        "pattern": "Uvicorn running on\\s+(https?://\\S+)",
+        "uriFormat": "%s",
+        "action": "debugWithChrome",
+        "killOnServerStop": true
+      }
+    },
+    {
       "name": "1z. Python: Current File",
       "type": "python",
       "request": "launch",

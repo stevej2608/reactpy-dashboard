@@ -4,7 +4,7 @@ from reactpy import component, html, use_state, event
 from utils.logger import log, logging
 from utils.make_data import make_data
 from examples.pico_run import pico_run
-from pages.components.reactpy_table import get_core_row_model, get_pagination_row_model, ColumnDef, create_reactpy_table, ReactPyTable
+from reactpy_table import use_reactpy_table, ReactpyTable, Options, Paginator, RowModel
 
 from modules.reactpy_helpers import For
 
@@ -42,7 +42,7 @@ def make_products(number: int) -> List[Product] :
 
 
 @component
-def TablePaginator(table: ReactPyTable):
+def TablePaginator(paginator: Paginator):
 
     @component
     def Button(text:str, action):
@@ -58,7 +58,7 @@ def TablePaginator(table: ReactPyTable):
 
         @event
         def onclick(event):
-            table.set_page_size(size)
+            paginator.set_page_size(size)
 
         return html.option({'value': size, 'onclick': onclick}, f"Show {size}")
 
@@ -68,7 +68,7 @@ def TablePaginator(table: ReactPyTable):
 
         @event
         def on_change(event):
-            table.set_page_size(event['currentTarget']['value'])
+            paginator.set_page_size(event['currentTarget']['value'])
 
         @component
         def PageOption(size:int):
@@ -82,7 +82,7 @@ def TablePaginator(table: ReactPyTable):
 
         @event
         def on_change(event):
-            table.set_page(event['currentTarget']['value'])
+            paginator.set_page(event['currentTarget']['value'])
 
         return html._(
             Text("Go to page:"),
@@ -90,10 +90,10 @@ def TablePaginator(table: ReactPyTable):
         )
 
     return html.div({'class_name': 'grid', 'style': {'align-items': 'center','grid-template-columns': '2.5fr 1.5fr 1.5fr 2.5fr 4fr 1.2fr 2fr 3fr'}},
-        Button("<<", table.first_page),
-        Button("<", table.previous_page),
-        Button(">", table.next_page),
-        Button(">>", table.last_page),
+        Button("<<", paginator.first_page),
+        Button("<", paginator.previous_page),
+        Button(">", paginator.next_page),
+        Button(">>", paginator.last_page),
         Text("Page",html.strong("1 of 10")),
         PageInput(),
         PageSizeSelect([10, 20, 30, 40, 50])
@@ -126,7 +126,7 @@ def TRow(index: int, row: Product):
     )
 
 
-def TBody(table: ReactPyTable):
+def TBody(table: ReactpyTable):
     return  html.tbody(
         For(TRow, iterator=enumerate(table.get_row_model().rows))
     )
@@ -140,10 +140,16 @@ def TFoot(columns: List[str]):
 @component
 def AppMain():
 
-
     table_data, set_table_data = use_state(make_products(999))
 
-    table = create_reactpy_table(table_data, COLS, get_core_row_model(), get_pagination_row_model())
+    table = use_reactpy_table(Options(
+        data=table_data,
+        cols = COLS,
+        plugins=[
+            Paginator.get_pagination_row_model,
+            RowModel.get_core_row_model
+            ]
+    ))
 
 
     return html.div(
@@ -152,7 +158,7 @@ def AppMain():
             TBody(table),
             TFoot(COLS),
         ),
-        TablePaginator(table)
+        TablePaginator(table.paginator)
     )
 
 # python -m examples.table_example

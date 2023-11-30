@@ -38,6 +38,11 @@ and uploaded to pypicloud. To install it:
     pytest --headed
 
 
+## reactpy_table
+
+* [use_reactpy_table](tmp/table/examples/react/pagination/src/main.tsx#L110)
+        [useReactTable](tmp/table/packages/react-table/src/index.tsx#L57)
+
 ## Links
 
 * [reactpy-crud]

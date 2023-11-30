@@ -2,7 +2,7 @@ from typing import List
 from reactpy import component, html, use_state
 from utils.child_list import ChildList
 
-from ..components.reactpy_table import get_core_row_model, get_pagination_row_model, ColumnDef, create_reactpy_table
+from ..components.reactpy_table import get_core_row_model, get_pagination_row_model, ColumnDef, use_reactpy_table
 from ..components.table_paginator import TablePaginator
 from ..components.table_widgets import Table, TBody, THead, TRow, Checkbox, Text, EditButtons, ColumnHeader
 
@@ -75,7 +75,7 @@ def ProductsTable():
 
     table_data, set_table_data = use_state(make_products(999))
 
-    table = create_reactpy_table(table_data, columns, get_core_row_model(), get_pagination_row_model())
+    table = use_reactpy_table(table_data, columns, get_core_row_model(), get_pagination_row_model())
 
     return html._(
         Table(
