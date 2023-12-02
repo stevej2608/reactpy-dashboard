@@ -1,4 +1,5 @@
 
+from typing import TypeVar
 from pydantic import BaseModel
 from utils.logger import log
 from .types import ReactpyTable
@@ -51,17 +52,17 @@ class Paginator(Plugin):
     # ./tmp/table/packages/table-core/src/features/Pagination.ts
 
     def get_can_previous_page(self):
-        return self.get_state().pagination.page_index > 0
+        return self.get_state().page_index > 0
 
 
     def get_can_next_page(self):
-        page_index = self.get_state().pagination.page_index
+        page_index = self.get_state().page_index
         page_count = self.get_page_count()
 
         if page_count == -1:
             return True
 
-        if page_count == 0:  
+        if page_count == 0:
             return False
 
         return page_index < page_count - 1

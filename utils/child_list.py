@@ -11,7 +11,7 @@ def ChildList(*children: Tuple[Component]):
     """
 
     for index, child in enumerate(children):
-        if not isinstance(child, dict):
+        if not (isinstance(child, dict) or isinstance(child, str)):
             child.key = index
 
     return html._(*children)

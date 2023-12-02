@@ -1,6 +1,7 @@
 from reactpy import component, html
-from reactpy.core.types import VdomChildren
-from .reactpy_table  import ReactPyTable
+from reactpy.core.component import Component
+from reactpy_table  import Paginator
+from utils.child_list import ChildList
 
 from .icon import Icon_LeftBracket, Icon_RightBracket, Icon_LeftBracketSmall, Icon_RightBracketSmall
 
@@ -28,8 +29,8 @@ def ArrowIcon(icon, onclick, disabled):
 
 
 @component
-def Faint (*children: VdomChildren):
-    return html.span({'class_name':'text-sm font-normal text-gray-500'}, html._(children))
+def Faint (*children: Component):
+    return html.span({'class_name':'text-sm font-normal text-gray-500'}, ChildList(*children))
 
 
 @component
@@ -38,21 +39,21 @@ def Bold (text:str):
 
 
 @component
-def TablePaginator(table: ReactPyTable):
+def TablePaginator(paginator: Paginator):
     return html.div({'class_name': 'sticky bottom-0 right-0 w-full items-center border-t border-gray-200 bg-white p-4 sm:flex sm:justify-between'},
         html.div({'class_name': 'mb-4 flex items-center sm:mb-0'},
-            ArrowIcon(icon=Icon_LeftBracket, onclick = table.previous_page, disabled = not table.get_can_previous_page()),
-            ArrowIcon(icon=Icon_RightBracket, onclick = table.next_page, disabled = table.get_can_next_page()),
+            ArrowIcon(icon=Icon_LeftBracket, onclick = paginator.previous_page, disabled = not paginator.get_can_previous_page()),
+            ArrowIcon(icon=Icon_RightBracket, onclick = paginator.next_page, disabled = paginator.get_can_next_page()),
             Faint(
                 "Showing ",
-                Bold(table.get_state().pagination.page_index + 1),
+                Bold(paginator.get_state().page_index + 1),
                 " of ",
-                Bold(table.get_page_count()),
+                Bold(paginator.get_page_count()),
                 "   "
             ),
         ),
         html.div({'class_name': 'flex items-center space-x-3'},
-            Button(label='Previous', icon=Icon_LeftBracketSmall, onclick=table.previous_page, disabled=table.get_can_previous_page()),
-            Button(label='Next', icon=Icon_RightBracketSmall, onclick=table.next_page, disabled= not table.get_can_next_page())
+            Button(label='Previous', icon=Icon_LeftBracketSmall, onclick=paginator.previous_page, disabled=paginator.get_can_previous_page()),
+            Button(label='Next', icon=Icon_RightBracketSmall, onclick=paginator.next_page, disabled= not paginator.get_can_next_page())
             )
         )

@@ -1,12 +1,18 @@
-from typing import List, Any
+from typing import Protocol, List, Any, Optional
 from pydantic import BaseModel
 from .types import Options
+from .paginator import Paginator
+
 
 class RowModel(BaseModel):
     rows: List[Any] = None
 
 
-class ReactpyTable:
+class ReactpyTable(Protocol):
+
+    table_data: Any
+    columns: None
+    paginator: Optional[Paginator]
 
     def __init__(self, table_data: Any):
         self.table_data = table_data
