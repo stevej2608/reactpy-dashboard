@@ -1,10 +1,9 @@
 
-from typing import TypeVar
 import math
 from pydantic import BaseModel
 from utils.logger import log
-from .types import ReactpyTable
-from .plugin import Plugin
+from .table_core import ReactpyTable
+from .types import AbstractPaginator, AbstractPlugin
 
 
 # packages/table-core/src/features/Pagination.ts#L157
@@ -15,15 +14,15 @@ class PaginationState(BaseModel):
     # page_count: int = 0
 
 
-class Paginator(Plugin):
+class Paginator(AbstractPaginator):
 
-    def __init__(self, table):
-        super().__init__(table)
+    def __init__(self, table: ReactpyTable):
+        self.table = table
         self.state = PaginationState()
 
 
     @staticmethod
-    def get_pagination_row_model(table: ReactpyTable) -> [str, Plugin]:
+    def get_pagination_row_model(table: ReactpyTable) -> [str, AbstractPlugin]:
         return ['paginator', Paginator(table)]
 
 

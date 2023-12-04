@@ -1,9 +1,12 @@
-from .types import ReactpyTable
-from .plugin import Plugin
+from .types import  AbstractRowModel
+from .table_core import ReactpyTable
 
+class RowModel(AbstractRowModel):
 
-class RowModel(Plugin):
+    def __init__(self, table: ReactpyTable):
+        self.table = table
+
 
     @staticmethod
-    def get_core_row_model(table: ReactpyTable) -> [str, Plugin]:
+    def get_core_row_model(table: ReactpyTable) -> [str, AbstractRowModel]:
         return ['row_model', RowModel(table)]

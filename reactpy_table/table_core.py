@@ -1,21 +1,23 @@
-from typing import Protocol, List, Any, Optional
+from typing import List, Any, Optional
 from pydantic import BaseModel
-from .types import Options
-from .paginator import Paginator
+from .types import Options, ReactpyTableBase, AbstractPaginator, AbstractRowModel
+
 
 
 class RowModel(BaseModel):
-    rows: List[Any] = None
+    rows: List[Any] = []
 
 
-class ReactpyTable(Protocol):
+class ReactpyTable(ReactpyTableBase):
 
-    table_data: Any
+    table_data: List[Any] = []
     columns: None
-    paginator: Optional[Paginator]
 
-    def __init__(self, table_data: Any):
-        self.table_data = table_data
+    paginator: Optional[AbstractPaginator] = None
+    row_model: Optional[AbstractRowModel] = None
+
+    def __init__(self, table_data: List[Any]):
+        self.table_data = table_data if table_data else []
 
 
     def get_row_model(self):
@@ -23,7 +25,8 @@ class ReactpyTable(Protocol):
         return row_model
 
 
-def use_reactpy_table(options: Options=None) -> ReactpyTable:
+def use_reactpy_table(options: Options = Options()) -> ReactpyTable:
+
     table = ReactpyTable(options.data)
     for plugin_factory in options.plugins:
         name, plugin = plugin_factory(table)

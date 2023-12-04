@@ -1,21 +1,35 @@
-from typing import List, Callable, Any, Tuple, TypeVar
+from typing import List, Callable, Any, Tuple, TypeVar, Optional
+from abc import ABCMeta, abstractmethod
+
 from pydantic import BaseModel
 
 
 class RowModel(BaseModel):
-    rows: List[Any] = None
+    rows: List[Any] = []
 
-class ReactpyTable:
 
-    def __init__(self, table_data: Any):
-        self.table_data = table_data
+class ReactpyTableBase(metaclass=ABCMeta):
+    ...
 
-    def test(self):
-        return True
 
-PluginFactory = Callable[[ReactpyTable], Tuple[str, TypeVar('Plugin')]]
+class AbstractPlugin(metaclass=ABCMeta):
+    ...
+
+
+class AbstractPaginator(metaclass=ABCMeta):
+
+    @abstractmethod
+    def first_page(self): ...
+
+    @abstractmethod
+    def previous_page(self): ...
+
+class AbstractRowModel(metaclass=ABCMeta):
+    ...
+
+PluginFactory = Callable[[ReactpyTableBase], Tuple[str, AbstractPlugin]]
 
 class Options(BaseModel):
     data: Any = None
-    cols: List[str] = None
-    plugins: List[PluginFactory]
+    cols: List[str] = []
+    plugins: List[PluginFactory] = []

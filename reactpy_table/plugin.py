@@ -1,8 +1,7 @@
-from .types import ReactpyTable
-from typing import List, Callable, Any, Tuple
+from .types import AbstractPlugin
+from .table_core import ReactpyTable
 
-
-class Plugin:
+class Plugin(AbstractPlugin):
 
     def __init__(self, table: ReactpyTable):
         self.table = table
