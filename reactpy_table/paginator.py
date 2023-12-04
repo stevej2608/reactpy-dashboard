@@ -1,23 +1,25 @@
 
 from typing import TypeVar
+import math
 from pydantic import BaseModel
 from utils.logger import log
 from .types import ReactpyTable
 from .plugin import Plugin
 
 
-class TableState(BaseModel):
-    page_page_size: int = 10
+# packages/table-core/src/features/Pagination.ts#L157
+
+class PaginationState(BaseModel):
+    page_size: int = 10
     page_index: int = 0
-    page_count: int = 0
+    # page_count: int = 0
 
 
 class Paginator(Plugin):
 
     def __init__(self, table):
         super().__init__(table)
-        self.table = table
-        self.state = TableState()
+        self.state = PaginationState()
 
 
     @staticmethod
@@ -49,11 +51,12 @@ class Paginator(Plugin):
         log.info('set_page_size')
 
 
-    # ./tmp/table/packages/table-core/src/features/Pagination.ts
+    # ./tmp/table/packages/table-core/src/features/Pagination.ts#L299
 
     def get_can_previous_page(self):
         return self.get_state().page_index > 0
 
+    # ./tmp/table/packages/table-core/src/features/Pagination.ts#L301
 
     def get_can_next_page(self):
         page_index = self.get_state().page_index
@@ -68,9 +71,12 @@ class Paginator(Plugin):
         return page_index < page_count - 1
 
 
-    def get_state(self) -> TableState:
+    def get_state(self) -> PaginationState:
         return self.state
 
+    # ./tmp/table/packages/table-core/src/features/Pagination.ts#L344
 
     def get_page_count(self) -> int:
-        return 99
+        page_size = self.get_state().page_size
+        row_count = len(self.table.table_data)
+        return math.ceil(row_count / page_size)

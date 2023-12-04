@@ -1,4 +1,4 @@
-from reactpy import component, html
+from reactpy import component, html, event
 from reactpy.core.component import Component
 from reactpy_table  import Paginator
 from utils.child_list import ChildList
@@ -20,12 +20,16 @@ def Button(icon, label, onclick, disabled):
 @component
 def ArrowIcon(icon, onclick, disabled):
 
+    @event
+    def _onclick(event):
+        onclick()
+
     def getClass():
         cls="inline-flex cursor-pointer justify-center rounded p-1 text-gray-500 "
         cls += "disabled:opacity-50 disabled:cursor-default" if disabled  else "hover:bg-gray-100 hover:text-gray-900"
         return cls
 
-    return html.button({'onclick': onclick, 'disabled': disabled, 'class_name': getClass()}, icon())
+    return html.button({'onclick': _onclick, 'disabled': disabled, 'class_name': getClass()}, icon())
 
 
 @component
@@ -40,10 +44,11 @@ def Bold (text:str):
 
 @component
 def TablePaginator(paginator: Paginator):
+
     return html.div({'class_name': 'sticky bottom-0 right-0 w-full items-center border-t border-gray-200 bg-white p-4 sm:flex sm:justify-between'},
         html.div({'class_name': 'mb-4 flex items-center sm:mb-0'},
             ArrowIcon(icon=Icon_LeftBracket, onclick = paginator.previous_page, disabled = not paginator.get_can_previous_page()),
-            ArrowIcon(icon=Icon_RightBracket, onclick = paginator.next_page, disabled = paginator.get_can_next_page()),
+            ArrowIcon(icon=Icon_RightBracket, onclick = paginator.next_page, disabled = not paginator.get_can_next_page()),
             Faint(
                 "Showing ",
                 Bold(paginator.get_state().page_index + 1),
