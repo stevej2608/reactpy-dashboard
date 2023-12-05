@@ -2,8 +2,7 @@
 import math
 from pydantic import BaseModel
 from utils.logger import log
-from .table_core import ReactpyTable
-from .types import AbstractPaginator, AbstractPlugin
+from .types import AbstractPaginator, AbstractPlugin, AbstractTable
 
 
 # packages/table-core/src/features/Pagination.ts#L157
@@ -16,13 +15,13 @@ class PaginationState(BaseModel):
 
 class Paginator(AbstractPaginator):
 
-    def __init__(self, table: ReactpyTable):
+    def __init__(self, table: AbstractTable):
         self.table = table
         self.state = PaginationState()
 
 
     @staticmethod
-    def get_pagination_row_model(table: ReactpyTable) -> [str, AbstractPlugin]:
+    def get_pagination_row_model(table: AbstractTable) -> [str, AbstractPlugin]:
         return ['paginator', Paginator(table)]
 
 
@@ -36,6 +35,8 @@ class Paginator(AbstractPaginator):
 
     def next_page(self):
         log.info('next_page')
+        page_index = self.get_state().page_index
+        self.set_page_index(page_index + 1)
 
 
     def last_page(self):
@@ -49,6 +50,11 @@ class Paginator(AbstractPaginator):
     def set_page_size(self, page:int):
         log.info('set_page_size')
 
+
+    def set_page_index(self, page_index:int):
+        log.info('set_page_index')
+        self.state = self.state.copy(update={'page_index': page_index})
+        self.table.set_table()
 
     # ./tmp/table/packages/table-core/src/features/Pagination.ts#L299
 

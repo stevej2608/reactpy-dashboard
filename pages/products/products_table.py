@@ -1,6 +1,7 @@
 from typing import List
 from reactpy import component, html, use_state
 from utils.child_list import ChildList
+from utils.logger import log
 from reactpy_table import use_reactpy_table, Options, Paginator, RowModel
 from ..components.table_paginator import TablePaginator
 from ..components.table_widgets import Table, TBody, THead, TRow, Checkbox, Text, EditButtons, ColumnHeader
@@ -73,11 +74,13 @@ def TableBody(table: List[Product]):
 @component
 def ProductsTable():
 
+    log.info('ProductsTable')
+
     table_data, _ = use_state(make_products(999))
 
     table = use_reactpy_table(Options(
         data=table_data,
-        cols = COLS,
+        cols=COLS,
         plugins=[
             Paginator.get_pagination_row_model,
             RowModel.get_core_row_model

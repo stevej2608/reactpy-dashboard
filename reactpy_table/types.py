@@ -1,15 +1,26 @@
-from typing import List, Callable, Any, Tuple, TypeVar, Optional
+from typing import List, Callable, Any, Tuple, TypeVar, Optional, List
 from abc import ABCMeta, abstractmethod
 
 from pydantic import BaseModel
+
+
+TableData = List[Any]
 
 
 class RowModel(BaseModel):
     rows: List[Any] = []
 
 
-class ReactpyTableBase(metaclass=ABCMeta):
-    ...
+class AbstractTable(metaclass=ABCMeta):
+
+    @property
+    @abstractmethod
+    def table_data(self) -> TableData:
+        ...
+
+    @abstractmethod
+    def set_table(self, table: 'AbstractTable'):
+        ...
 
 
 class AbstractPlugin(metaclass=ABCMeta):
@@ -27,7 +38,7 @@ class AbstractPaginator(metaclass=ABCMeta):
 class AbstractRowModel(metaclass=ABCMeta):
     ...
 
-PluginFactory = Callable[[ReactpyTableBase], Tuple[str, AbstractPlugin]]
+PluginFactory = Callable[[AbstractTable], Tuple[str, AbstractPlugin]]
 
 class Options(BaseModel):
     data: Any = None
