@@ -92,7 +92,7 @@ def ProductsTable():
     return html._(
         Table(
             TableHead(COLS),
-            TableBody(table.data.rows)
+            TableBody(table.paginator.rows)
         ),
         TablePaginator(table.paginator)
     )

@@ -1,7 +1,7 @@
-from typing import Optional
+from typing import Optional, Callable
 from reactpy import use_state
 from utils.logger import log
-from .types import Options, Table, TableData, RowModel
+from .types import Options, Table, TableData, RowModel, BaseModel
 
 
 
@@ -24,19 +24,25 @@ class ReactpyTable(Table):
 
 def use_reactpy_table(options: Options = Options()) -> ReactpyTable:
 
+    set_table: Optional[Callable[[BaseModel], None]] = None
 
     def _create_table():
         table_data = TableData(rows=options.data)
         table = ReactpyTable(data=table_data)
+
+        def _updater(old:BaseModel, new:BaseModel):
+            log.info('Update model')
+            if set_table:
+                new = table.copy()
+                set_table(new)
+
         for plugin_factory in options.plugins:
-            plugin_factory(table)
+            plugin_factory(table, _updater)
 
         return table
 
     table, set_table = use_state(_create_table)
 
     log.info('use_reactpy_table')
-
-    # table.set_updater(set_table)
 
     return table
