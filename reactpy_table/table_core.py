@@ -1,25 +1,12 @@
-from typing import Optional, Callable, Any, Union
+from typing import Callable, Any, Union
 from reactpy import use_state
 from utils.logger import log
-from .types import Options, Table, TableData, RowModel, BaseModel
 
-
+from .types import TableData
+from .abstract_table import Table, Options
 
 class ReactpyTable(Table):
-
-
-    def set_table(self, table: Optional[Table] = None):
-        table = table if table else self
-        if self._updater:
-            self._updater(table)
-
-    def set_updater(self, updater):
-        self._updater = updater
-
-
-    def get_row_model(self):
-        row_model = RowModel(rows=self.table_data[0:10])
-        return row_model
+    ...
 
 
 def use_reactpy_table(options: Options = Options()) -> ReactpyTable:
@@ -30,11 +17,12 @@ def use_reactpy_table(options: Options = Options()) -> ReactpyTable:
         table_data = TableData(rows=options.data)
         table = ReactpyTable(data=table_data)
 
-        def _updater(old:BaseModel, new:BaseModel):
-            log.info('Update model')
+        def _updater():
             new = table.copy()
-            if set_table:
+            try:
                 set_table(new)
+            except Exception as ex:
+                log.info('Update model failed %s', ex)
 
         for plugin_factory in options.plugins:
             plugin_factory(table, _updater)

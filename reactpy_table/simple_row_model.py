@@ -1,8 +1,8 @@
-from .types import  RowModel, Table, Updater
+from .types import  RowModel, Updater
 
+from .abstract_table import Table
 
 class SimpleRowModel(RowModel):
-
 
     @staticmethod
     def init(table: Table, updater: Updater) -> None:

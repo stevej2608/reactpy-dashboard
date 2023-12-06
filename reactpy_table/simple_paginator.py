@@ -1,22 +1,11 @@
 
 from typing import List, Any
-from functools import wraps
 import math
 from utils.logger import log
-from .types import Paginator, Table, Updater
+from .types import Updater
 
-
-def set_state(method):
-    @wraps(method)
-    def _impl(self: Paginator, *args, **kwargs):
-        old = self.copy()
-        result = method(self, *args, **kwargs)
-        new = self.copy()
-        if old != new:
-            log.info('Update the model!!!')
-            self.updater(old, new)
-        return result
-    return _impl
+from .abstract_table import Table
+from .abstract_paginator import Paginator, set_state
 
 
 DEFAULT_PAGE_SIZE = 10
