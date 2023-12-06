@@ -1,12 +1,9 @@
-from .types import  AbstractRowModel, AbstractTable
+from .types import  RowModel, Table
 
 
-class RowModel(AbstractRowModel):
-
-    def __init__(self, table: AbstractTable):
-        self.table = table
+class SimpleRowModel(RowModel):
 
 
     @staticmethod
-    def get_core_row_model(table: AbstractTable) -> [str, AbstractRowModel]:
-        return ['row_model', RowModel(table)]
+    def init(table: Table) -> None:
+        table.row_model = SimpleRowModel(table=table.data)

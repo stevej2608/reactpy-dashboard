@@ -51,9 +51,9 @@ def TablePaginator(paginator: Paginator):
             ArrowIcon(icon=Icon_RightBracket, onclick = paginator.next_page, disabled = not paginator.get_can_next_page()),
             Faint(
                 "Showing ",
-                Bold(paginator.get_state().page_index + 1),
+                Bold(paginator.page_index + 1),
                 " of ",
-                Bold(paginator.get_page_count()),
+                Bold(paginator.page_count),
                 "   "
             ),
         ),

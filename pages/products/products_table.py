@@ -2,7 +2,8 @@ from typing import List
 from reactpy import component, html, use_state
 from utils.child_list import ChildList
 from utils.logger import log
-from reactpy_table import use_reactpy_table, Options, Paginator, RowModel
+from reactpy_table import use_reactpy_table, Options, SimplePaginator, SimpleRowModel
+
 from ..components.table_paginator import TablePaginator
 from ..components.table_widgets import Table, TBody, THead, TRow, Checkbox, Text, EditButtons, ColumnHeader
 
@@ -67,7 +68,7 @@ def TableRow(index, row: Product):
 @component
 def TableBody(table: List[Product]):
 
-    table_rows = [TableRow(index, row) for index, row in enumerate(table.get_row_model().rows)]
+    table_rows = [TableRow(index, row) for index, row in enumerate(table)]
 
     return TBody(ChildList(*table_rows))
 
@@ -82,8 +83,8 @@ def ProductsTable():
         data=table_data,
         cols=COLS,
         plugins=[
-            Paginator.get_pagination_row_model,
-            RowModel.get_core_row_model
+            SimplePaginator.init,
+            SimpleRowModel.init
             ]
         ))
 
@@ -91,7 +92,7 @@ def ProductsTable():
     return html._(
         Table(
             TableHead(COLS),
-            TableBody(table)
+            TableBody(table.data.rows)
         ),
         TablePaginator(table.paginator)
     )

@@ -1,33 +1,33 @@
-from typing import List, Callable, Any, Tuple, TypeVar, Optional, List
-from abc import ABCMeta, abstractmethod
-
+from typing import List, Callable, Any, Tuple, Optional
+from abc import abstractmethod
 from pydantic import BaseModel
 
 
-TableData = List[Any]
 
 
-class RowModel(BaseModel):
+class TableData(BaseModel):
     rows: List[Any] = []
 
 
-class AbstractTable(metaclass=ABCMeta):
+class Plugin(BaseModel):
 
-    @property
-    @abstractmethod
-    def table_data(self) -> TableData:
-        ...
-
-    @abstractmethod
-    def set_table(self, table: 'AbstractTable'):
-        ...
+    table: TableData
 
 
-class AbstractPlugin(metaclass=ABCMeta):
+
+class RowModel(Plugin):
     ...
 
 
-class AbstractPaginator(metaclass=ABCMeta):
+class Paginator(Plugin):
+
+    page_index: int = 0
+    page_size: int
+
+
+    @property
+    @abstractmethod
+    def page_count(self): ...
 
     @abstractmethod
     def first_page(self): ...
@@ -35,12 +35,18 @@ class AbstractPaginator(metaclass=ABCMeta):
     @abstractmethod
     def previous_page(self): ...
 
-class AbstractRowModel(metaclass=ABCMeta):
-    ...
 
-PluginFactory = Callable[[AbstractTable], Tuple[str, AbstractPlugin]]
+
+class Table(BaseModel):
+
+    data: TableData
+    paginator: Optional[Paginator] = None
+    row_model: Optional[RowModel] = None
+
+PluginFactory = Callable[[Table], Table]
+
 
 class Options(BaseModel):
-    data: Any = None
+    data: List[Any] = []
     cols: List[str] = []
     plugins: List[PluginFactory] = []
