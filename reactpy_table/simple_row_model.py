@@ -1,5 +1,5 @@
-from .types import  RowModel, Updater
-
+from .abstract_plugin import Updater
+from .abstract_row_model import RowModel
 from .abstract_table import Table
 
 class SimpleRowModel(RowModel):
