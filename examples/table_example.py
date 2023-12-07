@@ -1,10 +1,12 @@
-from typing import List, Dict
+from typing import List
 from pydantic import BaseModel
-from reactpy import component, html, use_state, event
+from reactpy import component, html, use_memo, event
 from utils.logger import log, logging
 from utils.make_data import make_data
 from examples.pico_run import pico_run
-from reactpy_table import use_reactpy_table, ReactpyTable, Options, Paginator, RowModel
+
+from reactpy_table import use_reactpy_table, Options, Paginator, SimplePaginator
+
 
 from modules.reactpy_helpers import For
 
@@ -26,6 +28,7 @@ PRODUCTS = [
 COLS = ['#', 'Name', 'Description', 'Technology', 'ID', 'Price']
 
 class Product(BaseModel):
+    index: int
     name: str
     description: str
     technology: str
@@ -45,13 +48,13 @@ def make_products(number: int) -> List[Product] :
 def TablePaginator(paginator: Paginator):
 
     @component
-    def Button(text:str, action):
+    def Button(text:str, action, disabled=False):
 
         @event
         def onclick(event):
             action()
 
-        return html.button({'onclick': onclick}, text)
+        return html.button({'onclick': onclick, 'disabled': disabled}, text)
 
     @component
     def PageSize(size:int):
@@ -91,10 +94,10 @@ def TablePaginator(paginator: Paginator):
 
     return html.div({'class_name': 'grid', 'style': {'align-items': 'center','grid-template-columns': '2.5fr 1.5fr 1.5fr 2.5fr 4fr 1.2fr 2fr 3fr'}},
         Button("<<", paginator.first_page),
-        Button("<", paginator.previous_page),
-        Button(">", paginator.next_page),
+        Button("<", paginator.previous_page, disabled = not paginator.get_can_previous_page()),
+        Button(">", paginator.next_page, disabled = not paginator.get_can_next_page()),
         Button(">>", paginator.last_page),
-        Text("Page",html.strong("1 of 10")),
+        Text("Page",html.strong(f" {paginator.page_index + 1} of {paginator.page_count}")),
         PageInput(),
         PageSizeSelect([10, 20, 30, 40, 50])
     )
@@ -117,7 +120,7 @@ def THead(columns: List[str]):
 
 def TRow(index: int, row: Product):
     return  html.tr(
-        html.th(index),
+        html.td(str(row.index)),
         html.td(row.name),
         html.td(row.description),
         html.td(row.technology),
@@ -126,9 +129,9 @@ def TRow(index: int, row: Product):
     )
 
 
-def TBody(table: ReactpyTable):
+def TBody(table: List[Product]):
     return  html.tbody(
-        For(TRow, iterator=enumerate(table.get_row_model().rows))
+        For(TRow, iterator=enumerate(table))
     )
 
 @component
@@ -140,22 +143,19 @@ def TFoot(columns: List[str]):
 @component
 def AppMain():
 
-    table_data, set_table_data = use_state(make_products(999))
+    table_data = use_memo(lambda: make_products(99999))
 
     table = use_reactpy_table(Options(
         data=table_data,
         cols = COLS,
-        plugins=[
-            Paginator.get_pagination_row_model,
-            RowModel.get_core_row_model
-            ]
+        plugins=[SimplePaginator.init]
     ))
 
 
     return html.div(
         html.table({"role": "grid"},
             THead(COLS),
-            TBody(table),
+            TBody(table.paginator.rows),
             TFoot(COLS),
         ),
         TablePaginator(table.paginator)

@@ -35,7 +35,7 @@ class SimplePaginator(Paginator):
 
 
     def first_page(self):
-        self.set_page(0)
+        self.set_page_index(0)
 
 
     def previous_page(self):
@@ -47,7 +47,7 @@ class SimplePaginator(Paginator):
 
 
     def last_page(self):
-        last_page = self.page_count() - 1
+        last_page = self.page_count - 1
         self.set_page_index(last_page)
 
 
