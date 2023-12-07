@@ -2,7 +2,7 @@
 from typing import List, Any
 import math
 from utils.logger import log
-from .abstract_plugin import Updater, set_state
+from .abstract_plugin import Updater, update_state
 
 from .abstract_table import Table
 from .abstract_paginator import Paginator
@@ -35,22 +35,18 @@ class SimplePaginator(Paginator):
 
 
     def first_page(self):
-        log.info('firsts_page')
         self.set_page(0)
 
 
     def previous_page(self):
-        log.info('previous_page')
         self.set_page_index(self.page_index - 1)
 
 
     def next_page(self):
-        log.info('next_page')
         self.set_page_index(self.page_index + 1)
 
 
     def last_page(self):
-        log.info('last_page')
         last_page = self.page_count() - 1
         self.set_page_index(last_page)
 
@@ -59,9 +55,8 @@ class SimplePaginator(Paginator):
         log.info('set_page_size')
 
 
-    @set_state
+    @update_state
     def set_page_index(self, page_index:int):
-        log.info('set_page_index')
         self.page_index = page_index
 
 

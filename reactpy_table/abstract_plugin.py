@@ -1,7 +1,7 @@
-from typing import List, Callable, Any
+from typing import Callable
 from functools import wraps
 from pydantic import BaseModel
-from .types import TableData
+from .common import TableData
 
 
 Updater = Callable[[], None]
@@ -11,7 +11,8 @@ class Plugin(BaseModel):
     updater: Updater
 
 
-def set_state(method):
+def update_state(method):
+    """Update the table state if plugin state changes"""
     @wraps(method)
     def _impl(self: Plugin, *args, **kwargs):
         old = self.copy()

@@ -1,5 +1,5 @@
 from typing import List
-from reactpy import component, html, use_state
+from reactpy import component, html, use_memo
 from utils.child_list import ChildList
 from utils.logger import log
 from reactpy_table import use_reactpy_table, Options, SimplePaginator, SimpleRowModel
@@ -75,9 +75,9 @@ def TableBody(table: List[Product]):
 @component
 def ProductsTable():
 
-    log.info('ProductsTable')
+    # https://reactpy.dev/docs/reference/hooks-api.html
 
-    table_data, _ = use_state(make_products(999))
+    table_data = use_memo(lambda: make_products(10000))
 
     table = use_reactpy_table(Options(
         data=table_data,

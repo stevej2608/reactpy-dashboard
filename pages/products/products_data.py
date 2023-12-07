@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import List
 from pydantic import BaseModel
 from utils.make_data import make_data
 

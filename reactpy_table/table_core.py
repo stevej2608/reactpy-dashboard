@@ -2,7 +2,7 @@ from typing import Callable, Any, Union
 from reactpy import use_state
 from utils.logger import log
 
-from .types import TableData
+from .common import TableData
 from .abstract_table import Table, Options
 
 class ReactpyTable(Table):
@@ -30,7 +30,5 @@ def use_reactpy_table(options: Options = Options()) -> ReactpyTable:
         return table
 
     table, set_table = use_state(_create_table)
-
-    log.info('use_reactpy_table')
 
     return table

@@ -1,7 +1,7 @@
 from typing import List, Callable, Any, Optional
 from pydantic import BaseModel
 
-from .types import TableData
+from .common import TableData
 from .abstract_plugin import Updater
 from .abstract_row_model import RowModel
 from .abstract_paginator import Paginator
