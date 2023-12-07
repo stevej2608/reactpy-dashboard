@@ -35,3 +35,6 @@ class Paginator(Plugin):
 
     @abstractmethod
     def can_get_next_page(self) -> bool: ...
+
+    @abstractmethod
+    def set_page_size(self, page_size:int): ...

@@ -71,7 +71,8 @@ def TablePaginator(paginator: Paginator):
 
         @event
         def on_change(event):
-            paginator.set_page_size(event['currentTarget']['value'])
+            page_size = int(event['currentTarget']['value'])
+            paginator.set_page_size(page_size)
 
         @component
         def PageOption(size:int):

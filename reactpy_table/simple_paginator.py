@@ -51,8 +51,10 @@ class SimplePaginator(Paginator):
         self.set_page_index(last_page)
 
 
-    def set_page_size(self, page:int):
+    @update_state
+    def set_page_size(self, page_size:int):
         log.info('set_page_size')
+        self.page_size = page_size
 
 
     @update_state
