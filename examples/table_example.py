@@ -1,6 +1,7 @@
 from typing import List
 from pydantic import BaseModel
 from reactpy import component, html, use_memo, event
+from modules.inline_style import inline_style
 from utils.logger import log, logging
 from utils.make_data import make_data
 from examples.pico_run import pico_run
@@ -26,6 +27,13 @@ PRODUCTS = [
 ]
 
 COLS = ['#', 'Name', 'Description', 'Technology', 'ID', 'Price']
+
+
+CSS = """
+    td, th {
+        padding: 25px;
+    }
+"""
 
 class Product(BaseModel):
     index: int
@@ -119,13 +127,21 @@ def THead(columns: List[str]):
 
 
 def TRow(index: int, row: Product):
+
+    @component
+    def td(data:str, width:int = 80):
+        style = {'column-width':f"{width}px"}
+        return html.td({'style': style}, data)
+
+
     return  html.tr(
-        html.td(str(row.index)),
-        html.td(row.name),
-        html.td(row.description),
-        html.td(row.technology),
-        html.td(row.id),
-        html.td(row.price)
+        td(str(row.index), width=80),
+        td(row.name, width=150),
+        td(row.description, width=150),
+        td(row.technology),
+        td(row.id),
+        td(row.price),
+        html.td()
     )
 
 
@@ -153,6 +169,7 @@ def AppMain():
 
 
     return html.div(
+        # inline_style(CSS),
         html.table({"role": "grid"},
             THead(COLS),
             TBody(table.paginator.rows),
