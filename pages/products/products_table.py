@@ -75,6 +75,8 @@ def TableBody(table: List[Product]):
 @component
 def ProductsTable():
 
+    log.info('ProductsTable')
+
     # https://reactpy.dev/docs/reference/hooks-api.html
 
     table_data = use_memo(lambda: make_products(10000))
