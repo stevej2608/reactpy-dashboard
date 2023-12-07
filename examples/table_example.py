@@ -1,7 +1,6 @@
 from typing import List
 from pydantic import BaseModel
-from reactpy import component, html, use_memo, event
-from modules.inline_style import inline_style
+from reactpy import component, html, use_state, use_memo, event
 from utils.logger import log, logging
 from utils.make_data import make_data
 from examples.pico_run import pico_run
@@ -27,13 +26,6 @@ PRODUCTS = [
 ]
 
 COLS = ['#', 'Name', 'Description', 'Technology', 'ID', 'Price']
-
-
-CSS = """
-    td, th {
-        padding: 25px;
-    }
-"""
 
 class Product(BaseModel):
     index: int
@@ -91,20 +83,40 @@ def TablePaginator(paginator: Paginator):
     @component
     def PageInput():
 
-        @event
+        count_value, set_count = use_state(0)
+
+        @event(prevent_default=True)
         def on_change(event):
-            paginator.set_page(event['currentTarget']['value'])
+
+            try:
+                new_value = int(event['currentTarget']['value'])
+                new_value = max(new_value, 1)
+                new_value = min(new_value, paginator.page_count)
+            except Exception:
+                new_value = 1
+
+            log.info('new_value = %d', new_value)
+
+            if (paginator.page_index != new_value - 1):
+                paginator.set_page_index(new_value - 1)
+            else:
+                set_count(count_value + 1)
+
+        log.info('render new_value = %d', paginator.page_index + 1)
 
         return html._(
             Text("Go to page:"),
-            html.input({'type': 'number', 'value': 1, "on_change": on_change}),
+            html.input({'type': 'number', 'value': paginator.page_index + 1, "on_change": on_change}),
         )
 
+    no_previous = not paginator.can_get_previous_page()
+    no_next = not paginator.can_get_next_page()
+
     return html.div({'class_name': 'grid', 'style': {'align-items': 'center','grid-template-columns': '2.5fr 1.5fr 1.5fr 2.5fr 4fr 1.2fr 2fr 3fr'}},
-        Button("<<", paginator.first_page),
-        Button("<", paginator.previous_page, disabled = not paginator.get_can_previous_page()),
-        Button(">", paginator.next_page, disabled = not paginator.get_can_next_page()),
-        Button(">>", paginator.last_page),
+        Button("<<", paginator.first_page, disabled = no_previous),
+        Button("<", paginator.previous_page, disabled = no_previous),
+        Button(">", paginator.next_page, disabled = no_next),
+        Button(">>", paginator.last_page, disabled = no_next),
         Text("Page",html.strong(f" {paginator.page_index + 1} of {paginator.page_count}")),
         PageInput(),
         PageSizeSelect([10, 20, 30, 40, 50])
@@ -126,22 +138,21 @@ def THead(columns: List[str]):
     )
 
 
+@component
+def TColgroup(col_widths):
+    return  html.colgroup(
+        [html.col({'style': {'width':f"{width}px"}}) for width in col_widths]
+    )
+
+
 def TRow(index: int, row: Product):
-
-    @component
-    def td(data:str, width:int = 80):
-        style = {'column-width':f"{width}px"}
-        return html.td({'style': style}, data)
-
-
     return  html.tr(
-        td(str(row.index), width=80),
-        td(row.name, width=150),
-        td(row.description, width=150),
-        td(row.technology),
-        td(row.id),
-        td(row.price),
-        html.td()
+        html.td(str(row.index)),
+        html.td(row.name),
+        html.td(row.description),
+        html.td(row.technology),
+        html.td(row.id),
+        html.td(row.price),
     )
 
 
@@ -150,16 +161,18 @@ def TBody(table: List[Product]):
         For(TRow, iterator=enumerate(table))
     )
 
+
 @component
 def TFoot(columns: List[str]):
     return html.tfoot(
         For(html.td, columns)
     )
 
+
 @component
 def AppMain():
 
-    table_data = use_memo(lambda: make_products(99999))
+    table_data = use_memo(lambda: make_products(9999))
 
     table = use_reactpy_table(Options(
         data=table_data,
@@ -169,8 +182,8 @@ def AppMain():
 
 
     return html.div(
-        # inline_style(CSS),
         html.table({"role": "grid"},
+            TColgroup([80, 150, 100, 100, 100, 100]),
             THead(COLS),
             TBody(table.paginator.rows),
             TFoot(COLS),

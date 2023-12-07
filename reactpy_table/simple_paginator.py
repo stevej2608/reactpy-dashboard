@@ -60,11 +60,11 @@ class SimplePaginator(Paginator):
         self.page_index = page_index
 
 
-    def get_can_previous_page(self) -> bool:
+    def can_get_previous_page(self) -> bool:
         return self.page_index > 0
 
 
-    def get_can_next_page(self) -> bool:
+    def can_get_next_page(self) -> bool:
         page_count = self.page_count
 
         if page_count == -1:

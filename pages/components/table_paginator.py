@@ -51,8 +51,8 @@ def TablePaginator(paginator: Paginator):
 
     return html.div({'class_name': 'sticky bottom-0 right-0 w-full items-center border-t border-gray-200 bg-white p-4 sm:flex sm:justify-between'},
         html.div({'class_name': 'mb-4 flex items-center sm:mb-0'},
-            ArrowIcon(icon=Icon_LeftBracket, onclick = paginator.previous_page, disabled = not paginator.get_can_previous_page()),
-            ArrowIcon(icon=Icon_RightBracket, onclick = paginator.next_page, disabled = not paginator.get_can_next_page()),
+            ArrowIcon(icon=Icon_LeftBracket, onclick = paginator.previous_page, disabled = not paginator.can_get_previous_page()),
+            ArrowIcon(icon=Icon_RightBracket, onclick = paginator.next_page, disabled = not paginator.can_get_next_page()),
             Faint(
                 "Showing ",
                 Bold(paginator.page_index + 1),
@@ -62,7 +62,7 @@ def TablePaginator(paginator: Paginator):
             ),
         ),
         html.div({'class_name': 'flex items-center space-x-3'},
-            Button(label='Previous', icon=Icon_LeftBracketSmall, onclick=paginator.previous_page, disabled= not paginator.get_can_previous_page()),
-            Button(label='Next', icon=Icon_RightBracketSmall, onclick=paginator.next_page, disabled= not paginator.get_can_next_page())
+            Button(label='Previous', icon=Icon_LeftBracketSmall, onclick=paginator.previous_page, disabled= not paginator.can_get_previous_page()),
+            Button(label='Next', icon=Icon_RightBracketSmall, onclick=paginator.next_page, disabled= not paginator.can_get_next_page())
             )
         )
