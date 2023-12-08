@@ -26,7 +26,7 @@ PRODUCTS = [
 ]
 
 COLS: Columns = [
-    Column(name='#', label='#'),
+    Column(name='index', label='#'),
     Column(name='name', label='Name'),
     Column(name='description', label='Description'),
     Column(name='technology', label='Technology'),
@@ -156,7 +156,7 @@ def THead(table: Table):
 
         # https://symbl.cc/en/collections/arrow-symbols/
 
-        up = sort.is_sort_up(col)
+        up = sort.is_sort_reverse(col)
 
         text = col.label + (" 🠕" if up else " 🠗")
         return html.th({'onclick': on_click}, text)
@@ -195,7 +195,7 @@ def TBody(table: List[Product]):
 @component
 def TFoot(columns: Column):
     return html.tfoot(
-        For(html.td, columns)
+        For(html.td, [cast(Column, col).label for col in columns])
     )
 
 

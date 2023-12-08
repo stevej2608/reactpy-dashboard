@@ -8,7 +8,7 @@ from .table_data import Column
 from .abstract_table import Table
 
 class ColumnState(BaseModel):
-    up: bool = True
+    reverse: bool = True
 
 
 class SimpleColumnSort(ColumnSort):
@@ -24,7 +24,6 @@ class SimpleColumnSort(ColumnSort):
             name = col if isinstance(col, str) else col.name
             state[name] = ColumnState()
 
-
         table.sort = SimpleColumnSort(
             data=table.data,
             state = state,
@@ -37,25 +36,20 @@ class SimpleColumnSort(ColumnSort):
         def _sort(col:Column, element: Any):
             name = col if isinstance(col, str) else col.name
             return getattr(element, name)
-
-        log.info('toggle_sort %s', col)
-
+   
         state = self.get_state(col)
-        state.up = not state.up
+        state.reverse = not state.reverse
 
-        self.data.rows.sort(key=lambda element: _sort(col, element), reverse=state.up)
+        self.data.rows.sort(key=lambda element: _sort(col, element), reverse=state.reverse)
 
-        return state.up
+        return state.reverse
 
 
-    def is_sort_up(self, col:Column)-> bool:
+    def is_sort_reverse(self, col:Column)-> bool:
         state = self.get_state(col)
-        log.info('is_sort_up %s', state.up)
-        return state.up
+        return state.reverse
 
 
     def get_state(self, col:Column):
         name = col if isinstance(col, str) else col.name
         return self.state[name]
-    
-
