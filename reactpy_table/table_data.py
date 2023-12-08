@@ -10,16 +10,11 @@ class Column(BaseModel):
     name: str
     label: str
     style: Optional[str] = None
-
-    def __str__(self):
-        return self.label
-    
-    def __repr__(self):
-        return self.label
+    sort : Optional[Callable[['Column'], None]] = None
 
 
-Columns = List[Union[str, Column]]
 
+Columns = List[Column]
 
 class TableData(BaseModel):
     rows: RowData = []

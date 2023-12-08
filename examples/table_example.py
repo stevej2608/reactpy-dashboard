@@ -5,7 +5,7 @@ from utils.logger import log, logging
 from utils.make_data import make_data
 from examples.pico_run import pico_run
 
-from reactpy_table import use_reactpy_table, Column, Columns, ColumnSort, Table, Options, Paginator, SimplePaginator, SimpleColumnSort
+from reactpy_table import use_reactpy_table, Column, Columns, ColumnSort, Table, Options, Paginator, TableSearch, SimplePaginator, SimpleColumnSort, SimpleTableSearch
 
 
 from modules.reactpy_helpers import For
@@ -141,12 +141,21 @@ def Text(*children):
 
 
 @component
+def Search(search: TableSearch):
+
+    @event
+    def on_change(event):
+        text = event['currentTarget']['value']
+        search.table_search(text)
+
+    return html.input({'type': 'search', 'placeholder': 'Search', 'aria-label': 'Search', 'onchange': on_change})
+
+@component
 def THead(table: Table):
 
     @component
     def text_with_arrow(col: Column):
 
-        col = cast(Column, col)
         sort = cast(ColumnSort, table.sort)
 
         @event
@@ -195,7 +204,7 @@ def TBody(table: List[Product]):
 @component
 def TFoot(columns: Column):
     return html.tfoot(
-        For(html.td, [cast(Column, col).label for col in columns])
+        For(html.td, [col.label for col in columns])
     )
 
 
@@ -207,11 +216,18 @@ def AppMain():
     table = use_reactpy_table(Options(
         rows=table_data,
         cols = COLS,
-        plugins=[SimplePaginator.init, SimpleColumnSort.init]
+        plugins=[
+            SimplePaginator.init,
+            SimpleColumnSort.init,
+            SimpleTableSearch.init
+            ]
     ))
 
 
     return html.div(
+        html.br(),
+        html.h2('ReactPy Table Example'),
+        Search(table.search),
         html.table({"role": "grid"},
             TColgroup([80, 150, 100, 100, 100, 100]),
             THead(table),

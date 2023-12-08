@@ -8,7 +8,7 @@ from .table_data import Column
 from .abstract_table import Table
 
 class ColumnState(BaseModel):
-    reverse: bool = True
+    reverse: bool = False
 
 
 class SimpleColumnSort(ColumnSort):
@@ -18,6 +18,7 @@ class SimpleColumnSort(ColumnSort):
 
     @staticmethod
     def init(table: Table, updater: Updater) -> None:
+
 
         state = {}
         for col in table.data.cols:
@@ -51,5 +52,4 @@ class SimpleColumnSort(ColumnSort):
 
 
     def get_state(self, col:Column):
-        name = col if isinstance(col, str) else col.name
-        return self.state[name]
+        return self.state[col.name]
