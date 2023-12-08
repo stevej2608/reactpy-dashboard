@@ -202,7 +202,7 @@ def TBody(table: List[Product]):
 
 
 @component
-def TFoot(columns: Column):
+def TFoot(columns: Columns):
     return html.tfoot(
         For(html.td, [col.label for col in columns])
     )
@@ -211,7 +211,7 @@ def TFoot(columns: Column):
 @component
 def AppMain():
 
-    table_data = use_memo(lambda: make_products(9999))
+    table_data = use_memo(lambda: make_products(99999))
 
     table = use_reactpy_table(Options(
         rows=table_data,

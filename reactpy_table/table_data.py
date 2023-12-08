@@ -19,3 +19,4 @@ Columns = List[Column]
 class TableData(BaseModel):
     rows: RowData = []
     cols: Columns = []
+
