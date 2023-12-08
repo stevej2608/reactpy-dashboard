@@ -2,8 +2,8 @@ from typing import Callable, Any, Union
 from reactpy import use_state
 from utils.logger import log
 
-from .table_data import TableData
-from .abstract_table import Table, Options
+from .table_data import TableData, Options
+from .abstract_table import Table
 
 class ReactpyTable(Table):
     ...
@@ -16,7 +16,7 @@ def use_reactpy_table(options: Options = Options()) -> ReactpyTable:
     set_table: Union[Callable[[Union[Any, Callable[[Any], Any]]], None], None]  = None
 
     def _create_table() -> ReactpyTable:
-        table_data = TableData(rows=options.data)
+        table_data = TableData(data=options.data, options=options)
         table = ReactpyTable(data=table_data)
 
         def _updater():

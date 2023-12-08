@@ -28,7 +28,7 @@ columns = [
     }
 ]
 
-COLS = ['#', 'Name', 'Description', 'Technology', 'ID', 'Price']
+COLS = ['#', 'Product Name', 'Description', 'Technology', 'ID', 'Price']
 
 
 @component
@@ -71,6 +71,7 @@ def TableBody(table: List[Product]):
     table_rows = [TableRow(index, row) for index, row in enumerate(table)]
 
     return TBody(ChildList(*table_rows))
+
 
 @component
 def ProductsTable():

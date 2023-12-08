@@ -1,10 +1,8 @@
 from typing import Callable
 from functools import wraps
 from pydantic import BaseModel
-from .table_data import TableData
+from .table_data import TableData, Updater
 
-
-Updater = Callable[[], None]
 
 class Plugin(BaseModel):
     data: TableData

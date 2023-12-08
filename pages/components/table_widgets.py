@@ -1,8 +1,9 @@
 from reactpy import component, html
 from reactpy.core.component import Component
-from reactpy.core.types import VdomChild, VdomChildren
-from .icon import Icon_Edit, Icon_Bin
+from reactpy.core.types import VdomChildren
 from utils.child_list import ChildList
+
+from .icon import Icon_Edit, Icon_Bin
 
 @component
 def Table(head: Component, body: Component):
