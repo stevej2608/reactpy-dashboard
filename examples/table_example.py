@@ -25,7 +25,15 @@ PRODUCTS = [
     {"name": "Wordpress", "description": "Content Management", "technology": "PHP", "id": "#192656", "price": "$55"}
 ]
 
-COLS: Columns = ['#', 'Name', 'Description', 'Technology', 'ID', 'Price']
+COLS: Columns = [
+    Column(name='#', label='#'),
+    Column(name='name', label='Name'),
+    Column(name='description', label='Description'),
+    Column(name='technology', label='Technology'),
+    Column(name='id', label='ID'),
+    Column(name='price', label='Price')
+    ]
+
 
 class Product(BaseModel):
     index: int
@@ -138,6 +146,7 @@ def THead(table: Table):
     @component
     def text_with_arrow(col: Column):
 
+        col = cast(Column, col)
         sort = cast(ColumnSort, table.sort)
 
         @event
@@ -149,7 +158,7 @@ def THead(table: Table):
 
         up = sort.is_sort_up(col)
 
-        text = str(col) + (" 🠕" if up else " 🠗")
+        text = col.label + (" 🠕" if up else " 🠗")
         return html.th({'onclick': on_click}, text)
 
     columns = table.data.cols

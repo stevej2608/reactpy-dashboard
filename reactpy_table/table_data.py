@@ -8,6 +8,7 @@ RowData = List[Any]
 
 class Column(BaseModel):
     name: str
+    label: str
     style: Optional[str] = None
 
 

@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Any
 from pydantic import BaseModel
 from utils.logger import log
 
@@ -33,11 +33,20 @@ class SimpleColumnSort(ColumnSort):
 
     @update_state
     def toggle_sort(self, col:Column) -> bool:
+
+        def _sort(col:Column, element: Any):
+            name = col if isinstance(col, str) else col.name
+            return getattr(element, name)
+
         log.info('toggle_sort %s', col)
+
         state = self.get_state(col)
         state.up = not state.up
+
+        self.data.rows.sort(key=lambda element: _sort(col, element), reverse=state.up)
+
         return state.up
-    
+
 
     def is_sort_up(self, col:Column)-> bool:
         state = self.get_state(col)
