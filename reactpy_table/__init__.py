@@ -1,7 +1,7 @@
 from .abstract_paginator import Paginator
 from .abstract_table import Table
 
-from .table_data import TableData
+from .table_data import TableData, Column
 from .table_core import ReactpyTable, use_reactpy_table
 
 from .table_core import  Options

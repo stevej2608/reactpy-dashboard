@@ -5,7 +5,7 @@ from utils.logger import log, logging
 from utils.make_data import make_data
 from examples.pico_run import pico_run
 
-from reactpy_table import use_reactpy_table, Options, Paginator, SimplePaginator
+from reactpy_table import use_reactpy_table, Column, Options, Paginator, SimplePaginator
 
 
 from modules.reactpy_helpers import For
@@ -133,7 +133,7 @@ def Text(*children):
 
 
 @component
-def THead(columns: List[str]):
+def THead(columns: Column):
     return html.thead(
         For(html.th, iterator=columns)
     )
@@ -164,7 +164,7 @@ def TBody(table: List[Product]):
 
 
 @component
-def TFoot(columns: List[str]):
+def TFoot(columns: Column):
     return html.tfoot(
         For(html.td, columns)
     )
@@ -185,9 +185,9 @@ def AppMain():
     return html.div(
         html.table({"role": "grid"},
             TColgroup([80, 150, 100, 100, 100, 100]),
-            THead(COLS),
+            THead(table.data.cols),
             TBody(table.paginator.rows),
-            TFoot(COLS),
+            TFoot(table.data.cols),
         ),
         TablePaginator(table.paginator)
     )
