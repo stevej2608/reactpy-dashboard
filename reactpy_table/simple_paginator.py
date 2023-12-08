@@ -13,6 +13,7 @@ DEFAULT_PAGE_SIZE = 10
 
 class SimplePaginator(Paginator):
 
+
     @staticmethod
     def init(table: Table, updater: Updater) -> None:
         table.paginator = SimplePaginator(
@@ -21,16 +22,17 @@ class SimplePaginator(Paginator):
             updater = updater
             )
 
+
     @property
     def rows(self) -> List[Any]:
         low = self.page_size * self.page_index
-        high = min(low + self.page_size, len(self.data.data))
-        return self.data.data[low:high]
+        high = min(low + self.page_size, len(self.data.rows))
+        return self.data.rows[low:high]
 
 
     @property
     def page_count(self) -> int:
-        row_count = len(self.data.data)
+        row_count = len(self.data.rows)
         return math.ceil(row_count / self.page_size)
 
 

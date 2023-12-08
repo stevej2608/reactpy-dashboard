@@ -1,20 +1,16 @@
-from typing import List, Any, Callable
+from typing import List, Any, Callable, Optional, Union
 from pydantic import BaseModel
 
 
 Updater = Callable[[], None]
 
-PluginFactory = Callable[['TableData', Updater], None]
-
 RowData = List[Any]
 
-
-class Options(BaseModel):
-    data: RowData = []
-    cols: List[str] = []
-    plugins: List[PluginFactory] = []
+class Column(BaseModel):
+    name: str
+    style: Optional[str] = None
 
 
 class TableData(BaseModel):
-    data: RowData = []
-    options: Options
+    rows: RowData = []
+    cols: List[Union[str, Column]] = []

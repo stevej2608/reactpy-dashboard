@@ -176,7 +176,7 @@ def AppMain():
     table_data = use_memo(lambda: make_products(9999))
 
     table = use_reactpy_table(Options(
-        data=table_data,
+        rows=table_data,
         cols = COLS,
         plugins=[SimplePaginator.init]
     ))

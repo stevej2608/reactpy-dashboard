@@ -83,7 +83,7 @@ def ProductsTable():
     table_data = use_memo(lambda: make_products(10000))
 
     table = use_reactpy_table(Options(
-        data=table_data,
+        rows=table_data,
         cols=COLS,
         plugins=[
             SimplePaginator.init,
