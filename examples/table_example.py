@@ -1,11 +1,11 @@
-from typing import List
+from typing import List, cast
 from pydantic import BaseModel
 from reactpy import component, html, use_state, use_memo, event
 from utils.logger import log, logging
 from utils.make_data import make_data
 from examples.pico_run import pico_run
 
-from reactpy_table import use_reactpy_table, Column, Options, Paginator, SimplePaginator
+from reactpy_table import use_reactpy_table, Column, Columns, ColumnSort, Table, Options, Paginator, SimplePaginator, SimpleColumnSort
 
 
 from modules.reactpy_helpers import For
@@ -25,7 +25,7 @@ PRODUCTS = [
     {"name": "Wordpress", "description": "Content Management", "technology": "PHP", "id": "#192656", "price": "$55"}
 ]
 
-COLS = ['#', 'Name', 'Description', 'Technology', 'ID', 'Price']
+COLS: Columns = ['#', 'Name', 'Description', 'Technology', 'ID', 'Price']
 
 class Product(BaseModel):
     index: int
@@ -133,9 +133,29 @@ def Text(*children):
 
 
 @component
-def THead(columns: Column):
+def THead(table: Table):
+
+    @component
+    def text_with_arrow(col: Column):
+
+        sort = cast(ColumnSort, table.sort)
+
+        @event
+        def on_click(event):
+            log.info('onclick col=%s', col)
+            sort.toggle_sort(col)
+
+        # https://symbl.cc/en/collections/arrow-symbols/
+
+        up = sort.is_sort_up(col)
+
+        text = str(col) + (" 🠕" if up else " 🠗")
+        return html.th({'onclick': on_click}, text)
+
+    columns = table.data.cols
+
     return html.thead(
-        For(html.th, iterator=columns)
+        For(text_with_arrow, iterator=columns)
     )
 
 
@@ -178,14 +198,14 @@ def AppMain():
     table = use_reactpy_table(Options(
         rows=table_data,
         cols = COLS,
-        plugins=[SimplePaginator.init]
+        plugins=[SimplePaginator.init, SimpleColumnSort.init]
     ))
 
 
     return html.div(
         html.table({"role": "grid"},
             TColgroup([80, 150, 100, 100, 100, 100]),
-            THead(table.data.cols),
+            THead(table),
             TBody(table.paginator.rows),
             TFoot(table.data.cols),
         ),

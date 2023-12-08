@@ -19,7 +19,7 @@ class SimplePaginator(Paginator):
         table.paginator = SimplePaginator(
             data=table.data, 
             page_size=DEFAULT_PAGE_SIZE,
-            updater = updater
+            updater=updater
             )
 
 

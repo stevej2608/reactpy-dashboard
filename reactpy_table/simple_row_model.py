@@ -7,6 +7,6 @@ class SimpleRowModel(RowModel):
     @staticmethod
     def init(table: Table, updater: Updater) -> None:
         table.row_model = SimpleRowModel(
-            data=table.data, 
+            data=table.data,
             updater = updater
             )

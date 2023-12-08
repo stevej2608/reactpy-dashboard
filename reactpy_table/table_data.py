@@ -11,6 +11,9 @@ class Column(BaseModel):
     style: Optional[str] = None
 
 
+Columns = List[Union[str, Column]]
+
+
 class TableData(BaseModel):
     rows: RowData = []
-    cols: List[Union[str, Column]] = []
+    cols: Columns = []
