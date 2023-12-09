@@ -19,3 +19,15 @@ def TableTools(*children: VdomChildren):
     return html.div({'class_name': 'block sm:flex items-center md:divide-x md:divide-gray-100'},
         ChildList(*children)
     )
+
+@component
+def ToolsGroup(*children: VdomChildren):
+    return html.div({'class_name': 'flex items-center sm:justify-end w-full'},
+        ChildList(*children)
+    )
+
+@component
+def ButtonContainer(*children: VdomChildren):
+    return html.div({'class_name': 'hidden md:flex pl-2 space-x-1'},
+        ChildList(*children)
+    )

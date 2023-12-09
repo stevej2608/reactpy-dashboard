@@ -1,7 +1,7 @@
 from reactpy import component, html
 
 from .components import Breadcrumbs, PageTitle, TopPanel
-from .components.table_tools import TableTools, AddButton
+from .components.table_tools import TableTools, AddButton, ToolsGroup, ButtonContainer
 from .components.icon import Icon_Gear, Icon_Bin, Icon_Info, Icon_Dots
 from .products import ProductsTable, AddProductModal, EditProductModal, DeleteProductModal
 
@@ -22,65 +22,25 @@ def TableSearch():
         )
     )
 
-# @component
-# def ProductsX():
-#     return html.main(
-#         TopPanel(
-#             Breadcrumbs(crumbs=['Products']),
-#             PageTitle(title="All Products"),
-#         ),
-#         TableTools(
-#             TableSearch(),
-#             html.div({'class_name': 'hidden md:flex pl-2 space-x-1'},
-#                 Tool(Icon_Gear),
-#                 Tool(Icon_Bin),
-#                 Tool(Icon_Info),
-#                 Tool(Icon_Dots)
-#             ),
-#             html.div({'class_name': 'flex items-center sm:justify-end w-full'},
-#                 AddButton("Add Product")
-#             )
-#         ),
-#         ProductsTable(),
-#         # AddProductModal(),
-#         # EditProductModal(),
-#         # DeleteProductModal()
-#     )
 
 @component
 def Products():
     return html.main(
         TopPanel(
-        
-            # Top bar
-            
-            html.div({'class_name': 'mb-4'},
-                Breadcrumbs(crumbs=['Products']),
+            TopPanel(
+                Breadcrumbs(crumbs=['E-commerce', 'Products']),
                 PageTitle(title="All Products")
             ),
-
-
-            # Tool bar
-
-            html.div({'class_name': 'block sm:flex items-center md:divide-x md:divide-gray-100'},
-                        
+            TableTools(
                 TableSearch(),
-
-                html.div({'class_name': 'flex items-center sm:justify-end w-full'},
-                            
-
-                    html.div({'class_name': 'hidden md:flex pl-2 space-x-1'},
-                                
-
-                        # Icon Container
+                ToolsGroup(
+                    ButtonContainer(
                         Tool(Icon_Gear),
                         Tool(Icon_Bin),
                         Tool(Icon_Info),
                         Tool(Icon_Dots),
                     ),
-
-                AddButton("Add Product")
-
+                    AddButton("Add Product")
                 )
             )
         ),

@@ -24,10 +24,13 @@ def ProductsTable():
 
     @component
     def TableHead(columns: Columns):
+
+        cols = [ColumnHeader(width=col.width, title=col.label) for col in columns[1:5]]
+
         return THead(
             html.tr(
                 Checkbox("checkbox-all", checked=all_checked, on_click=lambda event: set_all_checked(not all_checked)),
-                [ColumnHeader(width=col.width, title=col.label) for col in columns[1:5]],
+                ChildList(*cols),
                 html.th({'scope': 'col', 'class_name': 'p-4'})
             )
         )

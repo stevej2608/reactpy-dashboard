@@ -3,6 +3,7 @@ from reactpy.core.events import EventHandler
 from reactpy.core.component import Component
 from reactpy.core.types import VdomChildren
 from utils.child_list import ChildList
+from utils.unique_sequence import UID
 
 from .icon import Icon_Edit, Icon_Bin
 
@@ -39,14 +40,15 @@ def TRow(*children: VdomChildren):
     )
 
 @component
-def Checkbox(label ='checkbox', checked = False, on_click = null_event):
+def Checkbox(label ='checkbox', id:str='', checked = False, on_click = null_event):
 
     state = 'checked' if checked else ''
+    id = id if id else UID('checkbox')
 
     return html.th({'scope': 'col', 'class_name': 'p-4'},
         html.div({'class_name': 'flex items-center'},
-            html.input({'id': label, 'checked': state, 'onclick': on_click, 'aria-describedby': 'checkbox-1', 'type': 'checkbox', 'class_name': 'focus:ring-3 h-4 w-4 rounded border-gray-300 bg-gray-50 focus:ring-cyan-200'}),
-            html.label({'html_for': label, 'class_name': 'sr-only'}, "checkbox")
+            html.input({'id': id, 'checked': state, 'onclick': on_click, 'aria-describedby': 'checkbox-1', 'type': 'checkbox', 'class_name': 'focus:ring-3 h-4 w-4 rounded border-gray-300 bg-gray-50 focus:ring-cyan-200'}),
+            html.label({'html_for': id, 'class_name': 'sr-only'}, "checkbox")
         )
     )
 
