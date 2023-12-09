@@ -22,27 +22,67 @@ def TableSearch():
         )
     )
 
+# @component
+# def ProductsX():
+#     return html.main(
+#         TopPanel(
+#             Breadcrumbs(crumbs=['Products']),
+#             PageTitle(title="All Products"),
+#         ),
+#         TableTools(
+#             TableSearch(),
+#             html.div({'class_name': 'hidden md:flex pl-2 space-x-1'},
+#                 Tool(Icon_Gear),
+#                 Tool(Icon_Bin),
+#                 Tool(Icon_Info),
+#                 Tool(Icon_Dots)
+#             ),
+#             html.div({'class_name': 'flex items-center sm:justify-end w-full'},
+#                 AddButton("Add Product")
+#             )
+#         ),
+#         ProductsTable(),
+#         # AddProductModal(),
+#         # EditProductModal(),
+#         # DeleteProductModal()
+#     )
+
 @component
 def Products():
     return html.main(
         TopPanel(
-            Breadcrumbs(crumbs=['Products']),
-            PageTitle(title="All Products"),
-            TableTools(
+        
+            # Top bar
+            
+            html.div({'class_name': 'mb-4'},
+                Breadcrumbs(crumbs=['Products']),
+                PageTitle(title="All Products")
+            ),
+
+
+            # Tool bar
+
+            html.div({'class_name': 'block sm:flex items-center md:divide-x md:divide-gray-100'},
+                        
                 TableSearch(),
-                html.div({'class_name': 'hidden md:flex pl-2 space-x-1'},
-                    Tool(Icon_Gear),
-                    Tool(Icon_Bin),
-                    Tool(Icon_Info),
-                    Tool(Icon_Dots)
-                ),
+
                 html.div({'class_name': 'flex items-center sm:justify-end w-full'},
-                    AddButton("Add Product")
+                            
+
+                    html.div({'class_name': 'hidden md:flex pl-2 space-x-1'},
+                                
+
+                        # Icon Container
+                        Tool(Icon_Gear),
+                        Tool(Icon_Bin),
+                        Tool(Icon_Info),
+                        Tool(Icon_Dots),
+                    ),
+
+                AddButton("Add Product")
+
                 )
             )
         ),
         ProductsTable(),
-        # AddProductModal(),
-        # EditProductModal(),
-        # DeleteProductModal()
     )
