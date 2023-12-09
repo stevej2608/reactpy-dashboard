@@ -18,7 +18,7 @@ class SimpleTableSearch(TableSearch):
 
         table.search = SimpleTableSearch(
             data=table.data,
-            initial_values = table.data.rows.copy(),
+            initial_values = table.data.rows,
             updater=updater
             )
 
