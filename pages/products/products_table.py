@@ -12,7 +12,6 @@ from .products_data import make_products, Product
 COLS: Columns = [
     Column(name='index', label='#'),
     Column(name='name', label='Product Name'),
-    Column(name='description', label='Description'),
     Column(name='technology', label='Technology'),
     Column(name='id', label='ID'),
     Column(name='price', label='Price')
@@ -27,8 +26,8 @@ def ProductsTable():
     def TableHead(columns: Columns):
         return THead(
             html.tr(
-                Checkbox(checked=all_checked, on_click=lambda event: set_all_checked(not all_checked)),
-                [ColumnHeader(width="200px", title=col.label) for col in columns[1:5]],
+                Checkbox("checkbox-all", checked=all_checked, on_click=lambda event: set_all_checked(not all_checked)),
+                [ColumnHeader(width=col.width, title=col.label) for col in columns[1:5]],
                 html.th({'scope': 'col', 'class_name': 'p-4'})
             )
         )
@@ -52,7 +51,7 @@ def ProductsTable():
             Text(value=row.technology),
             Text(value=row.id),
             Text(value=row.price),
-            EditButtons()
+            EditButtons(label='item')
         )
 
 

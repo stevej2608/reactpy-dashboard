@@ -13,4 +13,6 @@ def AddButton(label:str):
 
 @component
 def TableTools(*children: VdomChildren):
-    return ChildList(*children)
+    return html.div({'class_name': 'block sm:flex items-center md:divide-x md:divide-gray-100'},
+        ChildList(*children)
+    )

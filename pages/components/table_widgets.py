@@ -43,7 +43,7 @@ def Checkbox(label ='checkbox', checked = False, on_click = null_event):
 
     state = 'checked' if checked else ''
 
-    return html.th({'scope': 'col', 'class_name': 'p-4 w-[50px]'},
+    return html.th({'scope': 'col', 'class_name': 'p-4'},
         html.div({'class_name': 'flex items-center'},
             html.input({'id': label, 'checked': state, 'onclick': on_click, 'aria-describedby': 'checkbox-1', 'type': 'checkbox', 'class_name': 'focus:ring-3 h-4 w-4 rounded border-gray-300 bg-gray-50 focus:ring-cyan-200'}),
             html.label({'html_for': label, 'class_name': 'sr-only'}, "checkbox")
@@ -66,19 +66,19 @@ def Text(value:str):
 
 
 @component
-def EditButtons():
+def EditButtons(label = ''):
     return html.td({'class_name': 'space-x-2 whitespace-nowrap p-4'},
         html.button({'type': 'button', 'data-modal-toggle': 'user-modal', 'class_name': 'inline-flex items-center rounded-lg bg-cyan-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200'},
             Icon_Edit(),
-            "Edit user"
+            f"Edit {label}"
         ),
         html.button({'type': 'button', 'data-modal-toggle': 'delete-user-modal', 'class_name': 'inline-flex items-center rounded-lg bg-red-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300'},
-            Icon_Bin(),
-            "Delete user"
+            Icon_Bin(size='h-5 w-5'),
+            f"Delete {label}"
         )
     )
 
 @component
 def ColumnHeader(width:int, title:str):
-    cls = f'p-4 w-[{width}] text-left text-xs font-medium uppercase text-gray-500'
+    cls = f'p-4 {width} text-left text-xs font-medium uppercase text-gray-500'
     return html.th({'scope': 'col', 'class_name': cls}, title)

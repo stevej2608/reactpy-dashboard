@@ -11,6 +11,7 @@ class Column(BaseModel):
     label: str
     style: Optional[str] = None
     sort : Optional[Callable[['Column'], None]] = None
+    width: str = ""
 
 
 

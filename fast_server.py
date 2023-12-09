@@ -12,7 +12,7 @@ from utils.logger import log, logging
 from utils.var_name import var_name
 
 from modules.assets import assets_api
-from modules.css_links import TAILWIND_CSS
+from modules.css_links import TAILWIND_CSS, TAILWIND_CSS_2219
 
 app = FastAPI(description="ReactPy", version="0.1.0")
 
@@ -54,7 +54,8 @@ DASHBOARD_OPTIONS=Options(
         html.link(GOOGLE_STATIC_FONTS),
         html.link(GOOGLE_CSS),
         html.title(PAGE_HEADER_TITLE),
-        html.link(TAILWIND_CSS),
+        html.link(TAILWIND_CSS_2219),
+        # html.link(TAILWIND_CSS),
     )
 )
 
