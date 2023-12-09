@@ -1,9 +1,15 @@
-from reactpy import component, html
+from reactpy import component, html, event
+from reactpy.core.events import EventHandler
 from reactpy.core.component import Component
 from reactpy.core.types import VdomChildren
 from utils.child_list import ChildList
 
 from .icon import Icon_Edit, Icon_Bin
+
+
+@event
+def null_event(evt):
+    ...
 
 @component
 def Table(head: Component, body: Component):
@@ -33,10 +39,13 @@ def TRow(*children: VdomChildren):
     )
 
 @component
-def Checkbox(label:str='checkbox'):
+def Checkbox(label ='checkbox', checked = False, on_click = null_event):
+
+    state = 'checked' if checked else ''
+
     return html.th({'scope': 'col', 'class_name': 'p-4 w-[50px]'},
         html.div({'class_name': 'flex items-center'},
-            html.input({'id': label, 'aria-describedby': 'checkbox-1', 'type': 'checkbox', 'class_name': 'focus:ring-3 h-4 w-4 rounded border-gray-300 bg-gray-50 focus:ring-cyan-200'}),
+            html.input({'id': label, 'checked': state, 'onclick': on_click, 'aria-describedby': 'checkbox-1', 'type': 'checkbox', 'class_name': 'focus:ring-3 h-4 w-4 rounded border-gray-300 bg-gray-50 focus:ring-cyan-200'}),
             html.label({'html_for': label, 'class_name': 'sr-only'}, "checkbox")
         )
     )

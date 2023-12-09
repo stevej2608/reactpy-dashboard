@@ -178,7 +178,8 @@ def THead(table: Table):
 
 
 @component
-def TColgroup(col_widths):
+def TColgroup(col_widths: List[int]):
+    """Return a html.colgroup with the given widths"""
     return  html.colgroup(
         [html.col({'style': {'width':f"{width}px"}}) for width in col_widths]
     )
