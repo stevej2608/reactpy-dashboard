@@ -55,8 +55,7 @@ def AppMain():
                 page_route("/products",ProductsPage),
                 route("/sign-in", SignIn()),
                 route("/sign-up", SignUp()),
-                route("/not-found", NotFoundPage()),
-                # route("*", NoFoundPage())
+                route("*", NotFoundPage())
             )
         )
     )
