@@ -43,11 +43,23 @@ and uploaded to pypicloud. To install it:
 * [use_reactpy_table](tmp/table/examples/react/pagination/src/main.tsx#L110)
         [useReactTable](tmp/table/packages/react-table/src/index.tsx#L57)
 
+
+## Tailwind CSS
+
+During development use [tailwindcss play]. 
+
+To get a static css file containing all the CSS rules you need to copy
+the tailwind ;play generated style tag from a live browser session and 
+dump it into a file. see *static\css\tailwind-3.3.5.css*. This file will 
+contain the accumulated CSS rules for every page visited.
+
+
 ## Links
 
 * [reactpy-crud]
 
 
+[tailwindcss play]: https://tailwindcss.com/docs/installation/play-cdn
 [reactpy-crud]: https://github.com/fazt/reactpy-crud
 [reactpy-router@jonesst2608]: https://github.com/stevej2608/reactpy-router
 [reactpy]: https://github.com/reactive-python/reactpy
