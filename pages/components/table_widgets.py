@@ -14,9 +14,17 @@ def null_event(evt):
 
 @component
 def Table(head: Component, body: Component):
-    return html.table({'class_name': 'min-w-full table-fixed divide-y divide-gray-200'},
-        head,
-        body
+    return html.div({'class_name': 'flex flex-col'},
+        html.div({'class_name': 'overflow-x-auto'},
+            html.div({'class_name': 'align-middle inline-block min-w-full'},
+                html.div({'class_name': 'shadow overflow-hidden'},
+                    html.table({'class_name': 'table-fixed min-w-full divide-y divide-gray-200'},
+                        head,
+                        body
+                    )
+                )
+            )
+        )
     )
 
 

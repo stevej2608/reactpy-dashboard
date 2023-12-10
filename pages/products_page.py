@@ -1,7 +1,7 @@
 from reactpy import component, html
 
 from .components import Breadcrumbs, PageTitle, TopPanel
-from .components.table_tools import TableTools, AddButton, ToolsGroup, ButtonContainer
+from .components.table_tools import TableTools, AddButton, ToolsGroup, ButtonContainer, BreadcrumbsAndTitle
 from .components.icon import Icon_Gear, Icon_Bin, Icon_Info, Icon_Dots
 from .products import ProductsTable, AddProductModal, EditProductModal, DeleteProductModal
 
@@ -27,7 +27,7 @@ def TableSearch():
 def Products():
     return html.main(
         TopPanel(
-            TopPanel(
+            BreadcrumbsAndTitle(
                 Breadcrumbs(crumbs=['E-commerce', 'Products']),
                 PageTitle(title="All Products")
             ),
@@ -44,5 +44,5 @@ def Products():
                 )
             )
         ),
-        ProductsTable(),
+        ProductsTable()
     )
