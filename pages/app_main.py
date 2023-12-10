@@ -8,7 +8,7 @@ from .components.footer import Footer
 from .components.copyright import Copyright
 
 from .dashboard_page import Dashboard
-from .users import Users
+from .users_page import UsersPage
 from .products_page import ProductsPage
 
 from .sign_in import SignIn
@@ -50,7 +50,7 @@ def AppMain():
         html.div({'class_name': 'bg-gray-50 text-gray-800'},
             simple.router(
                 page_route("/",Dashboard),
-                page_route("/users", Users),
+                page_route("/users", UsersPage),
                 page_route("/products",ProductsPage),
                 route("/sign-in", SignIn()),
                 route("/sign-up", SignUp())

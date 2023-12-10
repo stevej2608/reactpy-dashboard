@@ -3,15 +3,15 @@ from reactpy import component, html
 from .components import Breadcrumbs, PageTitle, TopPanel
 from .components.icon import Icon_Gear, Icon_Bin, Icon_Info, Icon_Dots
 from .components.table_tools import TableTools, AddButton, ToolsGroup, ButtonContainer, BreadcrumbsAndTitle, TableTool, TableSearch
-from .products import ProductsTable
+from .users import UsersTable
 
 @component
-def ProductsPage():
+def UsersPage():
     return html.main(
         TopPanel(
             BreadcrumbsAndTitle(
-                Breadcrumbs(crumbs=['E-commerce', 'Products']),
-                PageTitle(title="All Products")
+                Breadcrumbs(crumbs=['Users', 'List']),
+                PageTitle(title="All Users")
             ),
             TableTools(
                 TableSearch(),
@@ -26,5 +26,5 @@ def ProductsPage():
                 )
             )
         ),
-        ProductsTable()
+        UsersTable()
     )
