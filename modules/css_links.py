@@ -53,3 +53,9 @@ TAILWIND_CDN = {
         'href': 'https://cdn.skypack.dev/twind/shim',
         'crossorigin': 'anonymous'
     }
+
+INDEX_CSS = {
+        'rel': 'stylesheet',
+        'href': '/static/css/index.css',
+        'crossorigin': 'anonymous'
+    }

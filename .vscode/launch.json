@@ -19,7 +19,7 @@
       "justMyCode": false,
       "serverReadyAction": {
         "pattern": "Uvicorn running on\\s+(https?://\\S+)",
-        "uriFormat": "%s/not-found",
+        "uriFormat": "%s/",
         "action": "debugWithChrome",
         "killOnServerStop": true
       }

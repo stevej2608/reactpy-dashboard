@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fix problem with CSS in src/forms/PasswordInput.tsx shadow was being applied to
+
+    <input type="password" ... />
+
+    See https://stackoverflow.com/a/72364881
+*/
+
+input {
+  --tw-ring-shadow: 0 0 #000 !important;
+}
+
+/* Avoid the need to define dark variants for background, text and boarder
+  * colours etc in the markup classes. We define all dark variants
+  * here and invoke them when 'dark' in enabled.
+  *
+  * All colors taken from Tailwind standard palette
+  *
+  *  https://tailwindcss.com/docs/customizing-colors
+  *
+  */
+
+:root {
+
+  /* These tailwind colors are used in dark mode */
+
+  --cyan-300: #67e8f9;
+  --cyan-400: #22D3EE;
+  --cyan-700: #0e7490;
+
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  --gray-950: #030712;
+
+  --green-500: #22c55e;
+  --green-600: #16a34a;
+
+  --red-200: #fecaca;
+  --red-300: #fca5a5;
+  --red-400: #f87171;
+  --red-700: #b91c1c;
+
+  --teal-500: #14b8a6;
+
+}
+
+/* These dark mode variants are the inverse of the light mode */
+
+.dark {
+  .bg-white { background-color: var(--gray-900)}
+
+  .bg-gray-50 { background-color: var(--gray-950)}
+  .bg-gray-100 { background-color:var(--gray-900)}
+  .bg-gray-200 { background-color:var(--gray-800)}
+  .bg-gray-900 { background-color: var(--gray-100)}
+  .bg-cyan-600 { background-color: var(--cyan-400)}
+  .bg-cyan-700 { background-color: var(--cyan-300)}
+  .bg-red-600 { background-color: var(--red-400)}
+  .bg-red-700 { background-color: var(--red-300)}
+  .bg-red-800 { background-color: var(--red-200)}
+  .bg-green-400 { background-color: var(--green-600)}
+
+  .hover\:bg-gray-100:hover { background-color:var(--gray-600)}
+
+  .border-gray-200 { border-color:var(--gray-800)}
+  .border-gray-300 { border-color:var(--gray-700)}
+  .border-cyan-600 { border-color:var(--cyan-400)}
+
+  .divide-gray-100>:not([hidden])~:not([hidden]) { border-color: var(--gray-900);}
+  .divide-gray-200>:not([hidden])~:not([hidden]) { border-color: var(--gray-800);}
+
+  .focus\:ring-gray-100:focus { --tw-ring-color: var(--gray-900);}
+  .focus\:ring-gray-200:focus { --tw-ring-color: var(--gray-800);}
+  .focus\:ring-cyan-200:focus { --tw-ring-color: var(--cyan-700);}
+  .focus\:ring-cyan-600:focus { --tw-ring-color: var(--cyan-400);}
+  .focus\:ring-red-300:focus { --tw-ring-color: var(--red-700);}
+
+  .text-white { color: var(--gray-900);}
+  .text-gray-400 { color: var(--gray-600);}
+  .text-gray-500 { color: var(--gray-500);}
+  .text-gray-600 { color: var(--gray-400);}
+  .text-gray-700 { color: var(--gray-400);}
+  .text-gray-800 { color: var(--gray-200);}
+  .text-gray-900 { color: var(--gray-100);}
+
+  .text-cyan-600 { color: var(--cyan-400);}
+  .text-green-500 { color: var(--green-500);}
+  .text-red-600 { color: var(--red-400);}
+  .text-teal-600 { color: var(--teal-500);}
+
+}
