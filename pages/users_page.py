@@ -2,7 +2,7 @@ from reactpy import component, html
 
 from .components import Breadcrumbs, PageTitle, TopPanel
 from .components.icon import Icon_Gear, Icon_Bin, Icon_Info, Icon_Dots
-from .components.table_tools import TableTools, AddButton, ToolsGroup, ButtonContainer, BreadcrumbsAndTitle, TableTool, TableSearch
+from .components.table_tools import TableTools, AddButton, ExportButton, ToolsGroup, TableToolContainer, ButtonContainer, BreadcrumbsAndTitle, TableTool, TableSearch
 from .users import UsersTable
 
 @component
@@ -14,15 +14,18 @@ def UsersPage():
                 PageTitle(title="All Users")
             ),
             TableTools(
-                TableSearch(),
+                TableSearch(placeholder="Search for users"),
                 ToolsGroup(
-                    ButtonContainer(
+                    TableToolContainer(
                         TableTool(Icon_Gear),
                         TableTool(Icon_Bin),
                         TableTool(Icon_Info),
                         TableTool(Icon_Dots),
                     ),
-                    AddButton("Add Product")
+                    ButtonContainer(
+                        AddButton("Add User"),
+                        ExportButton()
+                    )
                 )
             )
         ),

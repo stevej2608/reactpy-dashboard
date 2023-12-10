@@ -7,14 +7,14 @@ from reactpy_table import use_reactpy_table, Options, Columns, Column, SimplePag
 from ..components.table_paginator import TablePaginator
 from ..components.table_widgets import Table, TBody, THead, TRow, Checkbox, RowCheckbox, Text, EditButtons, ColumnHeader
 
-from .user_data import make_products, Product
+from .user_data import make_users, User
 
 COLS: Columns = [
     Column(name='index', label='#'),
-    Column(name='name', label='Product Name', width="w-80"),
-    Column(name='technology', label='Technology', width="w-48"),
-    Column(name='id', label='ID', width="w-48"),
-    Column(name='price', label='Price', width="w-48")
+    Column(name='name', label='Name', width="w-80"),
+    Column(name='position', label='Position', width="w-48"),
+    Column(name='company', label='Company', width="w-48"),
+    Column(name='status', label='Status', width="w-48")
     ]
 
 @component
@@ -36,30 +36,34 @@ def UsersTable():
         )
 
     @component
-    def TableRow(index, row: Product):
+    def TableRow(index, row: User):
 
         checked, set_checked = use_state(all_checked)
 
+
         @component
-        def Name(name:str, width=""):
-            return html.td({'class_name': f'whitespace-nowrap {width} p-4 text-sm font-normal text-gray-500'},
-                html.div({'class_name': 'text-base font-semibold text-gray-900'}, name),
-                html.div({'class_name': 'text-sm font-normal text-gray-500'}, "Html templates")
+        def NameAndPicture(row: User, width=""):
+            return html.td({'class_name': 'p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0'},
+                html.img({'class_name': 'h-10 w-10 rounded-full', 'src': row.img, 'alt': f'{row.name} avatar'}),
+                html.div({'class_name': 'text-sm font-normal text-gray-500'},
+                    html.div({'class_name': 'text-base font-semibold text-gray-900'}, row.name),
+                    html.div({'class_name': 'text-sm font-normal text-gray-500'}, row.email)
+                )
             )
 
 
         return TRow(
             RowCheckbox(checked=checked, on_click=lambda event: set_checked(not checked)),
-            Name(row.name),
-            Text(value=row.technology),
-            Text(value=row.id,),
-            Text(value=row.price),
-            EditButtons(label='item')
+            NameAndPicture(row),
+            Text(value=row.position),
+            Text(value=row.country),
+            Text(value=row.status),
+            EditButtons(label='user')
         )
 
 
     @component
-    def TableBody(table: List[Product]):
+    def TableBody(table: List[User]):
         table_rows = [TableRow(index, row) for index, row in enumerate(table)]
         return TBody(ChildList(*table_rows))
 
@@ -68,7 +72,7 @@ def UsersTable():
 
     # https://reactpy.dev/docs/reference/hooks-api.html
 
-    table_data = use_memo(lambda: make_products(10000))
+    table_data = use_memo(lambda: make_users(1000))
 
     table = use_reactpy_table(Options(
         rows=table_data,

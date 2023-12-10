@@ -2,25 +2,99 @@ from typing import List
 from pydantic import BaseModel
 from utils.make_data import make_data
 
-class Product(BaseModel):
+class User(BaseModel):
+    img: str
     name: str
-    description: str
-    technology: str
-    id: str
-    price: str
+    email: str
+    position: str
+    country: str
+    status: str
 
+# https://www.convertsimple.com/convert-javascript-to-json/
 
-PRODUCTS = [
-    {"name": "Education Dashboard", "description": "Html templates", "technology": "Angular", "id": "#194556", "price": "$149"},
-    {"name": "React UI Kit", "description": "Html templates", "technology": "React JS", "id": "#623232", "price": "$129"},
-    {"name": "DashboardPro", "description": "Html templates", "technology": "SolidJS", "id": "#194334", "price": "$449"},
-    {"name": "Charts Package", "description": "Fancy charts", "technology": "Angular", "id": "#323323", "price": "$129"},
-    {"name": "Server Render", "description": "NodeJS", "technology": "Typescript", "id": "#994336", "price": "$749"},
-    {"name": "Accounts Package", "description": "NodeJS", "technology": "Typescript", "id": "#144256", "price": "$779"},
-    {"name": "Grav CMS", "description": "Content Management", "technology": "PHP", "id": "#624478", "price": "$29"},
-    {"name": "Wordpress", "description": "Content Management", "technology": "PHP", "id": "#192656", "price": "$55"}
+USERS = [
+  {
+    "img": "/static/images/users/neil-sims.png",
+    "name": "Neil Sims",
+    "email": "neil.sims@windster.com",
+    "position": "Front-end developer",
+    "country": "United States",
+    "status": "Active"
+  },
+  {
+    "img": "/static/images/users/roberta-casas.png",
+    "name": "Roberta Casas",
+    "email": "roberta.casas@windster.com",
+    "position": "Designer",
+    "country": "Spain",
+    "status": "Active"
+  },
+  {
+    "img": "/static/images/users/michael-gough.png",
+    "name": "Michael Gough",
+    "email": "michael.gough@windster.com",
+    "position": "React developer",
+    "country": "United Kingdom",
+    "status": "Active"
+  },
+  {
+    "img": "/static/images/users/jese-leos.png",
+    "name": "Jese Leos",
+    "email": "jese.leos@windster.com",
+    "position": "Marketing",
+    "country": "United States",
+    "status": "Active"
+  },
+  {
+    "img": "/static/images/users/bonnie-green.png",
+    "name": "Bonnie Green",
+    "email": "bonnie.green@windster.com",
+    "position": "UI/UX Engineer",
+    "country": "Australia",
+    "status": "Offline"
+  },
+  {
+    "img": "/static/images/users/thomas-lean.png",
+    "name": "Thomas Lean",
+    "email": "thomas.lean@windster.com",
+    "position": "Vue developer",
+    "country": "Germany",
+    "status": "Active"
+  },
+  {
+    "img": "/static/images/users/helene-engels.png",
+    "name": "Helene Engels",
+    "email": "helene.engels@windster.com",
+    "position": "Product owner",
+    "country": "Canada",
+    "status": "Active"
+  },
+  {
+    "img": "/static/images/users/lana-byrd.png",
+    "name": "Lana Byrd",
+    "email": "lana.byrd@windster.com",
+    "position": "Designer",
+    "country": "United States",
+    "status": "Active"
+  },
+  {
+    "img": "/static/images/users/leslie-livingston.png",
+    "name": "Leslie Livingston",
+    "email": "leslie.livingston@windster.com",
+    "position": "Web developer",
+    "country": "France",
+    "status": "Offline"
+  },
+  {
+    "img": "/static/images/users/robert-brown.png",
+    "name": "Robert Brown",
+    "email": "robert.brown@windster.com",
+    "position": "Laravel developer",
+    "country": "Russia",
+    "status": "Active"
+  }
 ]
 
 
-def make_products(number: int) -> List[Product] :
-    return make_data(number, PRODUCTS, Product)
+def make_users(number: int) -> List[User] :
+    return make_data(number, USERS, User)

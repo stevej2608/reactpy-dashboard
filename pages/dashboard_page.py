@@ -4,6 +4,7 @@ from .dashboard.transactions_table import TransactionsTable
 from .dashboard.sales_chart import SalesChart
 from .dashboard.overview_panel import OverviewPanel
 from .dashboard.latest_customers import LatestCustomers
+from .dashboard.acquisition_overview import AcquisitionOverview
 
 from .components.icon import Icon_UpArrow
 
@@ -62,7 +63,7 @@ def MiddleRow():
 def BottomRow():
     return html.div({'class_name': 'my-4 grid grid-cols-1 xl:gap-4 2xl:grid-cols-2'},
         LatestCustomers(),
-        # AcquisitionOverview()
+        AcquisitionOverview()
     )
 
 
