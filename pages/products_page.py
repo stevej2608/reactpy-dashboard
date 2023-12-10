@@ -1,9 +1,9 @@
 from reactpy import component, html
 
 from .components import Breadcrumbs, PageTitle, TopPanel
-from .components.table_tools import TableTools, AddButton, ToolsGroup, ButtonContainer, BreadcrumbsAndTitle
 from .components.icon import Icon_Gear, Icon_Bin, Icon_Info, Icon_Dots
-from .products import ProductsTable, AddProductModal, EditProductModal, DeleteProductModal
+from .components.table_tools import TableTools, AddButton, ToolsGroup, ButtonContainer, BreadcrumbsAndTitle
+from .products import ProductsTable
 
 
 @component
@@ -24,7 +24,7 @@ def TableSearch():
 
 
 @component
-def Products():
+def ProductsPage():
     return html.main(
         TopPanel(
             BreadcrumbsAndTitle(

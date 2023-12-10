@@ -9,7 +9,7 @@ from .components.copyright import Copyright
 
 from .dashboard_page import Dashboard
 from .users import Users
-from .products_page import Products
+from .products_page import ProductsPage
 
 from .sign_in import SignIn
 from .sign_up import SignUp
@@ -51,7 +51,7 @@ def AppMain():
             simple.router(
                 page_route("/",Dashboard),
                 page_route("/users", Users),
-                page_route("/products",Products),
+                page_route("/products",ProductsPage),
                 route("/sign-in", SignIn()),
                 route("/sign-up", SignUp())
             )
