@@ -5,7 +5,7 @@ from utils.logger import log
 from reactpy_table import use_reactpy_table, Options, Columns, Column, SimplePaginator, SimpleRowModel
 
 from ..components.table_paginator import TablePaginator
-from ..components.table_widgets import Table, TBody, THead, TRow, Checkbox, Text, EditButtons, ColumnHeader
+from ..components.table_widgets import Table, TBody, THead, TRow, Checkbox, RowCheckbox, Text, EditButtons, ColumnHeader
 
 from .products_data import make_products, Product
 
@@ -49,7 +49,7 @@ def ProductsTable():
 
 
         return TRow(
-            Checkbox(checked=checked, on_click=lambda event: set_checked(not checked)),
+            RowCheckbox(checked=checked, on_click=lambda event: set_checked(not checked)),
             Name(row.name),
             Text(value=row.technology),
             Text(value=row.id),
