@@ -1,4 +1,4 @@
-from typing import List, Any, Callable, Optional, Union
+from typing import List, Any, Callable, Optional
 from pydantic import BaseModel
 
 

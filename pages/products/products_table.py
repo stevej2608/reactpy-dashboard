@@ -1,4 +1,4 @@
-from typing import List, Callable
+from typing import List
 from reactpy import component, html, use_memo, use_state
 from utils.child_list import ChildList
 from utils.logger import log

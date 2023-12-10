@@ -1,6 +1,5 @@
-from typing import Dict, TypeVar, Any
+from typing import Dict, TypeVar
 from pydantic import BaseModel
-from utils.logger import log
 
 from reactpy_forms.field_model import FieldModel
 

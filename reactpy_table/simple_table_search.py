@@ -1,5 +1,4 @@
 
-from utils.logger import log
 
 from .table_data import RowData, Column
 from .abstract_plugin import Updater, update_state

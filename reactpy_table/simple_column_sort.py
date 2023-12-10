@@ -1,6 +1,5 @@
 from typing import Dict, Any
 from pydantic import BaseModel
-from utils.logger import log
 
 from .abstract_plugin import Updater, update_state
 from .abstract_column_sort import ColumnSort

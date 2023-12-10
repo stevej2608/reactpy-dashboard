@@ -1,5 +1,4 @@
 from reactpy import Ref, component, html
-from reactpy.svg import svg, path
 from reactpy_router import link, route, simple
 from utils.logger import log, logging
 from pages.components.icon import Icon_Dashboard

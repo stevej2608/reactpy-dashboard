@@ -4,7 +4,6 @@ from .dashboard.transactions_table import TransactionsTable
 from .dashboard.sales_chart import SalesChart
 from .dashboard.overview_panel import OverviewPanel
 from .dashboard.latest_customers import LatestCustomers
-from .dashboard.acquisition_overview import AcquisitionOverview
 
 from .components.icon import Icon_UpArrow
 
