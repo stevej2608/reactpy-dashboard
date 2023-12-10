@@ -75,8 +75,8 @@ def RowCheckbox(label ='checkbox', id:str='', checked = False, on_click = null_e
 
 
 @component
-def Text(value:str):
-    return html.td({'class_name': 'whitespace-nowrap p-4 text-base font-medium text-gray-900'}, value)
+def Text(value:str, width=""):
+    return html.td({'class_name': f'whitespace-nowrap {width} p-4 text-base font-medium text-gray-900'}, value)
 
 
 @component

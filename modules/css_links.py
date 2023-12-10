@@ -42,4 +42,8 @@ TAILWIND_CSS_SHIM = {
         'crossorigin': 'anonymous'
     }
 
-
+TAILWIND_CDN = {
+        'rel': 'stylesheet',
+        'href': 'https://cdn.skypack.dev/twind/shim',
+        'crossorigin': 'anonymous'
+    }

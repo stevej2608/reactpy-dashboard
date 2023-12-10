@@ -11,10 +11,10 @@ from .products_data import make_products, Product
 
 COLS: Columns = [
     Column(name='index', label='#'),
-    Column(name='name', label='Product Name'),
-    Column(name='technology', label='Technology'),
-    Column(name='id', label='ID'),
-    Column(name='price', label='Price')
+    Column(name='name', label='Product Name', width="w-80"),
+    Column(name='technology', label='Technology', width="w-48"),
+    Column(name='id', label='ID', width="w-48"),
+    Column(name='price', label='Price', width="w-48")
     ]
 
 @component
@@ -41,8 +41,8 @@ def ProductsTable():
         checked, set_checked = use_state(all_checked)
 
         @component
-        def Name(name:str):
-            return html.td({'class_name': 'whitespace-nowrap p-4 text-sm font-normal text-gray-500'},
+        def Name(name:str, width=""):
+            return html.td({'class_name': f'whitespace-nowrap {width} p-4 text-sm font-normal text-gray-500'},
                 html.div({'class_name': 'text-base font-semibold text-gray-900'}, name),
                 html.div({'class_name': 'text-sm font-normal text-gray-500'}, "Html templates")
             )
@@ -52,7 +52,7 @@ def ProductsTable():
             RowCheckbox(checked=checked, on_click=lambda event: set_checked(not checked)),
             Name(row.name),
             Text(value=row.technology),
-            Text(value=row.id),
+            Text(value=row.id,),
             Text(value=row.price),
             EditButtons(label='item')
         )
