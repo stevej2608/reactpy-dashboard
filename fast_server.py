@@ -55,10 +55,10 @@ DASHBOARD_OPTIONS=Options(
         html.link(GOOGLE_CSS),
 
         # Use this for production
-        html.link(TAILWIND_CSS_335),
+        # html.link(TAILWIND_CSS_335),
 
         # Use this for development
-        # html.script({'src': 'https://cdn.tailwindcss.com'}),
+        html.script({'src': 'https://cdn.tailwindcss.com'}),
 
         html.title(PAGE_HEADER_TITLE),
     )

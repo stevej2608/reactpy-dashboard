@@ -10,7 +10,7 @@ from .components.copyright import Copyright
 from .dashboard_page import Dashboard
 from .users_page import UsersPage
 from .products_page import ProductsPage
-from .not_found_404 import NoFoundPage
+from .not_found_404 import NotFoundPage
 
 from .sign_in import SignIn
 from .sign_up import SignUp
@@ -55,7 +55,8 @@ def AppMain():
                 page_route("/products",ProductsPage),
                 route("/sign-in", SignIn()),
                 route("/sign-up", SignUp()),
-                route("*", NoFoundPage())
+                route("/not-found", NotFoundPage()),
+                # route("*", NoFoundPage())
             )
         )
     )

@@ -1,16 +1,27 @@
-from reactpy import component, html, event
-
+from reactpy import component, html
+from reactpy_router import link
+from .components.icon import Icon_BackArrow
 
 
 @component
-def NoFoundPage(*args, **kwargs):
-    return html.section({'class_name': 'flex items-center h-full p-16 dark:bg-gray-900 dark:text-gray-100'},
-        html.div({'class_name': 'container flex flex-col items-center justify-center px-5 mx-auto my-8'},
-            html.div({'class_name' :'max-w-md text-center'},
-                html.h2({'class_name': 'mb-8 font-extrabold text-9xl dark:text-gray-600'}, html.span({'class_name': 'sr-only'}, "Error","404")),
-                html.p({'class_name': 'text-2xl font-semibold md:text-3xl'}, "Sorry, we couldn't find this page."),
-                html.p({'class_name': 'mt-4 mb-8 dark:text-gray-400'}, "But dont worry, you can find plenty of other things on our homepage."),
-                html.a({'class_name': 'px-8 py-3 font-semibold rounded dark:bg-violet-400 dark:text-gray-900', 'rel': 'noopener noreferrer', 'href': '/'}, "Back to homepage")
+def NotFoundPage():
+    return html.div({'class_name': 'pt:mt-0 mx-auto flex flex-col items-center justify-center px-6 pt-8 md:h-screen'},
+        html.div({'class_name': 'row'},
+            html.div({'class_name': 'col-12 text-center d-flex align-items-center justify-content-center'},
+                html.div(
+                    html.img({'alt': '404 not found', 'class_name': 'img-fluid w-75', 'src': 'static/images/404.svg'}),
+                    html.h1({'class_name': 'text-4xl font-bold mt-5'},"Page not found"),
+                    html.p({'class_name': 'text-xl  m-5'}, "Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us."),
+
+                    link(
+                        html.div({'class_name': 'w-1/2 text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto'},
+                            Icon_BackArrow(),
+                            "Back to homepage"
+                        ),
+                        to='/products'
+                    )
+
+                )
             )
         )
     )
