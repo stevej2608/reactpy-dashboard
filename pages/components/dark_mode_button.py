@@ -1,11 +1,11 @@
 from reactpy import component, html, use_context
 
 from .icon import Icon_Sun, Icon_Moon
-from ..settings.settings_store import SettingsContext
+from .app_store import AppContext
 
 @component
 def DarkModeButton():
-    settings = use_context(SettingsContext)
+    settings = use_context(AppContext)
 
     icon =  Icon_Moon() if settings.dark_mode else Icon_Sun()
 

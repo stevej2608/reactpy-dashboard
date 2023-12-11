@@ -8,7 +8,7 @@ class UserSettings(BaseModel):
     dark_mode = False
 
 
-class UserState:
+class AppState:
 
     @property
     def dark_mode(self) -> bool:
@@ -28,4 +28,4 @@ class UserState:
         self.update(dark_mode = not self._settings.dark_mode)
 
 
-SettingsContext = create_context(cast(UserState, None))
+AppContext = create_context(cast(AppState, None))

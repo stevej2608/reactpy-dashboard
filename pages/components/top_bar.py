@@ -6,7 +6,7 @@ from .gitHub_button import GitHubButton
 
 from .mobile_logic import ToggleSidebarMobile, MobileSearch
 from .dark_mode_button import DarkModeButton
-from ..settings.settings_store import SettingsContext
+from .app_store import AppContext
 
 
 
@@ -27,7 +27,7 @@ def StarsButton(color):
 
 @component
 def OpenSource():
-    settings = use_context(SettingsContext)
+    settings = use_context(AppContext)
 
     # <GitHubButton /> requests the project star rating from the GitHub website.
     # To avoid network access and flicker when switching between light & dark

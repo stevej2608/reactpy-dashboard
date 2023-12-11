@@ -16,7 +16,7 @@ from .sign_in import SignIn
 from .sign_up import SignUp
 from .components.mobile_logic import SideBarBackdrop
 from .components.dark_mode_provider import DarkModeProvider
-from .settings.settings_store import UserSettings, UserState, SettingsContext
+from .components.app_store import UserSettings, AppState, AppContext
 
 from utils.logger import log
 
@@ -50,7 +50,7 @@ def AppMain():
 
     location = use_location()
     log.info('location %s', location)
-    return SettingsContext(
+    return AppContext(
         DarkModeProvider(settings.dark_mode,
             html.div({'class_name': 'bg-gray-50 text-gray-800'},
                 simple.router(
@@ -63,5 +63,5 @@ def AppMain():
                 )
             )
         ),
-        value = UserState(settings, set_settings)
+        value = AppState(settings, set_settings)
     )
