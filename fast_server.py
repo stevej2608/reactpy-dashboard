@@ -4,7 +4,6 @@ import signal
 import multiprocessing
 import uvicorn
 from fastapi import FastAPI
-from reactpy import html
 from reactpy.core.component import Component
 from reactpy.backend.fastapi import configure, Options
 
@@ -12,102 +11,10 @@ from utils.logger import log, logging
 from utils.var_name import var_name
 
 from modules.assets import assets_api
-from modules.css_links import INDEX_CSS
+from modules.dashboard_options import DASHBOARD_OPTIONS
+
 
 app = FastAPI(description="ReactPy", version="0.1.0")
-
-
-PAGE_HEADER_TITLE  = 'ReactPy Dashboard'
-
-GOOGLE_FONTS = {
-        'rel': 'preconnect',
-        'href': 'https://fonts.googleapis.com'
-    }
-
-GOOGLE_STATIC_FONTS = {
-        'rel': 'preconnect',
-        'href': 'https://fonts.gstatic.com',
-        'crossorigin': ''
-    }
-
-GOOGLE_CSS = {
-        'rel': 'stylesheet',
-        'href': 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap'
-    }
-
-META_VIEWPORT = {
-    'name': "viewport",
-    'content': "width=device-width",
-    'initial-scale': 1
-    }
-
-META_COLOR = {
-    'theme-color': "viewport",
-    'content': "#000000"
-    }
-
-DASHBOARD_OPTIONS=Options(
-    head=html.head(
-        html.meta(META_VIEWPORT),
-        html.meta(META_COLOR),
-        html.link(GOOGLE_FONTS),
-        html.link(GOOGLE_STATIC_FONTS),
-        html.link(GOOGLE_CSS),
-
-        # Use this for production
-        # html.link(TAILWIND_CSS_335),
-
-        # Use this for development
-        html.script({'src': 'https://cdn.tailwindcss.com'}),
-
-        # https://tailwindcss.com/docs/installation/play-cdn
-
-        html.script(
-            """
-            tailwind.config = {
-                darkMode: 'class',
-                theme: {
-                    extend: {
-                        fontFamily: {
-                            'sans': ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'system-ui', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'],
-                            'body': ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'system-ui', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'],
-                            'mono': ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace']
-                        },
-                        transitionProperty: {
-                            'width': 'width'
-                        },
-                        minWidth: {
-                            '20': '20rem'
-                        },
-                        colors: {
-                            cyan: {
-                                50: '#ECFEFF',
-                                100: '#CFFAFE',
-                                200: '#A5F3FC',
-                                300: '#67E8F9',
-                                400: '#22D3EE',
-                                500: '#06B6D4',
-                                600: '#0891B2',
-                                700: '#0E7490',
-                                800: '#155E75',
-                                900: '#164E63'
-                            },
-
-                            bg_gray_100: '#f3f4f6',
-                            bg_gray_800: '#1f2937',
-                            bg_gray_900: '#111827',
-                            bg_gray_950: '#030712',
-
-                        }
-                    },
-                },
-            }
-            """),
-
-        html.link(INDEX_CSS),
-        html.title(PAGE_HEADER_TITLE),
-    )
-)
 
 
 LOGS = [

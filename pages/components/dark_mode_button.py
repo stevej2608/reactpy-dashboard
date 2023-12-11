@@ -7,7 +7,7 @@ from .app_store import AppContext
 def DarkModeButton():
     settings = use_context(AppContext)
 
-    icon =  Icon_Moon() if settings.dark_mode else Icon_Sun()
+    icon =  Icon_Sun() if settings.dark_mode else Icon_Moon()
 
     return html.button({
         'id': 'theme-toggle',
