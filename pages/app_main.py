@@ -1,4 +1,4 @@
-from reactpy import component, html
+from reactpy import component, html, use_state
 from reactpy.backend.hooks import use_location
 from reactpy_router import route, simple
 
@@ -15,8 +15,8 @@ from .not_found_404 import NotFoundPage
 from .sign_in import SignIn
 from .sign_up import SignUp
 from .components.mobile_logic import SideBarBackdrop
-from .settings.dark_mode import dark_mode
 from .components.dark_mode_provider import DarkModeProvider
+from .settings.settings_store import UserSettings, UserState, SettingsContext
 
 from utils.logger import log
 
@@ -45,17 +45,23 @@ def page_route(path, page):
 
 @component
 def AppMain():
+
+    settings, set_settings = use_state(UserSettings())
+
     location = use_location()
     log.info('location %s', location)
-    return DarkModeProvider(dark_mode(),
-        html.div({'class_name': 'bg-gray-50 text-gray-800'},
-            simple.router(
-                page_route("/",Dashboard),
-                page_route("/users", UsersPage),
-                page_route("/products",ProductsPage),
-                route("/sign-in", SignIn()),
-                route("/sign-up", SignUp()),
-                route("*", NotFoundPage())
+    return SettingsContext(
+        DarkModeProvider(settings.dark_mode,
+            html.div({'class_name': 'bg-gray-50 text-gray-800'},
+                simple.router(
+                    page_route("/",Dashboard),
+                    page_route("/users", UsersPage),
+                    page_route("/products",ProductsPage),
+                    route("/sign-in", SignIn()),
+                    route("/sign-up", SignUp()),
+                    route("*", NotFoundPage())
+                )
             )
-        )
+        ),
+        value = UserState(settings, set_settings)
     )

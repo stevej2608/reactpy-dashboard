@@ -1,4 +1,4 @@
-from reactpy import component, html
+from reactpy import component, html, use_context
 
 from .logo import Logo
 from .icon import Icon_Search, Icon_Gem
@@ -6,7 +6,8 @@ from .gitHub_button import GitHubButton
 
 from .mobile_logic import ToggleSidebarMobile, MobileSearch
 from .dark_mode_button import DarkModeButton
-from ..settings.dark_mode import dark_mode
+from ..settings.settings_store import SettingsContext
+
 
 
 @component
@@ -26,6 +27,7 @@ def StarsButton(color):
 
 @component
 def OpenSource():
+    settings = use_context(SettingsContext)
 
     # <GitHubButton /> requests the project star rating from the GitHub website.
     # To avoid network access and flicker when switching between light & dark
@@ -36,7 +38,7 @@ def OpenSource():
 
     @component
     def DarkModeStarButton():
-        return StarsDark if dark_mode() else StarsLight
+        return StarsDark if settings.dark_mode else StarsLight
 
 
     return html.div({'class_name': 'hidden items-center lg:flex'},
