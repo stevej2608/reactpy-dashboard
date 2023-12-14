@@ -1,8 +1,8 @@
 from reactpy import component, html, use_context
+from reactpy_github_buttons import StarButton
 
 from .logo import Logo
 from .icon import Icon_Search, Icon_Gem
-from .gitHub_button import GitHubButton
 
 from .mobile_logic import ToggleSidebarMobile, MobileSearch
 from .dark_mode_button import DarkModeButton
@@ -12,16 +12,8 @@ from .app_store import AppContext
 
 @component
 def StarsButton(color):
-    return GitHubButton({
-        'href': 'https://github.com/themesberg/tailwind-dashboard-windster', 
-        'data-text': 'Star', 
-        'data-size': 
-        'large', 
-        'data-show-count': 'true', 
-        'data-icon': 'octicon-star', 
-        'data-color-scheme': color, 
-        'aria-label': 'Star tom-james-watson/p2p.chat on GitHub'}, 
-        "Star"
+    return html.div({'class_name': '-mb-1'},
+        StarButton(user='themesberg', repo='tailwind-dashboard-windster', large=True, show_count=True)
     )
 
 

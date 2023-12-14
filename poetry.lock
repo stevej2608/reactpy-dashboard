@@ -1080,6 +1080,25 @@ url = "http://debian-server:6543/simple"
 reference = "pypicloud"
 
 [[package]]
+name = "reactpy-github-buttons"
+version = "0.0.4"
+description = "ReactPy wrapper for react-github-btn"
+optional = false
+python-versions = ">=3.5,<4.0.0"
+files = [
+    {file = "reactpy_github_buttons-0.0.4-py3-none-any.whl", hash = "sha256:1358fcd1d01091d7be7a61216cbfa782aff34a724a6eaa42b36b86d783aa4f9d"},
+    {file = "reactpy_github_buttons-0.0.4.tar.gz", hash = "sha256:d6f1409d23938920314962aa60ed9e4aaa1856532be069c32b9f7ea46499ab7a"},
+]
+
+[package.dependencies]
+reactpy = {version = ">=1.0.2,<2.0.0", extras = ["starlette", "testing"]}
+
+[package.source]
+type = "legacy"
+url = "http://debian-server:6543/simple"
+reference = "pypicloud"
+
+[[package]]
 name = "reactpy-router"
 version = "0.1.1"
 description = "A URL router for ReactPy"
@@ -1600,4 +1619,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11.0"
-content-hash = "6b5d3d17d5e7ccb4eb98b97e4c436103a5f92c161d00e165a71bef91716ecbe1"
+content-hash = "951554a907ca3dc3baada30207b841100317787c5b809e04cdbdd7d3ce0197bd"
