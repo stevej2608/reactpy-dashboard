@@ -7,13 +7,21 @@ from .icon import Icon_Search, Icon_Gem
 from .mobile_logic import ToggleSidebarMobile, MobileSearch
 from .dark_mode_button import DarkModeButton
 from .app_store import AppContext
+from utils.logger import log
 
 
 
 @component
 def StarsButton(color):
+    log.info('StarsButton(%s)', color)
+
+    if color is 'dark':
+        scheme = "no-preference: light; light: dark; dark: light_high_contrast;"
+    else:
+        scheme = "no-preference: light; dark: dark; dark: dark_high_contrast;"
+
     return html.div({'class_name': '-mb-1'},
-        StarButton(user='themesberg', repo='tailwind-dashboard-windster', large=True, show_count=True)
+        StarButton(user='themesberg', repo='tailwind-dashboard-windster', large=True, show_count=True, color_scheme=scheme)
     )
 
 

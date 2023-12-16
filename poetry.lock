@@ -1062,13 +1062,13 @@ tornado = ["tornado"]
 
 [[package]]
 name = "reactpy-apexcharts"
-version = "0.0.3"
+version = "0.0.4"
 description = ""
 optional = false
 python-versions = ">=3.5,<4.0.0"
 files = [
-    {file = "reactpy_apexcharts-0.0.3-py3-none-any.whl", hash = "sha256:8fd079b52be72de0ab87eca03fb8963a9d04c42a06f31c3234873785097fbff9"},
-    {file = "reactpy_apexcharts-0.0.3.tar.gz", hash = "sha256:57f74a23818be12ce0fc05b88d129280b721d3ab10de6d7d69999f259193f0ff"},
+    {file = "reactpy_apexcharts-0.0.4-py3-none-any.whl", hash = "sha256:827122d8b0b4219e750599aed8247816de1fee26a7151cb397daddb443a3b29d"},
+    {file = "reactpy_apexcharts-0.0.4.tar.gz", hash = "sha256:f365f2dcd8b46548345811c55a0fa601fdf893c5b947896f29f2dde8b6153dc7"},
 ]
 
 [package.dependencies]
@@ -1081,13 +1081,13 @@ reference = "pypicloud"
 
 [[package]]
 name = "reactpy-github-buttons"
-version = "0.0.4"
+version = "0.0.7"
 description = "ReactPy wrapper for react-github-btn"
 optional = false
-python-versions = ">=3.5,<4.0.0"
+python-versions = ">=3.9,<4.0.0"
 files = [
-    {file = "reactpy_github_buttons-0.0.4-py3-none-any.whl", hash = "sha256:1358fcd1d01091d7be7a61216cbfa782aff34a724a6eaa42b36b86d783aa4f9d"},
-    {file = "reactpy_github_buttons-0.0.4.tar.gz", hash = "sha256:d6f1409d23938920314962aa60ed9e4aaa1856532be069c32b9f7ea46499ab7a"},
+    {file = "reactpy_github_buttons-0.0.7-py3-none-any.whl", hash = "sha256:9ff241c3115c58f7449d3793c13c48e10554c1c2113f555a393492918c49a6a9"},
+    {file = "reactpy_github_buttons-0.0.7.tar.gz", hash = "sha256:0abb66947cd06ddab7eada29ec1bf380997f2a34510158cd20389278600c8444"},
 ]
 
 [package.dependencies]
@@ -1619,4 +1619,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11.0"
-content-hash = "951554a907ca3dc3baada30207b841100317787c5b809e04cdbdd7d3ce0197bd"
+content-hash = "d01499b950e6f077ab50236eacc822d39967bac1aaac67fefe906d1ec6826328"
