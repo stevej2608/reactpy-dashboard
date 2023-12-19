@@ -1062,13 +1062,13 @@ tornado = ["tornado"]
 
 [[package]]
 name = "reactpy-apexcharts"
-version = "0.0.4"
+version = "0.0.5"
 description = ""
 optional = false
-python-versions = ">=3.5,<4.0.0"
+python-versions = ">=3.9,<4.0.0"
 files = [
-    {file = "reactpy_apexcharts-0.0.4-py3-none-any.whl", hash = "sha256:827122d8b0b4219e750599aed8247816de1fee26a7151cb397daddb443a3b29d"},
-    {file = "reactpy_apexcharts-0.0.4.tar.gz", hash = "sha256:f365f2dcd8b46548345811c55a0fa601fdf893c5b947896f29f2dde8b6153dc7"},
+    {file = "reactpy_apexcharts-0.0.5-py3-none-any.whl", hash = "sha256:375509a96284b341d63ff7c20a05d9faeb36f1b05bf0e29a3650ab733f5e4171"},
+    {file = "reactpy_apexcharts-0.0.5.tar.gz", hash = "sha256:53ead0ce6eb4df607a3148e90baaf4c46937e781e8573d1c63a4c993702b205f"},
 ]
 
 [package.dependencies]
@@ -1619,4 +1619,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11.0"
-content-hash = "d01499b950e6f077ab50236eacc822d39967bac1aaac67fefe906d1ec6826328"
+content-hash = "9b91971807850d496114840f45be48ca4d425c5fc65e31e48792cdd350dc1aa9"

@@ -1,5 +1,5 @@
 from reactpy import component, html
-from reactpy_apexcharts.chart import ApexChart
+from reactpy_apexcharts import ApexChart
 
 SALES_CHART = {
     "chart": {
