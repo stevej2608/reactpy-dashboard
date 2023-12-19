@@ -13,8 +13,8 @@ reactpy-router = {version = "^0.1.1", source = "pypicloud"}
 fastapi = "0.96.0"
 uvicorn = "0.22.0"
 pydantic = " 1.10.13"
-reactpy-apexcharts = "0.0.5"
-reactpy-github-buttons = "0.0.7"
+reactpy-apexcharts = "0.0.9"
+reactpy-github-buttons = "0.0.11"
 
 [tool.poetry.group.dev.dependencies]
 

@@ -1062,41 +1062,31 @@ tornado = ["tornado"]
 
 [[package]]
 name = "reactpy-apexcharts"
-version = "0.0.5"
+version = "0.0.9"
 description = ""
 optional = false
 python-versions = ">=3.9,<4.0.0"
 files = [
-    {file = "reactpy_apexcharts-0.0.5-py3-none-any.whl", hash = "sha256:375509a96284b341d63ff7c20a05d9faeb36f1b05bf0e29a3650ab733f5e4171"},
-    {file = "reactpy_apexcharts-0.0.5.tar.gz", hash = "sha256:53ead0ce6eb4df607a3148e90baaf4c46937e781e8573d1c63a4c993702b205f"},
+    {file = "reactpy_apexcharts-0.0.9-py3-none-any.whl", hash = "sha256:5bc4261dcbfc1189eb4b270b5a50a9230e4504bdede5f4fe4170a3877340da45"},
+    {file = "reactpy_apexcharts-0.0.9.tar.gz", hash = "sha256:72dff43c567eac4da65451a7251f47d854217db9b5979b6dfc74ff7b748277d2"},
 ]
 
 [package.dependencies]
 reactpy = {version = ">=1.0.2,<2.0.0", extras = ["starlette", "testing"]}
 
-[package.source]
-type = "legacy"
-url = "http://debian-server:6543/simple"
-reference = "pypicloud"
-
 [[package]]
 name = "reactpy-github-buttons"
-version = "0.0.7"
+version = "0.0.11"
 description = "ReactPy wrapper for react-github-btn"
 optional = false
 python-versions = ">=3.9,<4.0.0"
 files = [
-    {file = "reactpy_github_buttons-0.0.7-py3-none-any.whl", hash = "sha256:9ff241c3115c58f7449d3793c13c48e10554c1c2113f555a393492918c49a6a9"},
-    {file = "reactpy_github_buttons-0.0.7.tar.gz", hash = "sha256:0abb66947cd06ddab7eada29ec1bf380997f2a34510158cd20389278600c8444"},
+    {file = "reactpy_github_buttons-0.0.11-py3-none-any.whl", hash = "sha256:705a649d73812c79cb8df9eaead2b1fba8e5b375caddc84f3eae077711b7aef6"},
+    {file = "reactpy_github_buttons-0.0.11.tar.gz", hash = "sha256:75e5edf124eceedeb275191f80211d3f321982d4e12d4159f44c921ad4b503af"},
 ]
 
 [package.dependencies]
 reactpy = {version = ">=1.0.2,<2.0.0", extras = ["starlette", "testing"]}
-
-[package.source]
-type = "legacy"
-url = "http://debian-server:6543/simple"
-reference = "pypicloud"
 
 [[package]]
 name = "reactpy-router"
@@ -1619,4 +1609,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11.0"
-content-hash = "9b91971807850d496114840f45be48ca4d425c5fc65e31e48792cdd350dc1aa9"
+content-hash = "6a5e619e0dec8b59356fc9f3f909ffe1fc0abf19ec024cb5f71cafe68e80dc29"
