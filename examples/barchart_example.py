@@ -1,6 +1,6 @@
 from reactpy import component, html, run
-from utils.logger import log, logging
 from reactpy_apexcharts import ApexChart
+from utils.logger import log, logging
 
 @component
 def AppMain():
