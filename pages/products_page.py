@@ -2,11 +2,14 @@ from reactpy import component, html
 
 from .components import Breadcrumbs, PageTitle, TopPanel
 from .components.icon import Icon_Gear, Icon_Bin, Icon_Info, Icon_Dots
-from .components.table_tools import TableTools, AddButton, ToolsGroup, TableToolContainer, BreadcrumbsAndTitle, TableTool, TableSearch
+from .components.table_tools import TableTools, AddButton, ToolsGroup, TableToolContainer, BreadcrumbsAndTitle, TableTool, SimpleTableSearch
 from .products import ProductsTable
 
 @component
 def ProductsPage():
+
+    table = ProductsTable()
+
     return html.main(
         TopPanel(
             BreadcrumbsAndTitle(
@@ -14,7 +17,7 @@ def ProductsPage():
                 PageTitle(title="All Products")
             ),
             TableTools(
-                TableSearch(placeholder="Search for products"),
+                SimpleTableSearch(search=table.search, placeholder="Search for products"),
                 ToolsGroup(
                     TableToolContainer(
                         TableTool(Icon_Gear),
@@ -26,5 +29,5 @@ def ProductsPage():
                 )
             )
         ),
-        ProductsTable()
+        table
     )

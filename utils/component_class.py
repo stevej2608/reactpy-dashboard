@@ -1,3 +1,4 @@
+from typing import Type
 from reactpy.core.component import Component
 
 
@@ -7,7 +8,7 @@ class ComponentClass(Component):
         super().__init__(None, None, None, None, None)
 
 
-def class_component(comp: ComponentClass):
+def class_component(comp: Type[ComponentClass]):
     """ReactPy ComponentClass decorator
 
     Args:

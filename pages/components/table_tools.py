@@ -1,7 +1,10 @@
-from reactpy import component, html
+from reactpy import component, html, event
 from reactpy.core.types import VdomChildren
+from reactpy_table import TableSearch
 from utils.child_list import ChildList
 from .icon import Icon_Plus, Icon_Download
+
+
 
 @component
 def AddButton(label:str):
@@ -62,10 +65,23 @@ def TableTool(icon):
     )
 
 @component
-def TableSearch(placeholder:str):
+def SimpleTableSearch(search: TableSearch, placeholder:str):
+
+    @event
+    def on_change(event):
+        text = event['currentTarget']['value']
+        search.table_search(text)
+
+
     return html.form({'class_name': 'sm:pr-3 mb-4 sm:mb-0', 'action': '#', 'method': 'GET'},
         html.label({'html_for': 'products-search', 'class_name': 'sr-only'}, "Search"),
         html.div({'class_name': 'mt-1 relative sm:w-64 xl:w-96'},
-            html.input({'type': 'text', 'name': 'email', 'id': 'products-search', 'class_name': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5', 'placeholder': placeholder})
+            html.input({'type': 'text',
+                'name': 'email',
+                'id': 'products-search',
+                'class_name': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5',
+                'placeholder': placeholder,
+                'onchange': on_change
+                })
         )
     )

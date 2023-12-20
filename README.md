@@ -24,7 +24,9 @@ and uploaded to pypicloud. To install it:
 ### DONE/TODO
 
 - [X] Fix composite icons
-- [ ] Create a modulat forms solution
+- [X] Create a modular forms solution
+- [X] Add table pagination
+- [X] Add table search
 - [ ] Work out how to access client-side storage
 - [ ] Stop the crazy python stack dump when the a user leaves the site.
 - [ ] Figure out why my pytest tests need *@pytest.mark.anyio* but the pytest tests don't
