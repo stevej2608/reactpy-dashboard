@@ -1095,8 +1095,7 @@ description = "A URL router for ReactPy"
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "reactpy_router-0.1.1-py2.py3-none-any.whl", hash = "sha256:2cdb5dd76338c270e6207f73fac1ab493d09710349ebc025e7cf4c2b567b52e2"},
-    {file = "reactpy_router-0.1.1.tar.gz", hash = "sha256:6bf261906b8e36d42add077d535b2d0906deb753d2e4b5904a2319fd46c006d4"},
+    {file = "reactpy_router-0.1.1-py2.py3-none-any.whl", hash = "sha256:febd274fd8fbc97cdb8ca269cc64f0a0d178681fde4c4ce92ce4539e0dc69733"},
 ]
 
 [package.dependencies]
@@ -1104,9 +1103,8 @@ reactpy = ">=1"
 typing-extensions = "*"
 
 [package.source]
-type = "legacy"
-url = "http://debian-server:6543/simple"
-reference = "pypicloud"
+type = "url"
+url = "https://raw.githubusercontent.com/stevej2608/reactpy-router/master/dist/reactpy_router-0.1.1-py2.py3-none-any.whl"
 
 [[package]]
 name = "requests"
@@ -1609,4 +1607,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11.0"
-content-hash = "6a5e619e0dec8b59356fc9f3f909ffe1fc0abf19ec024cb5f71cafe68e80dc29"
+content-hash = "9a0a273f7388a50a2bada3aad176a299a3fd33073839efa914cacec9dee3bd15"
