@@ -10,26 +10,17 @@ This project is a port of the Themesberg [tailwind-dashboard-windster] project t
 
     python usage.py runserver --port 8000
 
-
-### reactpy-router
-
-This project uses a custom version of [reactpy-router@jonesst2608]. It's been built locally
-and uploaded to pypicloud. To install it:
-
-        poetry source add --priority=supplemental pypicloud http://debian-server:6543/simple/
-        poetry config http-basic.pypicloud jonesst2608@gmail.com passme99
-        
-        poetry add --source pypicloud reactpy-router
-
 ### DONE/TODO
 
+- [X] Tailwind CSS
 - [X] Fix composite icons
 - [X] Create a modular forms solution
 - [X] Add table pagination
 - [X] Add table search
+- [X] Add gitHub Stars Button
 - [ ] Work out how to access client-side storage
 - [ ] Stop the crazy python stack dump when the a user leaves the site.
-- [ ] Figure out why my pytest tests need *@pytest.mark.anyio* but the pytest tests don't
+- [ ] Figure out why my pytest tests need *@pytest.mark.anyio* but the ReactPy pytest tests don't
 
 ## Testing
 
@@ -48,13 +39,12 @@ and uploaded to pypicloud. To install it:
 
 ## Tailwind CSS
 
-During development use [tailwindcss play]. 
+During development [tailwindcss play] is used. 
 
-To get a static css file containing all the CSS rules you need to copy
-the tailwind ;play generated style tag from a live browser session and 
-dump it into a file. see *static\css\tailwind-3.3.5.css*. This file will 
+To get a static css file containing all the CSS active rules, you need to copy
+the tailwind play generated style tag from a live browser session and 
+dump it into a file. See *static\css\tailwind-3.3.5.css*. This file will 
 contain the accumulated CSS rules for every page visited.
-
 
 ## Links
 
