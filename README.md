@@ -18,6 +18,7 @@ This project is a port of the Themesberg [tailwind-dashboard-windster] project t
 - [X] Add table pagination
 - [X] Add table search
 - [X] Add gitHub Stars Button
+- [ ] Add table CRUD operations (inc multi-record delete)
 - [ ] Work out how to access client-side storage
 - [ ] Stop the crazy python stack dump when the a user leaves the site.
 - [ ] Figure out why my pytest tests need *@pytest.mark.anyio* but the ReactPy pytest tests don't
@@ -31,20 +32,19 @@ This project is a port of the Themesberg [tailwind-dashboard-windster] project t
     pytest --headed
 
 
-## reactpy_table
-
-* [use_reactpy_table](tmp/table/examples/react/pagination/src/main.tsx#L110)
-        [useReactTable](tmp/table/packages/react-table/src/index.tsx#L57)
-
-
 ## Tailwind CSS
 
-During development [tailwindcss play] is used. 
+During development [tailwindcss play] is used. Tailwind play generates CSS rules
+on the fly. They are accumulated, as pages are visited,  into a custom 
+style tag. This process a fast and seamless. 
 
-To get a static css file containing all the CSS active rules, you need to copy
-the tailwind play generated style tag from a live browser session and 
-dump it into a file. See *static\css\tailwind-3.3.5.css*. This file will 
-contain the accumulated CSS rules for every page visited.
+You can, if neccecery, create a static CSS file containing all the 
+accumulated rules. To do this you need to copy the content of the tailwind play 
+style tag from a live browser session and dump it to file. 
+
+Chrome debug tools are used to dump the style tag to the file:
+
+        ./static/css/tailwind-3.3.5.css
 
 ## Links
 
