@@ -14,7 +14,7 @@ def NotFoundPage():
                     html.img({'alt': '404 not found', 'class_name': 'img-fluid w-75', 'src': 'static/images/404.svg'}),
                     html.h1({'class_name': 'text-4xl font-bold mt-5'},"Page not found"),
                     html.p({'class_name': 'text-xl  m-5'}, "Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us."),
-                    link(ButtonWithIcon("Back to homepage", Icon_BackArrow), to='/products')
+                    link(ButtonWithIcon("Back to homepage", Icon_BackArrow), to='/')
                 )
             )
         )

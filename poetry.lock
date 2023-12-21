@@ -1076,13 +1076,13 @@ reactpy = {version = ">=1.0.2,<2.0.0", extras = ["starlette", "testing"]}
 
 [[package]]
 name = "reactpy-github-buttons"
-version = "0.0.11"
+version = "0.0.12"
 description = "ReactPy wrapper for react-github-btn"
 optional = false
 python-versions = ">=3.9,<4.0.0"
 files = [
-    {file = "reactpy_github_buttons-0.0.11-py3-none-any.whl", hash = "sha256:705a649d73812c79cb8df9eaead2b1fba8e5b375caddc84f3eae077711b7aef6"},
-    {file = "reactpy_github_buttons-0.0.11.tar.gz", hash = "sha256:75e5edf124eceedeb275191f80211d3f321982d4e12d4159f44c921ad4b503af"},
+    {file = "reactpy_github_buttons-0.0.12-py3-none-any.whl", hash = "sha256:c2b154177bebe0805dd29cdf7f4f9eb8cd12a5d18926c8737c67ab52f28cafc2"},
+    {file = "reactpy_github_buttons-0.0.12.tar.gz", hash = "sha256:c0d2a89015be45310afce867331b1b10b9f5b5a8c7ee145195d8add28d585b1d"},
 ]
 
 [package.dependencies]
@@ -1607,4 +1607,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11.0"
-content-hash = "9a0a273f7388a50a2bada3aad176a299a3fd33073839efa914cacec9dee3bd15"
+content-hash = "7fe5c83ebcc2666decfa47c979aa3aadbd3e4e729824e791fb00fad39c238e97"
