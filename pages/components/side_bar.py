@@ -1,4 +1,7 @@
+from typing import cast
 from reactpy import component, html
+from reactpy.core.component import Component
+from reactpy.types import VdomDict
 from reactpy_router import link
 
 from .icon import (
@@ -21,7 +24,7 @@ from .icon import (
 @component
 def Pro():
     return html.span({"class_name": "ml-3 inline-flex items-center justify-center rounded-full bg-gray-200 px-2 text-sm font-medium text-gray-800"},
-    "Pro"
+        "Pro"
     )
 
 
@@ -30,12 +33,15 @@ def SideBarItem(text: str, icon: ICON, path: str, is_pro: bool=False):
 
     pro = Pro() if is_pro else ""
 
+    icon_comp = icon()
+    icon_dict = cast(VdomDict, icon_comp.type())
+
     return html.li(
         link(
             html.div({'class_name': 'group flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100'},
-                icon(),
+                icon_dict,
                 html.span({'class_name': 'ml-3 flex-1 whitespace-nowrap'}, text),
-                pro
+                # pro
                 ),
             to=path)
     )
@@ -71,8 +77,8 @@ def SideBar():
                     html.ul({'class_name': 'space-y-2 pb-2'},
                         MobileSearch(),
                         SideBarItem(text="Dashboard", icon=Icon_Dashboard, path="/"),
-                        SideBarItem(text="Kanban", icon=Icon_Squares2x2Bold, path="/kanban", pro=True),
-                        SideBarItem(text="Inbox", icon=Icon_Inbox, path="/inbox", pro=True),
+                        SideBarItem(text="Kanban", icon=Icon_Squares2x2Bold, path="/kanban", is_pro=True),
+                        SideBarItem(text="Inbox", icon=Icon_Inbox, path="/inbox", is_pro=True),
                         SideBarItem(text="Users", icon=Icon_User, path="/users"),
                         SideBarItem(text="Products", icon=Icon_Bag, path="/products"),
                         SideBarItem(text="Sign In", icon=Icon_RightFromLine, path="/sign-in"),

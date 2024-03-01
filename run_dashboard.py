@@ -1,4 +1,5 @@
-from pages.app_main import AppMain
+from app_main import AppMain
+from modules.dashboard_options import DASHBOARD_OPTIONS
 from utils.fast_server import run
 from utils.find_port import find_available_port
 
@@ -6,4 +7,4 @@ from utils.find_port import find_available_port
 
 if __name__ == "__main__":
     port = find_available_port()
-    run(AppMain, port=port, disable_server_logs=True)
+    run(AppMain, port=port, disable_server_logs=True, options=DASHBOARD_OPTIONS)

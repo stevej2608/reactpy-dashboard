@@ -4,7 +4,7 @@ from manager import cli
 from utils.logger import log, logging
 
 from utils.fast_server import run
-from pages.app_main import AppMain
+from app_main import AppMain
 
 
 @cli.command()

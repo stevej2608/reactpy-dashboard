@@ -1,11 +1,11 @@
 from typing import Callable
 from reactpy import component
-from reactpy.types import VdomDict
+from reactpy.core.component import Component
 from reactpy.svg import svg, path
 
 # pylint: disable=line-too-long
 
-ICON = Callable[..., VdomDict]
+ICON = Callable[..., Component]
 
 @component
 def Icon_Bars3CenterLeft():

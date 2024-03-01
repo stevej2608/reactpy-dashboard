@@ -7,7 +7,7 @@
     
     {
       "name": "1a. run_dashboard.py",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "cwd": "${workspaceRoot}",
       "program": "run_dashboard.py",
@@ -26,7 +26,7 @@
     },
     {
       "name": "1b. examples/router_test.py",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "cwd": "${workspaceRoot}",
       "module": "examples.router_test",
@@ -39,7 +39,7 @@
     },
     {
       "name": "1c. examples/form_login.py",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "cwd": "${workspaceRoot}",
       "module": "examples.form_login",
@@ -55,7 +55,7 @@
     },
     {
       "name": "1d. examples/form_complex.py",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "cwd": "${workspaceRoot}",
       "module": "examples.form_complex",
@@ -71,7 +71,7 @@
     },
     {
       "name": "1e. examples/hello.py",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "cwd": "${workspaceRoot}",
       "module": "examples.hello",
@@ -90,7 +90,7 @@
     },
     {
       "name": "1f. examples/table_example",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "cwd": "${workspaceRoot}",
       "module": "examples.table_example",
@@ -107,7 +107,7 @@
 
     {
       "name": "1g. tmp/test.py",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "cwd": "${workspaceRoot}",
       "module": "tmp.test",
@@ -123,7 +123,7 @@
     },
     {
       "name": "1z. Python: Current File",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "cwd": "${workspaceRoot}",
       "program": "${file}",
@@ -135,7 +135,7 @@
     // https://stackoverflow.com/a/65292380/489239
     {
       "name": "2a. PyTest (all)",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "stopOnEntry": false,
       "module": "pytest",
@@ -151,7 +151,7 @@
     },
     {
       "name": "2b. PyTest (test_login_form.py)",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "stopOnEntry": false,
       "module": "pytest",
@@ -167,7 +167,7 @@
     },
     {
       "name": "2c. PyTest (test_complex_form.py)",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "stopOnEntry": false,
       "module": "pytest",
@@ -183,7 +183,7 @@
     },
     {
       "name": "2c. PyTest (props.py)",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "stopOnEntry": false,
       "module": "pytest",
