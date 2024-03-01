@@ -11,5 +11,5 @@ def unique_id():
 
 unique_sequence = unique_id()
 
-def UID(prefix=''):
+def UID(prefix:str=''):
     return f"{prefix}-{hex(next(unique_sequence))[2:]}"

@@ -1,14 +1,17 @@
-from typing import List, cast
+from typing import List, Callable
+
 from pydantic import BaseModel
-from reactpy import component, html, use_state, use_memo, event
+from reactpy import component, event, html, use_memo, use_state
+from reactpy.core.component import Component
+
+from reactpy_table import ColumnDef,Columns,IPaginator,Options,Table,use_reactpy_table, ITableSearch
+
+
 from utils.logger import log, logging
 from utils.make_data import make_data
-from examples.pico_run import pico_run
-
-from reactpy_table import use_reactpy_table, Column, Columns, ColumnSort, Table, Options, Paginator, TableSearch, SimplePaginator, SimpleColumnSort, SimpleTableSearch
-
-
-from modules.reactpy_helpers import For
+from utils.pico_run import pico_run
+from utils.reactpy_helpers import For
+from utils.types import EventArgs
 
 # https://codesandbox.io/p/devbox/tanstack-table-example-expanding-jr4nn3?embed=1
 
@@ -26,12 +29,12 @@ PRODUCTS = [
 ]
 
 COLS: Columns = [
-    Column(name='index', label='#'),
-    Column(name='name', label='Name'),
-    Column(name='description', label='Description'),
-    Column(name='technology', label='Technology'),
-    Column(name='id', label='ID'),
-    Column(name='price', label='Price')
+    ColumnDef(name='index', label='#'),
+    ColumnDef(name='name', label='Name'),
+    ColumnDef(name='description', label='Description'),
+    ColumnDef(name='technology', label='Technology'),
+    ColumnDef(name='id', label='ID'),
+    ColumnDef(name='price', label='Price')
     ]
 
 
@@ -53,36 +56,27 @@ def make_products(number: int) -> List[Product] :
 
 
 @component
-def TablePaginator(paginator: Paginator):
+def TablePaginator(paginator: IPaginator[Product]):
 
     @component
-    def Button(text:str, action, disabled=False):
+    def Button(text:str, action:Callable[...,None], disabled:bool=False):
 
         @event
-        def onclick(event):
+        def onclick(event: EventArgs):
             action()
 
         return html.button({'onclick': onclick, 'disabled': disabled}, text)
-
-    @component
-    def PageSize(size:int):
-
-        @event
-        def onclick(event):
-            paginator.set_page_size(size)
-
-        return html.option({'value': size, 'onclick': onclick}, f"Show {size}")
 
 
     @component
     def PageSizeSelect(sizes:List[int]):
 
         @event
-        def on_change(event):
+        def on_change(event: EventArgs):
             page_size = int(event['currentTarget']['value'])
             paginator.set_page_size(page_size)
 
-        @component
+
         def PageOption(size:int):
             return html.option({'value': size}, f"Show {size}")
 
@@ -95,7 +89,7 @@ def TablePaginator(paginator: Paginator):
         count_value, set_count = use_state(0)
 
         @event(prevent_default=True)
-        def on_change(event):
+        def on_change(event: EventArgs):
 
             try:
                 new_value = int(event['currentTarget']['value'])
@@ -106,7 +100,7 @@ def TablePaginator(paginator: Paginator):
 
             log.info('new_value = %d', new_value)
 
-            if (paginator.page_index != new_value - 1):
+            if paginator.page_index != new_value - 1:
                 paginator.set_page_index(new_value - 1)
             else:
                 set_count(count_value + 1)
@@ -133,7 +127,7 @@ def TablePaginator(paginator: Paginator):
 
 
 @component
-def Text(*children):
+def Text(*children: List[Component]):
     """Add the pico button margin to make the 
     given text line up with the button text."""
 
@@ -141,31 +135,30 @@ def Text(*children):
 
 
 @component
-def Search(search: TableSearch):
+def Search(search: ITableSearch[Product]):
 
     @event
-    def on_change(event):
+    def on_change(event: EventArgs):
         text = event['currentTarget']['value']
         search.table_search(text)
 
     return html.input({'type': 'search', 'placeholder': 'Search', 'aria-label': 'Search', 'onchange': on_change})
 
 @component
-def THead(table: Table):
+def THead(table: Table[Product]):
 
-    @component
-    def text_with_arrow(col: Column):
 
-        sort = cast(ColumnSort, table.sort)
+    def text_with_arrow(col: ColumnDef):
+
 
         @event
-        def on_click(event):
+        def on_click(event: EventArgs):
             log.info('onclick col=%s', col)
-            sort.toggle_sort(col)
+            table.sort.toggle_sort(col)
 
         # https://symbl.cc/en/collections/arrow-symbols/
 
-        up = sort.is_sort_reverse(col)
+        up = table.sort.is_sort_reverse(col)
 
         text = col.label + (" 🠕" if up else " 🠗")
         return html.th({'onclick': on_click}, text)
@@ -212,16 +205,11 @@ def TFoot(columns: Columns):
 @component
 def AppMain():
 
-    table_data = use_memo(lambda: make_products(99999))
+    table_data = use_memo(lambda: make_products(9999))
 
     table = use_reactpy_table(Options(
         rows=table_data,
         cols = COLS,
-        plugins=[
-            SimplePaginator.init,
-            SimpleColumnSort.init,
-            SimpleTableSearch.init
-            ]
     ))
 
 

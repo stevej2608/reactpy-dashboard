@@ -1,16 +1,18 @@
+from typing import Any
 from reactpy import component, html, event
 from reactpy.core.component import Component
-from reactpy_table  import Paginator
+from reactpy_table  import IPaginator
 from utils.child_list import ChildList
+from utils.types import EventArgs, Action
 
-from .icon import Icon_LeftBracket, Icon_RightBracket, Icon_LeftBracketSmall, Icon_RightBracketSmall
+from .icon import Icon_LeftBracket, Icon_RightBracket, Icon_LeftBracketSmall, Icon_RightBracketSmall, ICON
 
 
 @component
-def Button(icon, label, onclick, disabled):
+def Button(icon: ICON, label:str, onclick: Action, disabled: bool):
 
     @event
-    def _onclick(event):
+    def _onclick(event: EventArgs):
         onclick()
 
     def getClass():
@@ -22,10 +24,10 @@ def Button(icon, label, onclick, disabled):
 
 
 @component
-def ArrowIcon(icon, onclick, disabled):
+def ArrowIcon(icon: ICON, onclick: Action, disabled: bool):
 
     @event
-    def _onclick(event):
+    def _onclick(event: EventArgs):
         onclick()
 
     def getClass():
@@ -47,7 +49,7 @@ def Bold (text:str):
 
 
 @component
-def TablePaginator(paginator: Paginator):
+def TablePaginator(paginator: IPaginator[Any]):
 
     return html.div({'class_name': 'sticky bottom-0 right-0 w-full items-center border-t border-gray-200 bg-white p-4 sm:flex sm:justify-between'},
         html.div({'class_name': 'mb-4 flex items-center sm:mb-0'},

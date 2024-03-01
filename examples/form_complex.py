@@ -1,9 +1,8 @@
-from reactpy import component, html, event
+from reactpy import component, event, html
 
-
-from examples.pico_run import pico_run
-from pages.components.input import Input, Select, RangeSlider, FieldSet
+from pages.components.input import FieldSet, Input, RangeSlider, Select
 from utils.logger import log, logging
+from utils.pico_run import pico_run
 
 
 @component

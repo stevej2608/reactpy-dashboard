@@ -1,10 +1,15 @@
+from typing import Any
 from reactpy import component, html, event
 from reactpy.core.types import VdomChildren
-from reactpy_table import TableSearch
+from reactpy_table import ITableSearch
+
 from utils.child_list import ChildList
-from .icon import Icon_Plus, Icon_Download
+from utils.types import EventArgs
+
+from .icon import Icon_Plus, Icon_Download, ICON
 
 
+# pylint: disable=line-too-long
 
 @component
 def AddButton(label:str):
@@ -59,16 +64,16 @@ def ButtonContainer(*children: VdomChildren):
     )
 
 @component
-def TableTool(icon):
+def TableTool(icon: ICON):
     return html.a({'href': '#', 'class_name': 'text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded inline-flex justify-center'},
         icon()
     )
 
 @component
-def SimpleTableSearch(search: TableSearch, placeholder:str):
+def SimpleTableSearch(search: ITableSearch[Any], placeholder:str):
 
     @event
-    def on_change(event):
+    def on_change(event: EventArgs):
         text = event['currentTarget']['value']
         search.table_search(text)
 

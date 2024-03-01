@@ -1,14 +1,18 @@
+from typing import Any
 from reactpy import component, html, event
+
 from reactpy.core.component import Component
+from reactpy.core.events import EventHandler
 from reactpy.core.types import VdomChildren
 from utils.child_list import ChildList
 from utils.unique_sequence import UID
 
 from .icon import Icon_Edit, Icon_Bin
 
+# pylint: disable=line-too-long
 
 @event
-def null_event(evt):
+def null_event(evt: Any) -> None:
     ...
 
 @component
@@ -47,7 +51,7 @@ def TRow(*children: VdomChildren):
     )
 
 @component
-def Checkbox(label ='checkbox', id:str='', checked = False, on_click = null_event):
+def Checkbox(label:str ='checkbox', id:str='', checked:bool = False, on_click: EventHandler = null_event):
 
     state = 'checked' if checked else ''
     id = id if id else UID('checkbox')
@@ -61,7 +65,7 @@ def Checkbox(label ='checkbox', id:str='', checked = False, on_click = null_even
 
 
 @component
-def RowCheckbox(label ='checkbox', id:str='', checked = False, on_click = null_event):
+def RowCheckbox(label:str ='checkbox', id:str='', checked:bool = False, on_click: EventHandler = null_event):
 
     state = 'checked' if checked else ''
     id = id if id else UID('checkbox')
@@ -75,12 +79,12 @@ def RowCheckbox(label ='checkbox', id:str='', checked = False, on_click = null_e
 
 
 @component
-def Text(value:str, width=""):
+def Text(value:str, width:str=""):
     return html.td({'class_name': f'whitespace-nowrap {width} p-4 text-base font-medium text-gray-900'}, value)
 
 
 @component
-def EditButtons(label = ''):
+def EditButtons(label:str = ''):
     return html.td({'class_name': 'space-x-2 whitespace-nowrap p-4'},
         html.button({'type': 'button', 'data-modal-toggle': 'user-modal', 'class_name': 'inline-flex items-center rounded-lg bg-cyan-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200'},
             Icon_Edit(),

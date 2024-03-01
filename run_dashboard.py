@@ -1,5 +1,5 @@
 from pages.app_main import AppMain
-from fast_server import run
+from utils.fast_server import run
 from utils.find_port import find_available_port
 
 # python run_dashboard.py

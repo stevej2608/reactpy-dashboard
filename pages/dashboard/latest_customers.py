@@ -1,3 +1,4 @@
+from typing import Dict
 from reactpy import component, html
 
 CUSTOMERS = [
@@ -9,7 +10,7 @@ CUSTOMERS = [
 ]
 
 
-def table_row(index, row):
+def table_row(index:int, row: Dict[str,str]):
 
     img_src, name, email, purchases = row.values()
 

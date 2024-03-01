@@ -1,28 +1,29 @@
-from typing import List
+from typing import Any, List
+
 from reactpy import component, html, use_memo, use_state
+from reactpy_table import ColumnDef, Columns, ITableSearch, Options, use_reactpy_table
+
 from utils.child_list import ChildList
+from utils.component_class import ComponentClass, class_component
 from utils.logger import log
-from reactpy_table import use_reactpy_table, Options, Columns, Column, SimplePaginator, SimpleRowModel, TableSearch, SimpleTableSearch
 
 from ..components.table_paginator import TablePaginator
-from ..components.table_widgets import Table, TBody, THead, TRow, Checkbox, RowCheckbox, Text, EditButtons, ColumnHeader
-
-from utils.component_class import class_component, ComponentClass
-from .user_data import make_users, User
+from ..components.table_widgets import Checkbox, ColumnHeader, EditButtons, RowCheckbox, Table, TBody, Text, THead, TRow
+from .user_data import User, make_users
 
 COLS: Columns = [
-    Column(name='index', label='#'),
-    Column(name='name', label='Name', width="w-80"),
-    Column(name='position', label='Position', width="w-48"),
-    Column(name='company', label='Company', width="w-48"),
-    Column(name='status', label='Status', width="w-48")
+    ColumnDef(name='index', label='#'),
+    ColumnDef(name='name', label='Name', width="w-80"),
+    ColumnDef(name='position', label='Position', width="w-48"),
+    ColumnDef(name='company', label='Company', width="w-48"),
+    ColumnDef(name='status', label='Status', width="w-48")
     ]
 
 @class_component
 class UsersTable(ComponentClass):
 
     @property
-    def search(self) -> TableSearch:
+    def search(self) -> ITableSearch[Any]:
         return self.table.search
 
     def __init__(self):
@@ -36,13 +37,8 @@ class UsersTable(ComponentClass):
         self.table = use_reactpy_table(Options(
             rows=table_data,
             cols=COLS,
-            plugins=[
-                SimplePaginator.init,
-                SimpleRowModel.init,
-                SimpleTableSearch.init
-                ]
             ))
-        
+
     def render(self):
 
         all_checked, set_all_checked = use_state(False)
@@ -54,20 +50,20 @@ class UsersTable(ComponentClass):
 
             return THead(
                 html.tr(
-                    Checkbox("checkbox-all", checked=all_checked, on_click=lambda event: set_all_checked(not all_checked)),
+                    Checkbox("checkbox-all", checked=all_checked, on_click=lambda: set_all_checked(not all_checked)),
                     ChildList(*cols),
                     html.th({'scope': 'col', 'class_name': 'p-4'})
                 )
             )
 
         @component
-        def TableRow(index, row: User):
+        def TableRow(index:int, row: User):
 
             checked, set_checked = use_state(all_checked)
 
 
             @component
-            def NameAndPicture(row: User, width=""):
+            def NameAndPicture(row: User, width:str=""):
                 return html.td({'class_name': 'p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0'},
                     html.img({'class_name': 'h-10 w-10 rounded-full', 'src': row.img, 'alt': f'{row.name} avatar'}),
                     html.div({'class_name': 'text-sm font-normal text-gray-500'},
@@ -78,7 +74,7 @@ class UsersTable(ComponentClass):
 
 
             return TRow(
-                RowCheckbox(checked=checked, on_click=lambda event: set_checked(not checked)),
+                RowCheckbox(checked=checked, on_click=lambda: set_checked(not checked)),
                 NameAndPicture(row),
                 Text(value=row.position),
                 Text(value=row.country),

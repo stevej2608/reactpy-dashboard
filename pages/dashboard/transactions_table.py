@@ -1,3 +1,4 @@
+from typing import Dict
 from reactpy import component, html
 
 TRANSACTIONS = [
@@ -22,7 +23,7 @@ def TableHead():
 
 
 
-def table_row(index, row):
+def table_row(index:int, row: Dict[str,str]):
     action, item, date, value = row.values()
     rc = 'bg-gray-50' if index % 2 else ''
     return html.tr({'class_name': rc, 'key': index},

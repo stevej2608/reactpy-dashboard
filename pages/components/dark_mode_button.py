@@ -13,6 +13,6 @@ def DarkModeButton():
         'id': 'theme-toggle',
         'type': 'button', 
         'class_name': 'rounded-lg p-2.5 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none',
-        'onclick': lambda event: settings.toggle_dark_mode()},
+        'onclick': lambda : settings.toggle_dark_mode()},
         icon,
     )

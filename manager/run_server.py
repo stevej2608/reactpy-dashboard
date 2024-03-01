@@ -1,13 +1,14 @@
+from typing import Any
 import uvicorn
 from manager import cli
 from utils.logger import log, logging
 
-from fast_server import run
+from utils.fast_server import run
 from pages.app_main import AppMain
 
 
 @cli.command()
-def runserver(**kwargs):
+def runserver(**kwargs: Any):
     """Run the uvicorn server"""
 
     log.setLevel(logging.INFO)

@@ -1,28 +1,30 @@
+from typing import Any
+
 from reactpy import component, html, use_state
+from reactpy.core.types import VdomDictConstructor
 from reactpy.backend.hooks import use_location
-from reactpy_router import route, simple
-
-from .components.side_bar import SideBar
-from .components.top_bar import TopBar
-from .components.footer import Footer
-from .components.copyright import Copyright
-
-from .dashboard_page import Dashboard
-from .users_page import UsersPage
-from .products_page import ProductsPage
-from .not_found_404 import NotFoundPage
-
-from .sign_in import SignIn
-from .sign_up import SignUp
-from .components.mobile_logic import SideBarBackdrop
-from .components.dark_mode_provider import DarkModeProvider
-from .components.app_store import UserSettings, AppState, AppContext
+from reactpy_router import Route, route, simple
 
 from utils.logger import log
+from utils.types import Props
+
+from .components.app_store import AppContext, AppState, UserSettings
+from .components.copyright import Copyright
+from .components.dark_mode_provider import DarkModeProvider
+from .components.footer import Footer
+from .components.mobile_logic import SideBarBackdrop
+from .components.side_bar import SideBar
+from .components.top_bar import TopBar
+from .dashboard_page import Dashboard
+from .not_found_404 import NotFoundPage
+from .products_page import ProductsPage
+from .sign_in import SignIn
+from .sign_up import SignUp
+from .users_page import UsersPage
 
 
 @component
-def PageContainer(page, **props):
+def PageContainer(page: VdomDictConstructor, **props: Props):
     return html.div(
         TopBar(),
         html.div({'class_name': 'flex overflow-hidden bg-white pt-16'},
@@ -38,7 +40,7 @@ def PageContainer(page, **props):
     )
 
 
-def page_route(path, page):
+def page_route(path: str, page: Any) -> Route:
     element = PageContainer(page)
     return route(path, element)
 

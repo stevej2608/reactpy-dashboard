@@ -1,13 +1,14 @@
+from typing import Union
 from pydantic import validator
 from reactpy import component, html, event
 
 from reactpy_forms import createForm, FieldModel, FormModel, FieldValidationError, use_form_state
 from utils.logger import log, logging
-from examples.pico_run import pico_run
+from utils.pico_run import pico_run
 
 class LoginFormData(FormModel):
-    email: str = None
-    password: str = None
+    email: Union[str, None] = None
+    password: Union[str, None] = None
 
 
     @validator("email")
@@ -18,7 +19,7 @@ class LoginFormData(FormModel):
         return value
 
 
-@component
+# @component
 def TextInput(label: str, field: FieldModel, props: dict):
 
     # log.info('TextInput [%s]', field)

@@ -1,28 +1,29 @@
 from typing import List
+
 from reactpy import component, html, use_memo, use_state
+from reactpy_table import ColumnDef, Columns, ITableSearch, Options, use_reactpy_table
+
 from utils.child_list import ChildList
+from utils.component_class import ComponentClass, class_component
 from utils.logger import log
-from reactpy_table import use_reactpy_table, Options, Columns, Column, SimplePaginator, SimpleRowModel, TableSearch, SimpleTableSearch
 
 from ..components.table_paginator import TablePaginator
-from ..components.table_widgets import Table, TBody, THead, TRow, Checkbox, RowCheckbox, Text, EditButtons, ColumnHeader
-
-from utils.component_class import class_component, ComponentClass
-from .products_data import make_products, Product
+from ..components.table_widgets import Checkbox, ColumnHeader, EditButtons, RowCheckbox, Table, TBody, Text, THead, TRow
+from .products_data import Product, make_products
 
 COLS: Columns = [
-    Column(name='index', label='#'),
-    Column(name='name', label='Product Name', width="w-80"),
-    Column(name='technology', label='Technology', width="w-48"),
-    Column(name='id', label='ID', width="w-48"),
-    Column(name='price', label='Price', width="w-48")
+    ColumnDef(name='index', label='#'),
+    ColumnDef(name='name', label='Product Name', width="w-80"),
+    ColumnDef(name='technology', label='Technology', width="w-48"),
+    ColumnDef(name='id', label='ID', width="w-48"),
+    ColumnDef(name='price', label='Price', width="w-48")
     ]
 
 @class_component
 class ProductsTable(ComponentClass):
 
     @property
-    def search(self) -> TableSearch:
+    def search(self) -> ITableSearch[Product]:
         return self.table.search
 
     def __init__(self):
@@ -35,11 +36,6 @@ class ProductsTable(ComponentClass):
         self.table = use_reactpy_table(Options(
             rows=table_data,
             cols=COLS,
-            plugins=[
-                SimplePaginator.init,
-                SimpleRowModel.init,
-                SimpleTableSearch.init
-                ]
             ))
 
     def render(self):
@@ -53,19 +49,19 @@ class ProductsTable(ComponentClass):
 
             return THead(
                 html.tr(
-                    Checkbox("checkbox-all", checked=all_checked, on_click=lambda event: set_all_checked(not all_checked)),
+                    Checkbox("checkbox-all", checked=all_checked, on_click=lambda: set_all_checked(not all_checked)),
                     ChildList(*cols),
                     html.th({'scope': 'col', 'class_name': 'p-4'})
                 )
             )
 
         @component
-        def TableRow(index, row: Product):
+        def TableRow(index:int, row: Product):
 
             checked, set_checked = use_state(all_checked)
 
             @component
-            def Name(name:str, width=""):
+            def Name(name:str, width:str=""):
                 return html.td({'class_name': f'whitespace-nowrap {width} p-4 text-sm font-normal text-gray-500'},
                     html.div({'class_name': 'text-base font-semibold text-gray-900'}, name),
                     html.div({'class_name': 'text-sm font-normal text-gray-500'}, "Html templates")
@@ -73,7 +69,7 @@ class ProductsTable(ComponentClass):
 
 
             return TRow(
-                RowCheckbox(checked=checked, on_click=lambda event: set_checked(not checked)),
+                RowCheckbox(checked=checked, on_click=lambda: set_checked(not checked)),
                 Name(row.name),
                 Text(value=row.technology),
                 Text(value=row.id,),

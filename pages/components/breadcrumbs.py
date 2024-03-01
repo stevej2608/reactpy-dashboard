@@ -3,6 +3,8 @@ from reactpy import component, html
 from reactpy.svg import svg, path
 from utils.child_list import ChildList
 
+# pylint: disable=line-too-long
+
 @component
 def Home():
     return html.li({'class_name': 'inline-flex items-center'},
@@ -16,7 +18,7 @@ def Home():
 
 
 @component
-def PathElement(label):
+def PathElement(label: str):
     return html.li(
         html.div({'class_name': 'flex items-center'},
             svg({'class_name': 'h-6 w-6 text-gray-400', 'fill': 'currentColor', 'viewbox': '0 0 20 20', 'xmlns': 'http://www.w3.org/2000/svg'},

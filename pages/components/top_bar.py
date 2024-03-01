@@ -1,21 +1,21 @@
 from reactpy import component, html, use_context
 from reactpy_github_buttons import StarButton
 
-from .logo import Logo
-from .icon import Icon_Search, Icon_Gem
-
-from .mobile_logic import ToggleSidebarMobile, MobileSearch
-from .dark_mode_button import DarkModeButton
-from .app_store import AppContext
 from utils.logger import log
 
+from .app_store import AppContext
+from .dark_mode_button import DarkModeButton
+from .icon import Icon_Gem, Icon_Search
+from .logo import Logo
+from .mobile_logic import MobileSearch, ToggleSidebarMobile
 
+# pylint: disable=line-too-long
 
 @component
-def StarsButton(color):
+def StarsButton(color:str):
     log.info('StarsButton(%s)', color)
 
-    if color is 'dark':
+    if color == 'dark':
         scheme = "no-preference: light; light: dark; dark: light_high_contrast;"
     else:
         scheme = "no-preference: light; dark: dark; dark: dark_high_contrast;"
@@ -69,7 +69,7 @@ def Search():
 
 @component
 def TopBar():
-   return html.nav({'class_name': 'fixed z-30 w-full border-b border-gray-200 bg-white'},
+    return html.nav({'class_name': 'fixed z-30 w-full border-b border-gray-200 bg-white'},
         html.div({'class_name': 'px-3 py-3 lg:px-5 lg:pl-3'},
             html.div({'class_name': 'flex items-center justify-between'},
                 html.div({'class_name': 'flex items-center justify-start'},

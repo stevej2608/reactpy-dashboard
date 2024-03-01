@@ -1,4 +1,3 @@
-from typing import Any
 from reactpy import component, html
 from reactpy_router import link
 
@@ -14,9 +13,10 @@ from .icon import (
     Icon_Documentation,
     Icon_Components,
     Icon_Help,
+    ICON
 )
 
-
+# pylint: disable=line-too-long
 
 @component
 def Pro():
@@ -26,20 +26,14 @@ def Pro():
 
 
 @component
-def SideBarItem(text, icon, path, pro=False):
+def SideBarItem(text: str, icon: ICON, path: str, is_pro: bool=False):
 
-    if pro:
-        pro: Any = Pro()
-        pro = pro.type() # pylint: disable=no-member
-    else:
-        pro = ""
-
-    icon = icon().type()
+    pro = Pro() if is_pro else ""
 
     return html.li(
         link(
             html.div({'class_name': 'group flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100'},
-                icon,
+                icon(),
                 html.span({'class_name': 'ml-3 flex-1 whitespace-nowrap'}, text),
                 pro
                 ),
@@ -48,7 +42,7 @@ def SideBarItem(text, icon, path, pro=False):
 
 
 @component
-def SideBarLink(text, icon, path):
+def SideBarLink(text: str, icon: ICON, path: str):
     return html.a({'href': path, 'class_name': 'group flex items-center rounded-lg p-2 text-base font-normal text-gray-900 transition duration-75 hover:bg-gray-100', 'target': '_blank'},
         icon(),
         html.span({'class_name': 'ml-3'}, text)

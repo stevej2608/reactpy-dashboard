@@ -6,4 +6,3 @@ def Logo():
         html.img({'src': '/static/images/logo.svg', 'class_name': 'mr-2 h-6', 'alt': 'React/Py Logo'}),
         html.span({'class_name': 'self-center whitespace-nowrap'}, "React/Py")
     )
-

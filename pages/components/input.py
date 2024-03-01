@@ -1,4 +1,4 @@
-from typing import Literal
+from typing import Literal, Union
 from reactpy import component, html
 from reactpy.core.types import VdomChildren
 from utils.props import props
@@ -27,9 +27,9 @@ InputTypes = Literal[
 
 
 @component
-def Input(label:str='', id:str=None, type:InputTypes='text',
-          name:str=None, placeholder:str=None, value:str=None, role:str=None,
-          invalid:bool=None, disabled:bool=None):
+def Input(label:Union[str,None]='', id:Union[str,None]=None, type:InputTypes='text',
+          name:Union[str,None]=None, placeholder:Union[str,None]=None, value:Union[str,None]=None, role:Union[str,None]=None,
+          invalid:Union[bool,None]=None, disabled:Union[bool,None]=None):
 
     input_props = props(include='id, type, name, placeholder, role, value, disabled')
 
@@ -39,19 +39,19 @@ def Input(label:str='', id:str=None, type:InputTypes='text',
     if type in ['checkbox', 'radio']:
         return html.div(
             html.input(input_props),
-            html.label({'html_for': id}, label )
+            html.label({'html_for': id}, label or '')
         )
 
     return html.div(
-        html.label({'html_for': id}, label ),
+        html.label({'html_for': id}, label or '' ),
         html.input(input_props)
     )
 
 @component
-def RangeSlider(min:int=0, max:int=100, value:int=0, id:str=None, name:str=None, label:str=None):
+def RangeSlider(min:int=0, max:int=100, value:int=0, id:Union[str,None]=None, name:Union[str,None]=None, label:Union[str,None]=None):
     input_props = {'type': 'range', **props(include="min, max, value, id, name")}
     return html.div(
-        html.label({'html_for': id}, label ),
+        html.label({'html_for': id}, label or '' ),
         html.input(input_props)
     )
 
@@ -65,8 +65,8 @@ def Select(options: VdomChildren, name:str='', label:str=''):
     )
 
 @component
-def FieldSet(legend:str=None, children: VdomChildren = None):
+def FieldSet(legend:Union[str,None]=None, children: Union[VdomChildren,None] = None):
     return html.fieldset(
-        html.legend(html.strong(legend)),
-        children
+        html.legend(html.strong(legend or '')),
+        children if children else []
     )

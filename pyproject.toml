@@ -8,13 +8,13 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11.0"
 
+fastapi = "^0.109.0"
 reactpy = "^1.0.2"
-fastapi = "0.96.0"
-uvicorn = "0.22.0"
-pydantic = " 1.10.13"
-reactpy-apexcharts = "0.0.9"
+reactpy-apexcharts = {path = "../reactpy-apexcharts", develop = true}
 reactpy-github-buttons = "0.0.12"
 reactpy-router = {url = "https://raw.githubusercontent.com/stevej2608/reactpy-router/master/dist/reactpy_router-0.1.1-py2.py3-none-any.whl"}
+reactpy-table = {path = "../reactpy-table", develop = true}
+uvicorn = "0.22.0"
 
 [tool.poetry.group.dev.dependencies]
 
@@ -30,6 +30,18 @@ sanic-cors = "2.2.0"
 sanic-testing = "23.6.0"
 pytest-playwright = "^0.4.3"
 autoflake = "^2.2.1"
+
+[tool.ruff]
+# https://docs.astral.sh/ruff/configuration/
+# https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff
+
+line-length = 120
+
+[tool.pyright]
+# https://github.com/microsoft/pyright/blob/main/docs/configuration.md#sample-pyprojecttoml-file
+typeCheckingMode = "strict"
+pythonVersion = "3.11"
+reportMissingTypeStubs = false
 
 
 [[tool.poetry.source]]

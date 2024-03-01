@@ -1,4 +1,7 @@
+from typing import Dict
 from reactpy import component, html
+
+# pylint: disable=line-too-long
 
 ACQUISITIONS = [
   { 'channels': 'Organic Search', 'users': '5,649', 'performance': '30%', 'color': 'bg-cyan-600' },
@@ -21,7 +24,7 @@ def TableHead():
     )
 
 
-def table_row(index, row):
+def table_row(index:int, row: Dict[str,str]):
 
     channels, users, performance, color = row.values()
 
