@@ -1,9 +1,10 @@
-from typing import Tuple, Callable, List, overload, TypeVar, Dict, Any, cast, Union
+from typing import Tuple, Callable, List, overload, TypeVar, Dict, Any, cast, Union, Protocol
 from pydantic import ValidationError
 from reactpy import html, event, use_state
 from reactpy.core.component import Component
 from reactpy.core.hooks import current_hook
 from reactpy.core.types import State
+from reactpy.core.types import VdomDict
 from utils.logger import log
 from utils.types import EventArgs, Props
 
@@ -53,8 +54,17 @@ def use_form_state(initial_value: TModel | Callable[[], TModel]) -> State[TModel
 
     return State(model, dispatch)
 
+class FormFunc(Protocol):
+    def __call__(self, *argv:Any, **kwarg: Dict[str, Any]) -> VdomDict: ...
 
-def createForm(model: FormModel, set_model: Callable[[Any], FormModel]) -> Tuple[Form, Field]:
+class FieldFunc(Protocol):
+    def __call__(self, name:str, fn:Callable[[Any, Any], Any]) -> Component: ...
+
+UserModel = TypeVar('UserModel', bound=FormModel)
+
+SetModelFunc = Callable[[Union[UserModel, Callable[[UserModel],UserModel]]],None]
+
+def createForm(model: FormModel, set_model: SetModelFunc[UserModel]) -> Tuple[FormFunc, FieldFunc]:
     """Accept the model and setter created by use_form_state() and return
     the Form & Field HOC's that will be used to wrap the form elements
 
@@ -176,7 +186,8 @@ def createForm(model: FormModel, set_model: Callable[[Any], FormModel]) -> Tuple
         form_input = fn(field_state, _props)
         return form_input
 
-    def _form(*children: List[Component]):
-        return html.form(*children)
+    def _form(*argv:Any, **kwarg: Dict[str, Any]) -> VdomDict:
+        return html.form(*argv, **kwarg)
 
-    return [_form, _field]
+    # return [_form, _field]
+    return (_form, _field)

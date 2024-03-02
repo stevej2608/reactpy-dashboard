@@ -25,9 +25,14 @@ app = FastAPI(description="ReactPy", version="0.1.0")
 
 # https://stackoverflow.com/a/43506509/489239
 
-def extract_wrapped(decorated):
-    closure = (c.cell_contents for c in decorated.__closure__)
-    return next((c for c in closure if isinstance(c, FunctionType)), None)
+def extract_wrapped(decorated: FunctionType) -> FunctionType:
+    closure = (c.cell_contents for c in decorated.__closure__)  # type: ignore
+    func = next((c for c in closure if isinstance(c, FunctionType)), None)
+
+    if func is None:
+        raise AssertionError('Unable to extract function reference from wrapper')
+
+    return func
 
 def run(
     app_main: Callable[[], Component],
