@@ -12,6 +12,6 @@ def ChildList(*children: Tuple[Component]):
 
     for index, child in enumerate(children):
         if not (isinstance(child, dict) or isinstance(child, str)):
-            child.key = index
+            child.key = index # type: ignore
 
     return html._(*children)

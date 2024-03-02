@@ -1,30 +1,39 @@
 import pytest
-from examples.form_login import LoginForm
-from tests.wait_page import wait_page
-from tests.page_containers import PicoContainer
+from playwright.async_api import Page
 
-def error_field(page, name: str):
+from examples.form_login import LoginForm
+from tests.page_containers import PicoContainer
+from tests.wait_page import wait_page
+
+
+def error_field(page: Page, name: str):
 
     @wait_page(page)
     async def get_text():
         element = await page.query_selector(name)
-        value = await element.text_content()
-        return value
+        if element:
+            value = await element.text_content()
+            return value
+        else:
+            return None
     return get_text
 
 
-def input_field(page, name: str):
+def input_field(page: Page, name: str):
 
     @wait_page(page)
     async def get_input():
         element = await page.query_selector(name)
-        value = await element.input_value()
-        return value
+        if element:
+            value = await element.input_value()
+            return value
+        return None
 
     @wait_page(page)
-    async def set_input(value):
+    async def set_input(value:str):
         element = await page.query_selector(name)
-        await element.fill(value)
+        if element:
+            await element.fill(value)
 
     return [get_input, set_input]
 
@@ -32,14 +41,14 @@ def input_field(page, name: str):
 # pytest -o log_cli=1 --headed tests/test_form.py
 
 @pytest.mark.anyio
-async def test_form(pico_container: PicoContainer, page):
+async def test_form(pico_container: PicoContainer, page: Page):
 
     await pico_container.show(LoginForm)
 
     get_error = error_field(page, '#email-error')
 
     get_email, set_email = input_field(page, '#email')
-    get_password, set_password = input_field(page, '#password')
+    get_password, _set_password = input_field(page, '#password')
 
     # Test initial condition
 

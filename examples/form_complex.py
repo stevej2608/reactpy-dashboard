@@ -4,12 +4,14 @@ from pages.components.input import FieldSet, Input, RangeSlider, Select
 from utils.logger import log, logging
 from utils.pico_run import pico_run
 
+from utils.types import EventArgs
+
 
 @component
 def ComplexForm():
 
     @event(prevent_default=True)
-    def handle_submit(e):
+    def handle_submit(e: EventArgs):
         log.info('handle_submit %s', e)
 
 

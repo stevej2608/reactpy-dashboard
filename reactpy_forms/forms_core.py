@@ -1,32 +1,36 @@
-from typing import Tuple, Callable, List, overload, TypeVar
+from typing import Tuple, Callable, List, overload, TypeVar, Dict, Any, cast, Union
 from pydantic import ValidationError
 from reactpy import html, event, use_state
 from reactpy.core.component import Component
 from reactpy.core.hooks import current_hook
 from reactpy.core.types import State
 from utils.logger import log
+from utils.types import EventArgs, Props
 
 from reactpy_forms.field_model import FieldModel, FieldValidationError
 from reactpy_forms.form_model import FormModel
 
-FieldComponent = Callable[[FieldModel, dict,], Component]
+FieldComponent = Callable[[FieldModel, Dict[Any, Any]], Component]
 Field = Callable[[str, FieldComponent], Component]
-Form = Callable[[*List[Component]], Component]
+Form = Callable[[List[Component]], Component]
 
+# pylint: disable=protected-access
+# pyright: reportPrivateUsage=false
 
-_Type = TypeVar("_Type")
+TModel = TypeVar("TModel", bound=FormModel)
 
 @overload
-def use_form_state(initial_value: Callable[[], _Type]) -> State[_Type]:
+def use_form_state(initial_value: Callable[[], TModel]) -> State[TModel]:
     ...
 
 
 @overload
-def use_form_state(initial_value: _Type) -> State[_Type]:
+def use_form_state(initial_value: TModel) -> State[TModel]:
     ...
 
 
-def use_form_state(initial_value: _Type | Callable[[], _Type]) -> State[_Type]:
+
+def use_form_state(initial_value: TModel | Callable[[], TModel]) -> State[TModel]:
     """Create a form state model. Used in the same way
     as the reactpy hooks.use_state
 
@@ -40,17 +44,17 @@ def use_form_state(initial_value: _Type | Callable[[], _Type]) -> State[_Type]:
         A tuple containing the current state and a function to update it.
     """
 
-    model, dispatch = use_state(initial_value)
+    model, dispatch = use_state(cast(TModel,initial_value))
 
     # TODO - change LifeCycleHook to make ._rendered_atleast_once accessible
 
-    # pylint: disable=protected-access
-    if not current_hook()._rendered_atleast_once:
+    if not current_hook()._rendered_atleast_once: #noqa
         model.init_field_model()
 
-    return [model, dispatch]
+    return State(model, dispatch)
 
-def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
+
+def createForm(model: FormModel, set_model: Callable[[Any], FormModel]) -> Tuple[Form, Field]:
     """Accept the model and setter created by use_form_state() and return
     the Form & Field HOC's that will be used to wrap the form elements
 
@@ -82,7 +86,7 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
     ```
     """
 
-    def _field(name, fn) -> Component:
+    def _field(name:str, fn:Callable[[Any, Any], Any]) -> Component:
 
         if not model.has_field(name):
             raise FieldValidationError(f'Field "{name}" is not defined in the form model')
@@ -90,7 +94,7 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
         # TODO: extract common code from event handlers
 
         @event(prevent_default=True)
-        def onchange(event):
+        def onchange(event: EventArgs):
 
             field_model = model.get_field(name)
 
@@ -128,7 +132,7 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
                 set_model(new_model)
 
         @event(prevent_default=True)
-        def onclick(event):
+        def onclick(event: EventArgs):
             field_model = model.get_field(name)
             # log.info('get_field_state [%s]', field_model)
 
@@ -153,7 +157,7 @@ def createForm(model: FormModel, set_model) -> Tuple[Form, Field]:
 
         field_state = model.get_field(name)
 
-        def _props(props=None):
+        def _props(props: Union[Props, None]=None):
 
             if props is None:
                 props = {}

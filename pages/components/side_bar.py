@@ -1,6 +1,5 @@
-from typing import cast
+from typing import cast, Any
 from reactpy import component, html
-from reactpy.core.component import Component
 from reactpy.types import VdomDict
 from reactpy_router import link
 
@@ -31,17 +30,16 @@ def Pro():
 @component
 def SideBarItem(text: str, icon: ICON, path: str, is_pro: bool=False):
 
-    pro = Pro() if is_pro else ""
-
-    icon_comp = icon()
-    icon_dict = cast(VdomDict, icon_comp.type())
+    def vdom_dict(comp: Any) -> VdomDict:
+        icon_comp = comp()
+        return cast(VdomDict, icon_comp.type())
 
     return html.li(
         link(
             html.div({'class_name': 'group flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100'},
-                icon_dict,
+                vdom_dict(icon),
                 html.span({'class_name': 'ml-3 flex-1 whitespace-nowrap'}, text),
-                # pro
+                vdom_dict(Pro) if is_pro else ""
                 ),
             to=path)
     )

@@ -1,36 +1,27 @@
 import pytest
-from _pytest.config import Config
+from playwright.async_api import Browser
 from playwright.async_api import async_playwright
-
-from reactpy.testing import BackendFixture, DisplayFixture
-from reactpy.config import REACTPY_TESTING_DEFAULT_TIMEOUT
-
-from tests.page_containers import PicoContainer
-
-HEADLESS = False
-
-# Injected into page class, see below
-
-async def _wait_page_stable(self):
-    await self.wait_for_load_state("networkidle")
-    await self.wait_for_load_state("domcontentloaded")
+from reactpy.testing import DisplayFixture, BackendFixture
 
 
 @pytest.fixture(scope="session")
 def anyio_backend():
-    return 'asyncio'
+    return "asyncio"
+
+
+def pytest_addoption(parser: pytest.Parser) -> None:
+    parser.addoption(
+        "--headed",
+        dest="headed",
+        action="store_true",
+        help="Open a browser window when running web-based tests",
+    )
 
 
 @pytest.fixture(scope="session")
-async def display(server, page):
-    async with DisplayFixture(server, page) as display:
-        type(page).wait_page_stable = _wait_page_stable
+async def display(server: BackendFixture, browser: Browser):
+    async with DisplayFixture(server, browser) as display:
         yield display
-
-
-@pytest.fixture(scope="session")
-async def pico_container(display):
-    return PicoContainer(display)
 
 
 @pytest.fixture(scope="session")
@@ -40,17 +31,6 @@ async def server():
 
 
 @pytest.fixture(scope="session")
-async def page(browser):
-    pg = await browser.new_page()
-    pg.set_default_timeout(REACTPY_TESTING_DEFAULT_TIMEOUT.current * 1000)
-    try:
-        yield pg
-    finally:
-        await pg.close()
-
-
-@pytest.fixture(scope="session")
-async def browser(pytestconfig: Config):
+async def browser(pytestconfig: pytest.Config):
     async with async_playwright() as pw:
-        yield await pw.chromium.launch(headless =not bool(pytestconfig.option.headed))
-
+        yield await pw.chromium.launch(headless=not bool(pytestconfig.option.headed))

@@ -1,5 +1,7 @@
-from typing import Dict, Any
+from typing import Dict, Any, Union, cast
+from types import FrameType
 import inspect
+
 
 
 def props(include:str='', exclude:str='') -> Dict[str, Any]:
@@ -13,10 +15,11 @@ def props(include:str='', exclude:str='') -> Dict[str, Any]:
         Dict[str, Any]: The props
     """
 
-    frame = inspect.currentframe().f_back
+    frame: Union[FrameType, None] = cast(FrameType, inspect.currentframe()).f_back
+    assert frame
 
     all_args = frame.f_locals.copy()
-    _props = {}
+    _props: Dict[str, Any] = {}
 
     for name, value in all_args.items():
         if include=='' or name in include and value is not None:

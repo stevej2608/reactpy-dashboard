@@ -1,4 +1,4 @@
-from typing import Dict, TypeVar
+from typing import Dict, Union
 from pydantic import BaseModel
 
 from reactpy_forms.field_model import FieldModel
@@ -25,7 +25,7 @@ class FormModel(BaseModel):
         for value in self._field_model.values():
             if value.error:
                 return True
-        return None
+        return False
 
     # TODO: Create separate class to hide all this from user
 
@@ -34,7 +34,7 @@ class FormModel(BaseModel):
 
         self._field_model.clear()
 
-        for name, value in self.dict().items():
+        for name, value in self.model_dump().items():
             self._field_model[name] = FieldModel(name=name, value=value)
 
 
@@ -47,7 +47,7 @@ class FormModel(BaseModel):
             self._field_model[name] = value
 
     def get_field(self, name:str) -> FieldModel:
-        return self._field_model[name].copy()
+        return self._field_model[name].model_copy()
 
 
     def set_field(self, field:FieldModel):
@@ -63,7 +63,7 @@ class FormModel(BaseModel):
 
 
     @staticmethod
-    def update_model(model: BaseModel, update: FieldModel= None) -> TypeVar('FormModel'):
+    def update_model(model: 'FormModel', update: Union[FieldModel, None]= None) -> 'FormModel':
         """Copy and update the existing internal FieldModel
 
         Args:
@@ -75,19 +75,19 @@ class FormModel(BaseModel):
 
         field_model = model.get_model()
 
-        for name in model.dict():
+        for name in model.model_dump():
 
             if update and update.name == name:
-                field_model[name] = update.copy()
+                field_model[name] = update.model_copy()
 
         # Update the user model
 
         if update:
-            values = model.dict()
+            values = model.model_dump()
             values[update.name] = update.value
             user_model = type(model)(**values)
         else:
-            user_model = model.copy()
+            user_model = model.model_copy()
 
         user_model.set_model(field_model)
 
