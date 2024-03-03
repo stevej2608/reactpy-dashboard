@@ -84,7 +84,7 @@ def run(
 
     try:
         log.setLevel(logging.INFO)
-        uvicorn.run(app_path, host=host, port=port, **kwargs)
+        uvicorn.run(app_path, host=host, port=port, **kwargs) # type: ignore
     except Exception as ex:
         log.info("Uvicorn server %s\n", ex)
     finally:

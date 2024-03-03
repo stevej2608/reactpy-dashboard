@@ -11,20 +11,20 @@ from reactpy_forms.form_model import FormModel
 from utils.logger import log
 from utils.types import EventArgs, Props
 
-from .types import FieldFunc, FormFunc, SetModelFunc, TModel, UserModel
+from .types import FieldFunc, FormFunc, SetModelFunc, TFormModel
 
 # pylint: disable=protected-access
 # pyright: reportPrivateUsage=false
 
 @overload
-def use_form_state(initial_value: Callable[[], TModel]) -> State[TModel]:
+def use_form_state(initial_value: Callable[[], TFormModel]) -> State[TFormModel]:
     ...
 
 @overload
-def use_form_state(initial_value: TModel) -> State[TModel]:
+def use_form_state(initial_value: TFormModel) -> State[TFormModel]:
     ...
 
-def use_form_state(initial_value: TModel | Callable[[], TModel]) -> State[TModel]:
+def use_form_state(initial_value: TFormModel | Callable[[], TFormModel]) -> State[TFormModel]:
     """Create a form state model. Used in the same way
     as the reactpy hooks.use_state
 
@@ -38,7 +38,7 @@ def use_form_state(initial_value: TModel | Callable[[], TModel]) -> State[TModel
         A tuple containing the current state and a function to update it.
     """
 
-    model, dispatch = use_state(cast(TModel,initial_value))
+    model, dispatch = use_state(cast(TFormModel,initial_value))
 
     # TODO - change LifeCycleHook to make ._rendered_atleast_once accessible
 
@@ -48,7 +48,7 @@ def use_form_state(initial_value: TModel | Callable[[], TModel]) -> State[TModel
     return State(model, dispatch)
 
 
-def createForm(model: FormModel, set_model: SetModelFunc[UserModel]) -> Tuple[FormFunc, FieldFunc]:
+def createForm(model: TFormModel, set_model: SetModelFunc[TFormModel]) -> Tuple[FormFunc, FieldFunc]:
     """Accept the model and setter created by use_form_state() and return
     the Form & Field HOC's that will be used to wrap the form elements
 

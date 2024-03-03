@@ -1,8 +1,9 @@
-from typing import Dict, Union
+from typing import Dict, Union, TypeVar
 from pydantic import BaseModel
 
 from reactpy_forms.field_model import FieldModel
 
+TFormModel = TypeVar("TFormModel", bound='FormModel')
 
 class FormModel(BaseModel):
     """Container for the Pydantic form model supplied by the 
@@ -63,7 +64,7 @@ class FormModel(BaseModel):
 
 
     @staticmethod
-    def update_model(model: 'FormModel', update: Union[FieldModel, None]= None) -> 'FormModel':
+    def update_model(model: TFormModel, update: Union[FieldModel, None]= None) -> TFormModel:
         """Copy and update the existing internal FieldModel
 
         Args:
