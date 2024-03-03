@@ -4,7 +4,7 @@ import uvicorn
 
 from app_main import AppMain
 from manager import cli
-from modules.dashboard_options import DASHBOARD_OPTIONS
+from utils.server_options.tailwind_options import DASHBOARD_OPTIONS
 from utils.fast_server import run
 from utils.logger import log, logging
 
