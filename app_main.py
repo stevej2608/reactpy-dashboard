@@ -7,7 +7,7 @@ from reactpy_router import Route, route, simple
 from utils.logger import log
 from utils.fast_server import run
 
-from utils.server_options.tailwind_options import DASHBOARD_OPTIONS
+from utils.server_options.dashboard_options import DASHBOARD_OPTIONS
 
 from pages import Dashboard, NotFoundPage, ProductsPage, SignIn, SignUp, UsersPage, PageContainer
 from pages.components import AppContext, AppState, UserSettings, DarkModeProvider
