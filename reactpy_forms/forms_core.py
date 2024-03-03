@@ -1,35 +1,28 @@
-from typing import Tuple, Callable, List, overload, TypeVar, Dict, Any, cast, Union, Protocol
+from typing import Any, Callable, Dict, Tuple, Union, cast, overload
+
 from pydantic import ValidationError
-from reactpy import html, event, use_state
+from reactpy import event, html, use_state
 from reactpy.core.component import Component
 from reactpy.core.hooks import current_hook
-from reactpy.core.types import State
-from reactpy.core.types import VdomDict
+from reactpy.core.types import State, VdomDict
+
+from reactpy_forms.field_model import FieldValidationError
+from reactpy_forms.form_model import FormModel
 from utils.logger import log
 from utils.types import EventArgs, Props
 
-from reactpy_forms.field_model import FieldModel, FieldValidationError
-from reactpy_forms.form_model import FormModel
-
-FieldComponent = Callable[[FieldModel, Dict[Any, Any]], Component]
-Field = Callable[[str, FieldComponent], Component]
-Form = Callable[[List[Component]], Component]
+from .types import FieldFunc, FormFunc, SetModelFunc, TModel, UserModel
 
 # pylint: disable=protected-access
 # pyright: reportPrivateUsage=false
-
-TModel = TypeVar("TModel", bound=FormModel)
 
 @overload
 def use_form_state(initial_value: Callable[[], TModel]) -> State[TModel]:
     ...
 
-
 @overload
 def use_form_state(initial_value: TModel) -> State[TModel]:
     ...
-
-
 
 def use_form_state(initial_value: TModel | Callable[[], TModel]) -> State[TModel]:
     """Create a form state model. Used in the same way
@@ -54,15 +47,6 @@ def use_form_state(initial_value: TModel | Callable[[], TModel]) -> State[TModel
 
     return State(model, dispatch)
 
-class FormFunc(Protocol):
-    def __call__(self, *argv:Any, **kwarg: Dict[str, Any]) -> VdomDict: ...
-
-class FieldFunc(Protocol):
-    def __call__(self, name:str, fn:Callable[[Any, Any], Any]) -> Component: ...
-
-UserModel = TypeVar('UserModel', bound=FormModel)
-
-SetModelFunc = Callable[[Union[UserModel, Callable[[UserModel],UserModel]]],None]
 
 def createForm(model: FormModel, set_model: SetModelFunc[UserModel]) -> Tuple[FormFunc, FieldFunc]:
     """Accept the model and setter created by use_form_state() and return
