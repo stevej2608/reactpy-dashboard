@@ -1,7 +1,7 @@
 from typing import Optional, Any
 from reactpy import component, html, event
 
-from reactpy_forms import createForm, FieldModel, FormModel, use_form_state
+from reactpy_forms import create_form, FieldModel, FormModel, use_form_state
 from pages.forms import StandardFormContainer, TextInput, PasswordInput, SubmitButton
 
 from utils.logger import log
@@ -49,7 +49,7 @@ def SignUp(*args:Any, **kwargs:Any):
     def handleSubmit(event: EventArgs):
         log.info("Submit [%s]", model)
 
-    Form, Field = createForm(model, set_model)
+    Form, Field = create_form(model, set_model)
 
     log.info("SignUp model=[%s]", model)
 
