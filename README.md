@@ -15,10 +15,12 @@ This project is a port of the Themesberg [tailwind-dashboard-windster] project t
 - [X] Tailwind CSS
 - [X] Fix composite icons
 - [X] Create a modular forms solution
-- [X] Add table pagination
-- [X] Add table search
-- [X] Add gitHub Stars Button
-- [ ] Add table CRUD operations (inc multi-record delete)
+- [X] Apex chart support
+- [X] Table pagination/search/sort
+- [X] GitHub Stars Button
+- [X] Dark/Light mode switch
+- [ ] Update browser address bar on page/parameter change
+- [ ] CRUD operations on tables (inc multi-record delete)
 - [ ] Work out how to access client-side storage
 - [ ] Stop the crazy python stack dump when the a user leaves the site.
 - [ ] Figure out why my pytest tests need *@pytest.mark.anyio* but the ReactPy pytest tests don't
