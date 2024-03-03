@@ -1,5 +1,5 @@
 from typing import Union
-from pydantic import validator
+from pydantic import field_validator, ValidationInfo
 from reactpy import component, html, event
 from reactpy.core.events import EventHandler
 
@@ -12,10 +12,9 @@ class LoginFormData(FormModel):
     email: Union[str, None] = None
     password: Union[str, None] = None
 
-
-    @validator("email")
+    @field_validator("email")
     @classmethod
-    def validate_email(cls, value:str):
+    def validate_email(cls, value:str, info: ValidationInfo) -> str:
         if "xxx" == value:
             raise FieldValidationError("xxx is an invalid email!")
         return value

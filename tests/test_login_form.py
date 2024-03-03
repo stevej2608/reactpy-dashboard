@@ -38,7 +38,7 @@ def input_field(page: Page, name: str):
     return [get_input, set_input]
 
 
-# pytest -o log_cli=1 --headed tests/test_form.py
+# pytest -o log_cli=1 --headed tests/test_login_form.py
 
 @pytest.mark.anyio
 async def test_form(pico_container: PicoContainer, page: Page):
@@ -66,7 +66,9 @@ async def test_form(pico_container: PicoContainer, page: Page):
 
     await set_email('xxx')
     assert (await  get_email()) == 'xxx'
-    assert (await get_error()) == 'xxx is an invalid email!'
+
+    err = await get_error()
+    assert err == 'xxx is an invalid email!'
 
     # Add valid email
 

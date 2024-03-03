@@ -18,18 +18,15 @@ uvicorn = "0.22.0"
 
 [tool.poetry.group.dev.dependencies]
 
-annotated-types = "0.6.0"
-playwright = "1.34.0"
-pytest-asyncio = "0.21.1"
-pytest-mock = "3.12.0"
-pytest-rerunfailures = "12.0"
+fastapi = "^0.109.0"
+playwright = "1.41.1"
+pytest = "^7.4.4"
+pytest-asyncio = "^0.23.3"
 pytest-timeout = "2.2.0"
-python-dotenv = "1.0.0"
-responses = "0.24.1"
-sanic-cors = "2.2.0"
-sanic-testing = "23.6.0"
-pytest-playwright = "^0.4.3"
-autoflake = "^2.2.1"
+starlette = ">=0.13.6"
+trio = "^0.24.0"
+twine = "^4.0.2"
+uvicorn = {extras = ["standard"], version = ">=0.19.0"}
 
 [tool.ruff]
 # https://docs.astral.sh/ruff/configuration/
@@ -42,6 +39,11 @@ line-length = 120
 typeCheckingMode = "strict"
 pythonVersion = "3.11"
 reportMissingTypeStubs = false
+
+[tool.pytest.ini_options]
+testpaths = "tests"
+log_cli_level = "INFO"
+filterwarnings = "ignore::DeprecationWarning"
 
 
 [[tool.poetry.source]]

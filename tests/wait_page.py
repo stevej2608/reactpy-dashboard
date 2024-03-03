@@ -17,3 +17,4 @@ def wait_page(page: Page) -> Callable[[FuncType], FuncType]:
         return _wrapper
 
     return _decorator
+

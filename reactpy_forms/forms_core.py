@@ -1,6 +1,8 @@
-from typing import Any, Callable, Dict, Tuple, Union, cast, overload
+from typing import Any, Callable, Dict, Tuple, Union, cast, overload, List
 
 from pydantic import ValidationError
+from pydantic_core import ErrorDetails
+
 from reactpy import event, html, use_state
 from reactpy.core.component import Component
 from reactpy.core.hooks import current_hook
@@ -46,6 +48,15 @@ def use_form_state(initial_value: TFormModel | Callable[[], TFormModel]) -> Stat
         model.init_field_model()
 
     return State(model, dispatch)
+
+
+def get_error(e: ValidationError) -> str:
+    """Extract the user supplied error message from the Pydantic forest"""
+    new_errors: List[ErrorDetails] = e.errors()
+    for error in new_errors:
+        msg = error['ctx']['error'].message # type:ignore
+        return msg
+    return 'unknown Error'
 
 
 def createForm(model: TFormModel, set_model: SetModelFunc[TFormModel]) -> Tuple[FormFunc, FieldFunc]:
@@ -118,7 +129,7 @@ def createForm(model: TFormModel, set_model: SetModelFunc[TFormModel]) -> Tuple[
 
                 # Update the field model with the value and the validation error.
 
-                field_model.error = ex.args[0][0].exc.message
+                field_model.error = get_error(ex)
                 new_model.set_field(field_model)
 
                 # Update the external state
