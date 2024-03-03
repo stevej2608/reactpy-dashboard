@@ -1220,6 +1220,22 @@ type = "directory"
 url = "../reactpy-apexcharts"
 
 [[package]]
+name = "reactpy-forms"
+version = "0.0.1"
+description = ""
+optional = false
+python-versions = "^3.11"
+files = []
+develop = true
+
+[package.dependencies]
+reactpy = "^1.0.2"
+
+[package.source]
+type = "directory"
+url = "../reactpy-forms"
+
+[[package]]
 name = "reactpy-github-buttons"
 version = "0.0.12"
 description = "ReactPy wrapper for react-github-btn"
@@ -1731,4 +1747,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11.0"
-content-hash = "c96f58db3d952b2988e2d1ddffa82ab1d7cdf58c18ef85415dada913249baf43"
+content-hash = "8ff73bdf2aae43b0bc52db7209f195350d33abcd65ad2c0837b443abb7973c3f"
