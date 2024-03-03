@@ -1,10 +1,12 @@
 from typing import Any
-import uvicorn
-from manager import cli
-from utils.logger import log, logging
 
-from utils.fast_server import run
+import uvicorn
+
 from app_main import AppMain
+from manager import cli
+from modules.dashboard_options import DASHBOARD_OPTIONS
+from utils.fast_server import run
+from utils.logger import log, logging
 
 
 @cli.command()
@@ -16,7 +18,7 @@ def runserver(**kwargs: Any):
     if "log_level" not in kwargs:
         kwargs["log_level"] = logging.WARNING
 
-    run(AppMain, **kwargs)
+    run(AppMain, options=DASHBOARD_OPTIONS, **kwargs)
 
 
 
