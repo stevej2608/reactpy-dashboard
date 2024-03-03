@@ -23,9 +23,12 @@ from utils.var_name import var_name
 app = FastAPI(description="ReactPy", version="0.1.0")
 
 
-# https://stackoverflow.com/a/43506509/489239
 
-def extract_wrapped(decorated: FunctionType) -> FunctionType:
+def extract_wrapped(decorated: Callable[..., Component]) -> FunctionType:
+    """Return the FunctionType object for the functions wrapped by @component"""
+
+    # https://stackoverflow.com/a/43506509/489239
+
     closure = (c.cell_contents for c in decorated.__closure__)  # type: ignore
     func = next((c for c in closure if isinstance(c, FunctionType)), None)
 
