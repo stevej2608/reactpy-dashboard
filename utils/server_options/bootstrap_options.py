@@ -2,6 +2,7 @@
 from reactpy import html
 from .default_options import ServerOptions
 
+from .default_options import DEFAULT_OPTIONS
 
 HIGHLIGHT_JS = {
     "rel": "stylesheet",
@@ -54,7 +55,7 @@ BOOTSTRAP_SCRIPT = {
     "crossorigin": "anonymous",
 }
 
-BOOTSTRAP_OPTIONS = ServerOptions(
+BOOTSTRAP_OPTIONS = DEFAULT_OPTIONS + ServerOptions(
     head=[
         html.link(BOOTSTRAP_CSS), 
         html.link(HIGHLIGHT_JS),

@@ -46,12 +46,12 @@ class ServerOptions(BaseModel):
 
     def __add__(self, other: Self):
         model = self.model_copy()
-        model.head += other.head
+        model.head = model.head.copy() + other.head.copy()
 
-        if other.asset_root:
+        if model.asset_root != other.asset_root:
             model.asset_root = other.asset_root
 
-        if other.asset_folder:
+        if model.asset_folder != other.asset_folder:
             model.asset_folder = other.asset_folder
 
         return model

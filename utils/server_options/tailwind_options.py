@@ -2,6 +2,8 @@ from reactpy import html
 
 from utils.server_options.server_options import ServerOptions
 
+from .default_options import DEFAULT_OPTIONS
+
 INDEX_CSS = {
         'rel': 'stylesheet',
         'href': '/static/css/index.css',
@@ -51,7 +53,7 @@ TAILWIND_CSS = """
     }
 """
 
-TAILWIND_OPTIONS=ServerOptions(
+TAILWIND_OPTIONS = DEFAULT_OPTIONS + ServerOptions(
     head=[
 
         # Use this for production

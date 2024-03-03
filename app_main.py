@@ -7,7 +7,7 @@ from reactpy_router import Route, route, simple
 from utils.logger import log
 from utils.fast_server import run
 
-from utils.server_options.dashboard_options import DASHBOARD_OPTIONS
+from utils.server_options import TAILWIND_OPTIONS
 
 from pages import Dashboard, NotFoundPage, ProductsPage, SignIn, SignUp, UsersPage, PageContainer
 from pages.components import AppContext, AppState, UserSettings, DarkModeProvider
@@ -45,4 +45,4 @@ def AppMain():
 # python app_main.py
 
 if __name__ == "__main__":
-    run(AppMain, options=DASHBOARD_OPTIONS)
+    run(AppMain, options=TAILWIND_OPTIONS)

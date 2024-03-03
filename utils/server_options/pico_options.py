@@ -2,6 +2,7 @@
 from reactpy import html
 from .default_options import ServerOptions
 
+from .default_options import DEFAULT_OPTIONS
 
 PICO_CSS = {
         'rel': 'stylesheet',
@@ -9,7 +10,7 @@ PICO_CSS = {
         'crossorigin': 'anonymous'
     }
 
-PICO_OPTIONS = ServerOptions(
+PICO_OPTIONS = DEFAULT_OPTIONS + ServerOptions(
     head=[
         html.link(PICO_CSS)
         ]
