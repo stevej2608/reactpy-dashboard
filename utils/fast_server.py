@@ -12,7 +12,7 @@ from reactpy.backend.fastapi import Options as FastApiOptions
 from reactpy.backend.fastapi import configure
 from reactpy.core.component import Component
 
-from utils.logger import log, logging
+from utils.logger import log, logging, disable_noisy_logs
 from utils.server_options.assets import assets_api
 from utils.server_options.default_options import DEFAULT_OPTIONS, ServerOptions
 from utils.var_name import var_name
@@ -42,7 +42,7 @@ def run(
     options: ServerOptions = DEFAULT_OPTIONS,
     host: str = "127.0.0.1",
     port: int = 8000,
-    disable_server_logs: bool = False,
+    disable_server_logs: bool = True,
     **kwargs: Any,
 ) -> None:
     """Called once to run reactpy application on the fastapi server
@@ -81,6 +81,13 @@ def run(
     configure(app, app_main, options=opt)
 
     app_path = _app_path(app)
+
+    @app.on_event('startup')
+    async def fastapi_startup():
+        if disable_server_logs:
+            disable_noisy_logs()
+        log.info("Uvicorn running on  http://%s:%s (Press CTRL+C to quit)", host, port)
+
 
     try:
         log.setLevel(logging.INFO)
