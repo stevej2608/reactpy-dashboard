@@ -13,7 +13,8 @@ reactpy = "^1.0.2"
 reactpy-apexcharts = {path = "../reactpy-apexcharts", develop = true}
 reactpy-forms = {path = "../reactpy-forms", develop = true}
 reactpy-github-buttons = "0.0.12"
-reactpy-router = {url = "https://raw.githubusercontent.com/stevej2608/reactpy-router/master/dist/reactpy_router-0.1.1-py2.py3-none-any.whl"}
+# reactpy-router =  {path = "../reactpy-router", develop = true}
+reactpy-router = {url = " https://raw.githubusercontent.com/stevej2608/reactpy-router/v0.1.3/dist/reactpy_router-0.1.3-py2.py3-none-any.whl"}
 reactpy-table = {path = "../reactpy-table", develop = true}
 uvicorn = "0.22.0"
 
