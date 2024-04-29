@@ -1221,19 +1221,17 @@ url = "../reactpy-apexcharts"
 
 [[package]]
 name = "reactpy-forms"
-version = "0.0.1"
+version = "0.0.2"
 description = ""
 optional = false
-python-versions = "^3.11"
-files = []
-develop = true
+python-versions = "<4.0,>=3.11"
+files = [
+    {file = "reactpy_forms-0.0.2-py3-none-any.whl", hash = "sha256:f15d9f96f725993f24c9e275a87e10cc192481e00bed230b43c593f0ae09d5af"},
+    {file = "reactpy_forms-0.0.2.tar.gz", hash = "sha256:000c8431f945b883398b52323a07e73bcb18d7a279b5e1b2819a2db9797eaea3"},
+]
 
 [package.dependencies]
-reactpy = "^1.0.2"
-
-[package.source]
-type = "directory"
-url = "../reactpy-forms"
+reactpy = ">=1.0.2,<2.0.0"
 
 [[package]]
 name = "reactpy-github-buttons"
@@ -1745,4 +1743,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11.0"
-content-hash = "33154689c79358db33b5824bcf03ac568ee0396a012350b532b734f4237b68da"
+content-hash = "4a9afc99658c048eff198042f9bc441c58905f814f2729a8045aa8bdbaa435e9"

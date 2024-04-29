@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "reactpy-dashboard"
-version = "0.1.2"
+version = "0.1.3"
 description = ""
 authors = ["Steve Jones <jonesst2608@gmail.com>"]
 readme = "README.md"
@@ -11,12 +11,12 @@ python = "^3.11.0"
 fastapi = "^0.109.0"
 reactpy = "^1.0.2"
 reactpy-apexcharts = {path = "../reactpy-apexcharts", develop = true}
-reactpy-forms = {path = "../reactpy-forms", develop = true}
 reactpy-github-buttons = "0.0.12"
 # reactpy-router =  {path = "../reactpy-router", develop = true}
 reactpy-router = {url = " https://raw.githubusercontent.com/stevej2608/reactpy-router/v0.1.3/dist/reactpy_router-0.1.3-py2.py3-none-any.whl"}
 uvicorn = "0.22.0"
 reactpy-table = "0.0.14"
+reactpy-forms = "0.0.2"
 
 [tool.poetry.group.dev.dependencies]
 
