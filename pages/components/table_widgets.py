@@ -16,7 +16,7 @@ def null_event(evt: Any) -> None:
     ...
 
 @component
-def Table(head: Component, body: Component):
+def TTable(head: Component, body: Component):
     return html.div({'class_name': 'flex flex-col'},
         html.div({'class_name': 'overflow-x-auto'},
             html.div({'class_name': 'align-middle inline-block min-w-full'},

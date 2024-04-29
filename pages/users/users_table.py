@@ -1,14 +1,14 @@
-from typing import Any, List
-
 from reactpy import component, html, use_memo, use_state
-from reactpy_table import ColumnDef, Columns, ITableSearch, Options, use_reactpy_table
+from reactpy.core.types import VdomDict
+
+from reactpy_table import ColumnDef, Columns, ITableSearch, Table, Options, use_reactpy_table, FeatureControl
 
 from utils.child_list import ChildList
 from utils.component_class import ComponentClass, class_component
 from utils.logger import log
 
 from ..components.table_paginator import TablePaginator
-from ..components.table_widgets import Checkbox, ColumnHeader, EditButtons, RowCheckbox, Table, TBody, Text, THead, TRow
+from ..components.table_widgets import Checkbox, ColumnHeader, EditButtons, RowCheckbox, TTable, TBody, Text, THead, TRow
 from .user_data import User, make_users
 
 COLS: Columns = [
@@ -23,7 +23,7 @@ COLS: Columns = [
 class UsersTable(ComponentClass):
 
     @property
-    def search(self) -> ITableSearch[Any]:
+    def search(self) -> ITableSearch[User]:
         return self.table.search
 
     def __init__(self):
@@ -37,9 +37,10 @@ class UsersTable(ComponentClass):
         self.table = use_reactpy_table(Options(
             rows=table_data,
             cols=COLS,
+            pagination_control=FeatureControl.DEFAULT
             ))
 
-    def render(self):
+    def render(self) -> VdomDict:
 
         all_checked, set_all_checked = use_state(False)
 
@@ -84,17 +85,18 @@ class UsersTable(ComponentClass):
 
 
         @component
-        def TableBody(table: List[User]):
-            table_rows = [TableRow(index, row) for index, row in enumerate(table)]
+        def TableBody(table: Table[User]):
+            rows = table.data.rows
+            table_rows = [TableRow(index, row) for index, row in enumerate(rows)]
             return TBody(ChildList(*table_rows))
 
 
         log.info('ProductsTable')
 
         return html._(
-            Table(
+            TTable(
                 TableHead(COLS),
-                TableBody(self.table.paginator.rows)
+                TableBody(self.table)
             ),
             TablePaginator(self.table.paginator)
         )

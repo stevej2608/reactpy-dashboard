@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from reactpy import component, event, html, use_memo, use_state
 from reactpy.core.component import Component
 
-from reactpy_table import ColumnDef,Columns,IPaginator,Options,Table,use_reactpy_table, ITableSearch
+from reactpy_table import ColumnDef,Columns,IPaginator,Options,Table, use_reactpy_table, ITableSearch
 
 
 from utils.logger import log, logging
@@ -220,7 +220,7 @@ def AppMain():
         html.table({"role": "grid"},
             TColgroup([80, 150, 100, 100, 100, 100]),
             THead(table),
-            TBody(table.paginator.rows),
+            TBody(table),
             TFoot(table.data.cols),
         ),
         TablePaginator(table.paginator)
