@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from reactpy import component, event, html, use_memo, use_state
 from reactpy.core.component import Component
 
-from reactpy_table import ColumnDef,Columns,IPaginator,Options,Table, use_reactpy_table, ITableSearch
+from reactpy_table import ColumnDef,Columns,IPaginator,Options,Table, FeatureControl, use_reactpy_table, ITableSearch
 
 
 from utils.logger import log, logging
@@ -189,9 +189,11 @@ def TRow(index: int, row: Product):
     )
 
 
-def TBody(table: List[Product]):
+@component
+def TBody(table: Table[Product]):
+    rows = table.data.rows
     return  html.tbody(
-        For(TRow, iterator=enumerate(table))
+        For(TRow, iterator=enumerate(rows))
     )
 
 
@@ -210,6 +212,7 @@ def AppMain():
     table = use_reactpy_table(Options(
         rows=table_data,
         cols = COLS,
+        pagination_control=FeatureControl.DEFAULT
     ))
 
 

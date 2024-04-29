@@ -29,7 +29,6 @@ class UsersTable(ComponentClass):
     def __init__(self):
         super().__init__()
 
-
         # https://reactpy.dev/docs/reference/hooks-api.html
 
         table_data = use_memo(lambda: make_users(1000))
@@ -91,7 +90,7 @@ class UsersTable(ComponentClass):
             return TBody(ChildList(*table_rows))
 
 
-        log.info('ProductsTable')
+        log.info('Users Table')
 
         return html._(
             TTable(

@@ -86,9 +86,7 @@ class ProductsTable(ComponentClass):
             table_rows = [TableRow(index, row) for index, row in enumerate(rows)]
             return TBody(ChildList(*table_rows))
 
-
-        log.info('ProductsTable')
-
+        log.info('Products Table')
 
         return html._(
             TTable(

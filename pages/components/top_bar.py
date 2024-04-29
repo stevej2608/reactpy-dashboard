@@ -1,7 +1,6 @@
 from reactpy import component, html, use_context
 from reactpy_github_buttons import StarButton
 
-from utils.logger import log
 
 from .app_store import AppContext
 from .dark_mode_button import DarkModeButton
@@ -13,7 +12,7 @@ from .mobile_logic import MobileSearch, ToggleSidebarMobile
 
 @component
 def StarsButton(color:str):
-    log.info('StarsButton(%s)', color)
+    # log.info('StarsButton(%s)', color)
 
     if color == 'dark':
         scheme = "no-preference: light; light: dark; dark: light_high_contrast;"

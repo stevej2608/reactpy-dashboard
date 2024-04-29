@@ -32,6 +32,6 @@ def pico_run(app: Union[Component, Callable[..., Component]], options: ServerOpt
 
     @component
     def AppMain():
-        return html.div({"class_name": "container"}, html.section(children))
+        return html.div({"class_name": "container", 'style': {'max-width': '1900px'}}, html.section(children))
 
     run(AppMain, options=options)
