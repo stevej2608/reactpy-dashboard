@@ -62,10 +62,6 @@ TAILWIND_OPTIONS = DEFAULT_OPTIONS + ServerOptions(
         # Use this for development
         html.script({'src': 'https://cdn.tailwindcss.com'}),
 
-        # https://buttons.github.io/
-        # html.script({'async': 'defer', 'src': 'https://buttons.github.io/buttons.js'}),
-        html.script({'async': 'defer', 'src': 'static/js/buttons.js'}),
-
         html.script(TAILWIND_CSS),
         html.link(INDEX_CSS),
     ],
