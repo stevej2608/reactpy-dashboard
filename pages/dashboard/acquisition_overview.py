@@ -28,7 +28,7 @@ def table_row(index:int, row: Dict[str,str]):
 
     channels, users, performance, color = row.values()
 
-    style = f"width: {performance}"
+    style = {"width": performance}
     bar_class = f"{color} h-2 rounded-sm"
 
 

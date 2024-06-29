@@ -24,7 +24,7 @@ def TopRow():
                     Icon_UpArrow()
                 )
             ),
-            html.div({'id': 'main-chart', 'style': 'min-height: 435px;'},
+            html.div({'id': 'main-chart', 'style': {'min-height': '435px'}},
                 SalesChart()
             )
         ),
