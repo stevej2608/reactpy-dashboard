@@ -3,7 +3,6 @@ from reactpy import component, html, event
 from reactpy.core.types import VdomChildren
 from reactpy_table import ITableSearch
 
-from utils.child_list import ChildList
 from utils.types import EventArgs
 
 from .icon import Icon_Plus, Icon_Download, ICON
@@ -32,35 +31,35 @@ def ExportButton():
 @component
 def BreadcrumbsAndTitle(*children: VdomChildren):
     return html.div({'class_name': 'mb-4'},
-        ChildList(*children)
+        *children
     )
 
 
 @component
 def TableTools(*children: VdomChildren):
     return html.div({'class_name': 'block sm:flex items-center md:divide-x md:divide-gray-100'},
-        ChildList(*children)
+        *children
     )
 
 
 @component
 def ToolsGroup(*children: VdomChildren):
     return html.div({'class_name': 'flex items-center sm:justify-end w-full'},
-        ChildList(*children)
+        *children
     )
 
 
 @component
 def TableToolContainer(*children: VdomChildren):
     return html.div({'class_name': 'hidden md:flex pl-2 space-x-1'},
-        ChildList(*children)
+        *children
     )
 
 
 @component
 def ButtonContainer(*children: VdomChildren):
     return html.div({'class_name': 'flex items-center space-x-2 sm:space-x-3 ml-auto'},
-        ChildList(*children)
+        *children
     )
 
 @component

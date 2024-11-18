@@ -3,7 +3,6 @@ from reactpy.core.types import VdomDict
 
 from reactpy_table import ColumnDef, Columns, ITableSearch, Table, Options, use_reactpy_table, FeatureControl
 
-from utils.child_list import ChildList
 from utils.component_class import ComponentClass, class_component
 from utils.logger import log
 
@@ -51,7 +50,7 @@ class UsersTable(ComponentClass):
             return THead(
                 html.tr(
                     Checkbox("checkbox-all", checked=all_checked, on_click=lambda: set_all_checked(not all_checked)),
-                    ChildList(*cols),
+                    *cols,
                     html.th({'scope': 'col', 'class_name': 'p-4'})
                 )
             )
@@ -87,7 +86,7 @@ class UsersTable(ComponentClass):
         def TableBody(table: Table[User]):
             rows = table.data.rows
             table_rows = [TableRow(index, row) for index, row in enumerate(rows)]
-            return TBody(ChildList(*table_rows))
+            return TBody(*table_rows)
 
 
         log.info('Users Table')

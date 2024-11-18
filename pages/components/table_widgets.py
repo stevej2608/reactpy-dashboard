@@ -4,7 +4,6 @@ from reactpy import component, html, event
 from reactpy.core.component import Component
 from reactpy.core.events import EventHandler
 from reactpy.core.types import VdomChildren
-from utils.child_list import ChildList
 from utils.unique_sequence import UID
 
 from .icon import Icon_Edit, Icon_Bin
@@ -41,13 +40,13 @@ def TBody(*rows: Component):
 @component
 def THead(*children: VdomChildren):
     return html.thead({'class_name': 'bg-gray-100'},
-        ChildList(*children)
+        *children
     )
 
 @component
 def TRow(*children: VdomChildren):
     return html.tr({'key': 999, 'class_name': 'hover:bg-gray-100'},
-        ChildList(*children)
+        *children
     )
 
 @component

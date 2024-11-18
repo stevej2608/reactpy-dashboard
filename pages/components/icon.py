@@ -3,6 +3,8 @@ from reactpy import component
 from reactpy.core.component import Component
 from reactpy.svg import svg, path
 
+# https://heroicons.com/
+
 # pylint: disable=line-too-long
 
 ICON = Callable[..., Component]

@@ -2,7 +2,6 @@ from typing import Any
 from reactpy import component, html, event
 from reactpy.core.component import Component
 from reactpy_table  import IPaginator
-from utils.child_list import ChildList
 from utils.types import EventArgs, Action
 
 from .icon import Icon_LeftBracket, Icon_RightBracket, Icon_LeftBracketSmall, Icon_RightBracketSmall, ICON
@@ -40,7 +39,7 @@ def ArrowIcon(icon: ICON, onclick: Action, disabled: bool):
 
 @component
 def Faint (*children: Component):
-    return html.span({'class_name':'text-sm font-normal text-gray-500'}, ChildList(*children))
+    return html.span({'class_name':'text-sm font-normal text-gray-500'}, *children)
 
 
 @component

@@ -1,7 +1,7 @@
 from typing import List
 from reactpy import component, html
 from reactpy.svg import svg, path
-from utils.child_list import ChildList
+
 
 # pylint: disable=line-too-long
 
@@ -37,6 +37,6 @@ def Breadcrumbs(crumbs: List[str]):
     return html.nav({'class_name': 'mb-5 flex', 'aria-label': 'Breadcrumb'},
         html.ol({'class_name': 'inline-flex items-center space-x-1 md:space-x-2'},
             Home(),
-            ChildList(*Route)
+            *Route
         )
     )
