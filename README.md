@@ -24,10 +24,10 @@ This project is a port of the Themesberg [tailwind-dashboard-windster] project t
 - [X] Table pagination/search/sort
 - [X] GitHub Stars Button
 - [X] Dark/Light mode switch
-- [ ] Update browser address bar on page/parameter change
+- [X] Update browser address bar on page/parameter change
+- [X] Work out how to access client-side storage
+- [X] Stop the crazy python stack dump when the a user leaves the site.
 - [ ] CRUD operations on tables (inc multi-record delete)
-- [ ] Work out how to access client-side storage
-- [ ] Stop the crazy python stack dump when the a user leaves the site.
 - [ ] Figure out why my pytest tests need *@pytest.mark.anyio* but the ReactPy pytest tests don't
 
 ## Testing
