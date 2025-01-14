@@ -1,5 +1,7 @@
 from reactpy import component, html
 
+from reactpy_utils import DocumentTitle
+
 from .components import Breadcrumbs, PageTitle, TopPanel
 from .components.icon import Icon_Gear, Icon_Bin, Icon_Info, Icon_Dots
 from .components.table_tools import TableTools, AddButton, ToolsGroup, TableToolContainer, BreadcrumbsAndTitle, TableTool, SimpleTableSearch
@@ -11,6 +13,7 @@ def ProductsPage():
     table = ProductsTable()
 
     return html.main(
+        DocumentTitle("Products - reactpy"),
         TopPanel(
             BreadcrumbsAndTitle(
                 Breadcrumbs(crumbs=['E-commerce', 'Products']),

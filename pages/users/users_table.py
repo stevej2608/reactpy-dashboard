@@ -3,7 +3,7 @@ from reactpy.core.types import VdomDict
 
 from reactpy_table import ColumnDef, Columns, ITableSearch, Table, Options, use_reactpy_table, FeatureControl
 
-from utils.component_class import ComponentClass, class_component
+from reactpy_utils import class_component
 from utils.logger import log
 
 from ..components.table_paginator import TablePaginator
@@ -19,7 +19,7 @@ COLS: Columns = [
     ]
 
 @class_component
-class UsersTable(ComponentClass):
+class UsersTable:
 
     @property
     def search(self) -> ITableSearch[User]:

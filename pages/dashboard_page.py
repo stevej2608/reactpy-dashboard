@@ -1,5 +1,7 @@
 from reactpy import component, html
 
+from reactpy_utils import DocumentTitle
+
 from .dashboard.transactions_table import TransactionsTable
 from .dashboard.sales_chart import SalesChart
 from .dashboard.overview_panel import OverviewPanel
@@ -7,6 +9,8 @@ from .dashboard.latest_customers import LatestCustomers
 from .dashboard.acquisition_overview import AcquisitionOverview
 
 from .components.icon import Icon_UpArrow
+from .components.copyright import Copyright
+from .components.footer import Footer
 
 
 @component
@@ -70,9 +74,13 @@ def BottomRow():
 @component
 def Dashboard():
     return html.main(
+        DocumentTitle("Dashboard - reactpy"),
         html.div({'class_name': 'px-4 pt-6'},
             TopRow(),
             MiddleRow(),
             BottomRow()
-        )
+        ),
+        Footer(),
+        Copyright()
+
     )

@@ -5,12 +5,15 @@ import sys
 from pathlib import Path
 from typing import Any, Callable
 
+from exceptiongroup import ExceptionGroup
+
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from reactpy import html
 from reactpy.backend.fastapi import Options as FastApiOptions
 from reactpy.backend.fastapi import configure
 from reactpy.core.component import Component
+from starlette.websockets import WebSocketDisconnect
 
 from utils.logger import log, logging, disable_noisy_logs
 from utils.server_options.assets import assets_api
@@ -81,6 +84,27 @@ def run(
     configure(app, app_main, options=opt)
 
     app_path = _app_path(app)
+
+
+    @app.exception_handler(ExceptionGroup)
+    def websocket_disconnect_handler(request: Request, exc: ExceptionGroup):
+        if len(exc.exceptions) == 1 and isinstance(exc.exceptions[0], WebSocketDisconnect):
+            websocket_disconnect = exc.exceptions[0]
+
+            code = websocket_disconnect.code
+
+            # Code 1001 indicates that an endpoint is "going away", such as a server going
+            # down or a browser having navigated away from a page. Ignore these.
+
+            # 1002 indicates that an endpoint is terminating
+            # the connection due to a protocol error.
+
+            if code != 1001:
+                log.info("WebSocket %s disconnected with code %s", request.url, code)
+
+        else:
+            # If it's not a WebSocketDisconnect, re-raise the exception
+            raise exc
 
     @app.on_event('startup')
     async def fastapi_startup():

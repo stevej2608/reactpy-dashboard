@@ -4,8 +4,6 @@ from reactpy.core.types import VdomDictConstructor
 
 from utils.types import Props
 
-from .components.copyright import Copyright
-from .components.footer import Footer
 from .components.mobile_logic import SideBarBackdrop
 from .components.side_bar import SideBar
 from .components.top_bar import TopBar
@@ -20,8 +18,6 @@ def PageContainer(page: VdomDictConstructor, **props: Props):
             SideBarBackdrop(),
             html.div({'id': 'main-content', 'class_name': 'relative h-full w-full overflow-y-auto bg-gray-50 lg:ml-64'},
                 page(**props),
-                Footer(),
-                Copyright()
             )
         )
 

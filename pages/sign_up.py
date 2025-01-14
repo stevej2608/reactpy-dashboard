@@ -1,11 +1,15 @@
-from typing import Optional, Any
-from reactpy import component, html, event
-
+from typing import Optional
+from reactpy import component, html, event, use_state
 from reactpy_forms import create_form, FieldModel, FormModel, use_form_state
-from pages.forms import StandardFormContainer, TextInput, PasswordInput, SubmitButton
+from reactpy_utils.types import EventArgs, NO_PROPS, PropsFunc
 
 from utils.logger import log
-from utils.types import EventArgs, NO_PROPS, PropsFunc
+from reactpy_utils import DocumentTitle
+
+
+from .forms import StandardFormContainer, TextInput, PasswordInput, PasswordState, PasswordContext, SubmitButton
+
+
 
 class RegisterFormData(FormModel):
     email: Optional[str] = None
@@ -37,11 +41,13 @@ def TermsCheckbox(label:Optional[str]=None, field: Optional[FieldModel]=None, pr
 def HaveAccountLink():
     return html.div({'class_name': 'text-sm font-medium text-gray-500'},
         " Already have an account? ",
-        html.a({'href': '/sign-in/', 'class_name': 'text-teal-500 hover:underline'}, "Login here")
+        html.a({'href': '/sign-in', 'class_name': 'text-teal-500 hover:underline'}, "Login here")
     )
 
 @component
-def SignUp(*args:Any, **kwargs:Any):
+def SignUp():
+
+    password_state, set_password_state = use_state(PasswordState())
 
     model, set_model = use_form_state(RegisterFormData())
 
@@ -53,14 +59,21 @@ def SignUp(*args:Any, **kwargs:Any):
 
     log.info("SignUp model=[%s]", model)
 
-
-    return StandardFormContainer("Create a Free Account",
-        Form({'class_name': 'mt-8 space-y-6'},
-            Field('email', lambda field, props: TextInput("Your email", props({'placeholder': 'name@company.com'}))),
-            Field('password', lambda field, props: PasswordInput("Your password", props())),
-            Field('confirm_password', lambda field, props: PasswordInput("Your password", props())),
-            Field('terms', lambda field, props: TermsCheckbox("Terms and Conditions", field, props)),
-            SubmitButton(label="Create account", onclick=handleSubmit),
-            HaveAccountLink()
+    @component
+    def SignUpForm():
+        return StandardFormContainer("Create a Free Account",
+            Form({'class_name': 'mt-8 space-y-6'},
+                Field('email', lambda props, field: TextInput("Your email", props({'placeholder': 'name@company.com'}))),
+                Field('password', lambda props, field: PasswordInput("Create password", props)),
+                Field('confirm_password', lambda props, field: PasswordInput("Confirm password", props)),
+                Field('terms', lambda props, field: TermsCheckbox("Terms and Conditions", field, props)),
+                SubmitButton(label="Create account", onclick=handleSubmit),
+                HaveAccountLink()
+            )
         )
-    )
+
+    return PasswordContext(
+        DocumentTitle("Sign Up - reactpy"),
+        SignUpForm(),
+        value=(password_state, set_password_state)
+        )

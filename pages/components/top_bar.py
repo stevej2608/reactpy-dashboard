@@ -20,13 +20,13 @@ def StarsButton(color:str):
         scheme = "no-preference: light; dark: dark; dark: dark_high_contrast;"
 
     return html.div({'class_name': '-mb-1'},
-        StarButton(user='themesberg', repo='tailwind-dashboard-windster', large=True, show_count=True, color_scheme=scheme)
+        StarButton(user='stevej2608', repo='reactpy-dashboard', large=True, show_count=True, color_scheme=scheme)
     )
 
 
 @component
 def OpenSource():
-    settings = use_context(AppContext)
+    settings, _ = use_context(AppContext)
 
     # <GitHubButton /> requests the project star rating from the GitHub website.
     # To avoid network access and flicker when switching between light & dark

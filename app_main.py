@@ -2,7 +2,8 @@ from typing import Any
 
 from reactpy import component, html, use_state
 from reactpy.backend.hooks import use_location
-from reactpy_router import Route, route, simple
+from reactpy_router import  route, browser_router
+from reactpy_router.types import Route
 
 from utils.logger import log
 from utils.fast_server import run
@@ -10,7 +11,7 @@ from utils.fast_server import run
 from utils.server_options import TAILWIND_OPTIONS
 
 from pages import Dashboard, NotFoundPage, ProductsPage, SignIn, SignUp, UsersPage, PageContainer
-from pages.components import AppContext, AppState, UserSettings, DarkModeProvider
+from pages.components import AppContext, AppState, DarkModeProvider
 
 
 def page_route(path: str, page: Any) -> Route:
@@ -21,24 +22,24 @@ def page_route(path: str, page: Any) -> Route:
 @component
 def AppMain():
 
-    settings, set_settings = use_state(UserSettings())
+    settings, set_settings = use_state(AppState())
 
     location = use_location()
     log.info('location %s', location)
     return AppContext(
-        DarkModeProvider(settings.dark_mode,
+        DarkModeProvider(
             html.div({'class_name': 'bg-gray-50 text-gray-800'},
-                simple.router(
+                browser_router(
                     page_route("/",Dashboard),
                     page_route("/users", UsersPage),
                     page_route("/products",ProductsPage),
                     route("/sign-in", SignIn()),
                     route("/sign-up", SignUp()),
-                    route("*", NotFoundPage())
+                    route("{404:any}", NotFoundPage())
                 )
             )
         ),
-        value = AppState(settings, set_settings)
+        value = (settings, set_settings)
     )
 
 

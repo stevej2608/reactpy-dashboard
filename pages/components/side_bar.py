@@ -35,13 +35,13 @@ def SideBarItem(text: str, icon: ICON, path: str, is_pro: bool=False):
         return cast(VdomDict, icon_comp.type())
 
     return html.li(
-        link(
+        link({'to': path},
             html.div({'class_name': 'group flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-100'},
                 vdom_dict(icon),
                 html.span({'class_name': 'ml-3 flex-1 whitespace-nowrap'}, text),
                 vdom_dict(Pro) if is_pro else ""
-                ),
-            to=path)
+                )
+            )
     )
 
 

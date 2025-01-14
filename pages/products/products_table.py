@@ -2,9 +2,10 @@
 from reactpy import component, html, use_memo, use_state
 from reactpy.core.types import VdomDict
 
+from reactpy_utils import class_component
+
 from reactpy_table import ColumnDef, Columns, ITableSearch, Table, Options, use_reactpy_table, FeatureControl
 
-from utils.component_class import ComponentClass, class_component
 from utils.logger import log
 
 from ..components.table_paginator import TablePaginator
@@ -20,7 +21,7 @@ COLS: Columns = [
     ]
 
 @class_component
-class ProductsTable(ComponentClass):
+class ProductsTable:
 
     @property
     def search(self) -> ITableSearch[Product]:

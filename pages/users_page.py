@@ -1,4 +1,5 @@
 from reactpy import component, html
+from reactpy_utils import DocumentTitle
 
 from .components import Breadcrumbs, PageTitle, TopPanel
 from .components.icon import Icon_Gear, Icon_Bin, Icon_Info, Icon_Dots
@@ -11,6 +12,7 @@ def UsersPage():
     table = UsersTable()
 
     return html.main(
+        DocumentTitle("Users - reactpy"),
         TopPanel(
             BreadcrumbsAndTitle(
                 Breadcrumbs(crumbs=['Users', 'List']),

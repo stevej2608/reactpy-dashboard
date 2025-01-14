@@ -1,12 +1,3 @@
 {
-    "cSpell.words": [
-        "neccecery",
-        "pytest",
-        "runserver"
-    ],
-    "python.analysis.typeCheckingMode": "standard",
-    "python.analysis.exclude": [
-        "tmp",
-        ".venv"
-    ]
+
 }

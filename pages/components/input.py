@@ -1,7 +1,7 @@
 from typing import Literal, Union
 from reactpy import component, html
 from reactpy.core.types import VdomChildren
-from utils.props import props
+from reactpy_utils import props
 
 InputTypes = Literal[
     'button'
