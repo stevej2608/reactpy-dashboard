@@ -1,15 +1,15 @@
 from reactpy import component, html
 from reactpy.svg import svg, path
 
-from .icon import Icon_Bars3CenterLeft, Icon_XMark
+from .icon import ICON
 
 # pylint: disable=line-too-long
 
 @component
 def ToggleSidebarMobile():
     return html.button({'id': 'toggleSidebarMobile', 'aria-expanded': 'true', 'aria-controls': 'sidebar', 'class_name': 'mr-2 cursor-pointer rounded p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:ring-2 focus:ring-gray-100 lg:hidden', 'onclick': '{toggleSidebarMobile}'},
-        Icon_Bars3CenterLeft(),
-        Icon_XMark()
+        ICON.Bars3CenterLeft(),
+        ICON.XMark()
     )
 
 

@@ -3,7 +3,7 @@ from reactpy import component, html
 from reactpy_utils import DocumentTitle
 
 from .components import Breadcrumbs, PageTitle, TopPanel
-from .components.icon import Icon_Gear, Icon_Bin, Icon_Info, Icon_Dots
+from .components.icon import ICON
 from .components.table_tools import TableTools, AddButton, ToolsGroup, TableToolContainer, BreadcrumbsAndTitle, TableTool, SimpleTableSearch
 from .products import ProductsTable
 
@@ -23,10 +23,10 @@ def ProductsPage():
                 SimpleTableSearch(search=table.search, placeholder="Search for products"),
                 ToolsGroup(
                     TableToolContainer(
-                        TableTool(Icon_Gear),
-                        TableTool(Icon_Bin),
-                        TableTool(Icon_Info),
-                        TableTool(Icon_Dots),
+                        TableTool(ICON.Gear),
+                        TableTool(ICON.Bin),
+                        TableTool(ICON.Info),
+                        TableTool(ICON.Dots),
                     ),
                     AddButton("Add Product")
                 )

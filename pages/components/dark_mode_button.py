@@ -1,6 +1,6 @@
 from reactpy import component, html, use_context, event
 
-from .icon import Icon_Sun, Icon_Moon
+from .icon import ICON
 from .app_store import AppContext
 from utils.types import EventArgs
 
@@ -8,7 +8,7 @@ from utils.types import EventArgs
 def DarkModeButton():
     context, set_context = use_context(AppContext)
 
-    icon =  Icon_Sun() if context.dark_mode else Icon_Moon()
+    icon =  ICON.Sun() if context.dark_mode else ICON.Moon()
 
     @event
     def on_click(event: EventArgs):

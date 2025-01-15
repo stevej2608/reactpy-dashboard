@@ -8,7 +8,7 @@ from .dashboard.overview_panel import OverviewPanel
 from .dashboard.latest_customers import LatestCustomers
 from .dashboard.acquisition_overview import AcquisitionOverview
 
-from .components.icon import Icon_UpArrow
+from .components.icon import ICON
 from .components.copyright import Copyright
 from .components.footer import Footer
 
@@ -25,7 +25,7 @@ def TopRow():
                 ),
                 html.div({'class_name': 'flex flex-1 items-center justify-end text-base font-bold text-green-500'},
                     "12.5%",
-                    Icon_UpArrow()
+                    ICON.UpArrow()
                 )
             ),
             html.div({'id': 'main-chart', 'style': {'min-height': '435px'}},

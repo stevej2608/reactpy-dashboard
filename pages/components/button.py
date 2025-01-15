@@ -1,12 +1,12 @@
 from typing import cast, Any
 from reactpy import component, html
 from reactpy.types import VdomDict
-from .icon import ICON
+from .icon import Icon
 
 # pylint: disable=line-too-long
 
 @component
-def ButtonWithIcon(text: str, icon: ICON):
+def ButtonWithIcon(text: str, icon: Icon):
 
     def vdom_dict(comp: Any) -> VdomDict:
         icon_comp = comp()

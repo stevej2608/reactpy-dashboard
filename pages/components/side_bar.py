@@ -6,21 +6,8 @@ from reactpy_router import link
 from .app_store import AppContext
 from .logo import Logo
 
-from .icon import (
-    Icon_RightFromLine,
-    Icon_User,
-    Icon_Bag,
-    Icon_SignUp,
-    Icon_Dashboard,
-    Icon_Squares2x2Bold,
-    Icon_Inbox,
-    Icon_Upgrade,
-    Icon_Documentation,
-    Icon_Components,
-    Icon_Help,
-    Icon_XMark,
-    ICON
-)
+from .icon import Icon, ICON
+
 
 # pylint: disable=line-too-long
 
@@ -32,7 +19,7 @@ def Pro():
 
 
 @component
-def SideBarItem(text: str, icon: ICON, path: str, is_pro: bool=False):
+def SideBarItem(text: str, icon: Icon, path: str, is_pro: bool=False):
 
     def vdom_dict(comp: Any) -> VdomDict:
         icon_comp = comp()
@@ -50,7 +37,7 @@ def SideBarItem(text: str, icon: ICON, path: str, is_pro: bool=False):
 
 
 @component
-def SideBarLink(text: str, icon: ICON, path: str):
+def SideBarLink(text: str, icon: Icon, path: str):
     return html.a({'href': path, 'class_name': 'group flex items-center rounded-lg p-2 text-base font-normal text-gray-900 transition duration-75 hover:bg-gray-100', 'target': '_blank'},
         icon(),
         html.span({'class_name': 'ml-3'}, text)
@@ -63,7 +50,7 @@ def MobileSearch():
             html.label({'html_for': 'mobile-search', 'class_name': 'sr-only'}, "Search"),
             html.div({'class_name': 'relative'},
                 html.div({'class_name': 'pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'},
-                    Icon_Squares2x2Bold()
+                    ICON.Squares2x2Bold()
                 ),
                 html.input({'type': 'text', 'name': 'email', 'id': 'mobile-search', 'class_name': 'block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:ring-cyan-600 focus:ring-cyan-600', 'placeholder': 'Search'})
             )
@@ -90,7 +77,7 @@ def SideBar():
             Logo(),
             html.button({'class_name': f'text-gray-500 hover:text-gray-700 {button_hidden}',
                 'on_click': lambda _: set_app_state(app_state.update(sidebar_open=not app_state.sidebar_open))},
-                Icon_XMark()
+                ICON.XMark()
             )
         ),
 
@@ -101,19 +88,19 @@ def SideBar():
                 html.div({'class_name': 'flex-1 space-y-1 divide-gray-200 divide-y bg-white px-3'},
                     html.ul({'class_name': 'space-y-2 pb-2'},
                         MobileSearch(),
-                        SideBarItem(text="Dashboard", icon=Icon_Dashboard, path="/"),
-                        SideBarItem(text="Kanban", icon=Icon_Squares2x2Bold, path="/kanban", is_pro=True),
-                        SideBarItem(text="Inbox", icon=Icon_Inbox, path="/inbox", is_pro=True),
-                        SideBarItem(text="Users", icon=Icon_User, path="/users"),
-                        SideBarItem(text="Products", icon=Icon_Bag, path="/products"),
-                        SideBarItem(text="Sign In", icon=Icon_RightFromLine, path="/sign-in"),
-                        SideBarItem(text="Sign Up", icon=Icon_SignUp, path="/sign-up")
+                        SideBarItem(text="Dashboard", icon=ICON.Dashboard, path="/"),
+                        SideBarItem(text="Kanban", icon=ICON.Squares2x2Bold, path="/kanban", is_pro=True),
+                        SideBarItem(text="Inbox", icon=ICON.Inbox, path="/inbox", is_pro=True),
+                        SideBarItem(text="Users", icon=ICON.User, path="/users"),
+                        SideBarItem(text="Products", icon=ICON.Bag, path="/products"),
+                        SideBarItem(text="Sign In", icon=ICON.RightFromLine, path="/sign-in"),
+                        SideBarItem(text="Sign Up", icon=ICON.SignUp, path="/sign-up")
                     ),
                     html.div({'class_name': 'space-y-2 pt-2'},
-                        SideBarLink(text="Upgrade to Pro", icon=Icon_Upgrade, path="https://demo.themesberg.com/windster/pricing/"),
-                        SideBarLink(text="Documentation", icon=Icon_Documentation, path="https://flowbite.com/docs/getting-started/introduction/"),
-                        SideBarLink(text="Components", icon=Icon_Components, path="https://flowbite.com/docs/components/alerts/"),
-                        SideBarLink(text="Help", icon=Icon_Help, path="https://github.com/themesberg/windster-tailwind-css-dashboard/issues")
+                        SideBarLink(text="Upgrade to Pro", icon=ICON.Upgrade, path="https://demo.themesberg.com/windster/pricing/"),
+                        SideBarLink(text="Documentation", icon=ICON.Documentation, path="https://flowbite.com/docs/getting-started/introduction/"),
+                        SideBarLink(text="Components", icon=ICON.Components, path="https://flowbite.com/docs/components/alerts/"),
+                        SideBarLink(text="Help", icon=ICON.Help, path="https://github.com/themesberg/windster-tailwind-css-dashboard/issues")
                     )
                 )
             )

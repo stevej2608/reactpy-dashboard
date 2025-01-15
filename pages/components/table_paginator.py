@@ -4,11 +4,11 @@ from reactpy.core.component import Component
 from reactpy_table  import IPaginator
 from utils.types import EventArgs, Action
 
-from .icon import Icon_LeftBracket, Icon_RightBracket, Icon_LeftBracketSmall, Icon_RightBracketSmall, ICON
+from .icon import Icon, ICON
 
 
 @component
-def Button(icon: ICON, label:str, onclick: Action, disabled: bool):
+def Button(icon: Icon, label:str, onclick: Action, disabled: bool):
 
     @event
     def _onclick(event: EventArgs):
@@ -23,7 +23,7 @@ def Button(icon: ICON, label:str, onclick: Action, disabled: bool):
 
 
 @component
-def ArrowIcon(icon: ICON, onclick: Action, disabled: bool):
+def ArrowIcon(icon: Icon, onclick: Action, disabled: bool):
 
     @event
     def _onclick(event: EventArgs):
@@ -52,8 +52,8 @@ def TablePaginator(paginator: IPaginator[Any]):
 
     return html.div({'class_name': 'sticky bottom-0 right-0 w-full items-center border-t border-gray-200 bg-white p-4 sm:flex sm:justify-between'},
         html.div({'class_name': 'mb-4 flex items-center sm:mb-0'},
-            ArrowIcon(icon=Icon_LeftBracket, onclick = paginator.previous_page, disabled = not paginator.can_get_previous_page()),
-            ArrowIcon(icon=Icon_RightBracket, onclick = paginator.next_page, disabled = not paginator.can_get_next_page()),
+            ArrowIcon(icon=ICON.LeftBracket, onclick = paginator.previous_page, disabled = not paginator.can_get_previous_page()),
+            ArrowIcon(icon=ICON.RightBracket, onclick = paginator.next_page, disabled = not paginator.can_get_next_page()),
             Faint(
                 "Showing ",
                 Bold(paginator.page_index + 1),
@@ -63,7 +63,7 @@ def TablePaginator(paginator: IPaginator[Any]):
             ),
         ),
         html.div({'class_name': 'flex items-center space-x-3'},
-            Button(label='Previous', icon=Icon_LeftBracketSmall, onclick=paginator.previous_page, disabled= not paginator.can_get_previous_page()),
-            Button(label='Next', icon=Icon_RightBracketSmall, onclick=paginator.next_page, disabled= not paginator.can_get_next_page())
+            Button(label='Previous', icon=ICON.LeftBracketSmall, onclick=paginator.previous_page, disabled= not paginator.can_get_previous_page()),
+            Button(label='Next', icon=ICON.RightBracketSmall, onclick=paginator.next_page, disabled= not paginator.can_get_next_page())
             )
         )

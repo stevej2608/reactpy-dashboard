@@ -5,7 +5,7 @@ from reactpy import component, event, html, use_context
 from reactpy_utils.dynamic_context import DynamicContextModel, create_dynamic_context
 from reactpy_utils.types import EventArgs, Props, PropsFunc
 
-from ..components.icon import Icon_Eye, Icon_EyeSlash
+from ..components.icon import ICON
 from .text_input import Input, Label
 
 
@@ -28,7 +28,7 @@ def PasswordInput(label: str, props: Props | PropsFunc | None = None):
     def toggle_password_visibility(event: EventArgs):
         set_context(lambda ctx: ctx.update(show=not ctx.show))
 
-    icon = Icon_EyeSlash if context.show else Icon_Eye
+    icon = ICON.EyeSlash if context.show else ICON.Eye
 
     _props = {
         'type': 'input' if context.show else 'password',

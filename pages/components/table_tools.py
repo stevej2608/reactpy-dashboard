@@ -5,7 +5,7 @@ from reactpy_table import ITableSearch
 
 from utils.types import EventArgs
 
-from .icon import Icon_Plus, Icon_Download, ICON
+from .icon import ICON
 
 
 # pylint: disable=line-too-long
@@ -16,14 +16,14 @@ def AddButton(label:str):
             'type': 'button', 
             'data-modal-toggle': 'add-user-modal', 
             'class_name': 'text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center rounded-lg text-sm px-3 py-2 text-center sm:ml-auto'},
-        Icon_Plus(),
+        ICON.Plus(),
         label
     )
 
 @component
 def ExportButton():
     return html.a({'href': '#', 'class_name': 'w-1/2 text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto'},
-        Icon_Download(),
+        ICON.Download(),
         "Export"
     )
 

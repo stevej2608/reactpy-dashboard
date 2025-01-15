@@ -1,12 +1,12 @@
 from reactpy import component, html
 
-from ..components.icon import Icon_DownArrow, Icon_UpArrow
+from ..components.icon import ICON
 
 @component
 def OverviewPanel(title:str, number:int, change: str):
 
     up = not change.startswith('-')
-    ArrowIcon = Icon_UpArrow if up else Icon_DownArrow
+    ArrowIcon = ICON.UpArrow if up else ICON.DownArrow
     colour = 'text-green-500' if up  else 'text-red-500'
     div_class = f"ml-5 w-0 flex items-center justify-end flex-1 {colour} text-base font-bold"
 

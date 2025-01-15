@@ -6,7 +6,7 @@ from reactpy.core.events import EventHandler
 from reactpy.core.types import VdomChildren
 from utils.unique_sequence import UID
 
-from .icon import Icon_Edit, Icon_Bin
+from .icon import ICON
 
 # pylint: disable=line-too-long
 
@@ -86,11 +86,11 @@ def Text(value:str, width:str=""):
 def EditButtons(label:str = ''):
     return html.td({'class_name': 'space-x-2 whitespace-nowrap p-4'},
         html.button({'type': 'button', 'data-modal-toggle': 'user-modal', 'class_name': 'inline-flex items-center rounded-lg bg-cyan-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200'},
-            Icon_Edit(),
+            ICON.Edit(),
             f"Edit {label}"
         ),
         html.button({'type': 'button', 'data-modal-toggle': 'delete-user-modal', 'class_name': 'inline-flex items-center rounded-lg bg-red-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300'},
-            Icon_Bin(size='h-5 w-5'),
+            ICON.Bin(size='h-5 w-5'),
             f"Delete {label}"
         )
     )
