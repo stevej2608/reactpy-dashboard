@@ -1,12 +1,10 @@
 from reactpy import component, html, use_context
 from reactpy_github_buttons import StarButton
 
-
 from .app_store import AppContext
 from .dark_mode_button import DarkModeButton
-from .icon import Icon_Gem, Icon_Search
-from .logo import Logo
-from .mobile_logic import MobileSearch, ToggleSidebarMobile
+from .icon import Icon_Gem, Icon_Search, Icon_Menu
+
 
 # pylint: disable=line-too-long
 
@@ -68,20 +66,31 @@ def Search():
 
 @component
 def TopBar():
-    return html.nav({'class_name': 'fixed z-30 w-full border-b border-gray-200 bg-white'},
-        html.div({'class_name': 'px-3 py-3 lg:px-5 lg:pl-3'},
-            html.div({'class_name': 'flex items-center justify-between'},
-                html.div({'class_name': 'flex items-center justify-start'},
-                    ToggleSidebarMobile(),
-                    Logo(),
-                    Search()
+    app_state, set_app_state = use_context(AppContext)
+
+
+    sidebar_open = "left-64" if app_state.sidebar_open else "left-0"
+    button_hidden = 'hidden' if app_state.sidebar_open else ''
+
+
+    return html.header({'class_name': f'bg-white border-b border-gray-200 fixed top-0 right-0 z-20 transition-[left] duration-200 ease-in-out {sidebar_open}'},
+        html.div({'class_name': 'flex items-center justify-between h-16 px-4'},
+
+            html.div({'class_name': 'flex items-center gap-3'},
+
+                html.button({'class_name': f'text-gray-500 hover:text-gray-600 {button_hidden}',
+                            'on_click': lambda _: set_app_state(app_state.update(sidebar_open=not app_state.sidebar_open))},
+                    Icon_Menu()
                 ),
-                html.div({'class_name': 'flex items-center'},
-                    MobileSearch(),
-                    OpenSource(),
-                    ProUpgrade(),
-                    DarkModeButton()
-                )
+
+                html.h1({'class_name': 'text-xl font-semibold text-gray-800'},
+                    Search(),
+                ),
+            ),
+
+
+            html.div({'class_name': 'flex items-center gap-4'},
+                DarkModeButton(),
             )
         )
     )

@@ -1,7 +1,7 @@
 from typing import Callable
 from reactpy import component
 from reactpy.core.component import Component
-from reactpy.svg import svg, path
+from reactpy.svg import svg, path, line
 
 # https://heroicons.com/
 
@@ -25,7 +25,7 @@ def Icon_Search():
 
 @component
 def Icon_XMark():
-    return svg({'id': 'toggleSidebarMobileClose', 'class_name': 'hidden h-6 w-6', 'fill': 'currentColor', 'viewBox': '0 0 20 20', 'xmlns': 'http://www.w3.org/2000/svg'},
+    return svg({'id': 'toggleSidebarMobileClose', 'class_name': 'h-6 w-6', 'fill': 'currentColor', 'viewBox': '0 0 20 20', 'xmlns': 'http://www.w3.org/2000/svg'},
         path({'fill-rule': 'evenodd', 'd': 'M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z', 'clip-rule': 'evenodd'})
     )
 
@@ -239,4 +239,11 @@ def Icon_Sun():
 def Icon_Gem():
     return svg({'class_name': 'svg-inline--fa fa-gem -ml-1 mr-2 h-4 w-4', 'aria-hidden': 'true', 'focusable': 'false', 'data-prefix': 'fas', 'data-icon': 'gem', 'role': 'img', 'xmlns': 'http://www.w3.org/2000/svg', 'viewBox': '0 0 512 512'},
         path({'fill': 'currentColor', 'd': 'M378.7 32H133.3L256 182.7L378.7 32zM512 192l-107.4-141.3L289.6 192H512zM107.4 50.67L0 192h222.4L107.4 50.67zM244.3 474.9C247.3 478.2 251.6 480 256 480s8.653-1.828 11.67-5.062L510.6 224H1.365L244.3 474.9z'})
+    )
+
+def Icon_Menu():
+    return svg({'xmlns': 'http://www.w3.org/2000/svg', 'width': '24', 'height': '24', 'viewBox': '0 0 24 24', 'fill': 'none', 'stroke': 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'class_name': 'lucide lucide-menu'},
+        line({'x1': 4, 'x2': 20, 'y1': 12, 'y2': 12}),
+        line({'x1': 4, 'x2': 20, 'y1': 6, 'y2': 6}),
+        line({'x1': 4, 'x2': 20, 'y1': 18, 'y2': 18})
     )

@@ -1,7 +1,10 @@
 from typing import cast, Any
-from reactpy import component, html
+from reactpy import component, html, use_context
 from reactpy.types import VdomDict
 from reactpy_router import link
+
+from .app_store import AppContext
+from .logo import Logo
 
 from .icon import (
     Icon_RightFromLine,
@@ -15,6 +18,7 @@ from .icon import (
     Icon_Documentation,
     Icon_Components,
     Icon_Help,
+    Icon_XMark,
     ICON
 )
 
@@ -68,7 +72,30 @@ def MobileSearch():
 
 @component
 def SideBar():
-    return html.aside({'id': 'sidebar', 'class_name': 'fixed left-0 top-0 z-20 flex hidden h-full w-64 flex-shrink-0 flex-col pt-16 transition-width duration-75 lg:flex', 'aria-label': 'Sidebar'},
+    app_state, set_app_state = use_context(AppContext)
+
+    # closed = fixed top-0 left-0 h-full w-64 bg-white border-r border-gray-200 transform transition-transform duration-200 ease-in-out z-30 -translate-x-full
+    # open   = fixed top-0 left-0 h-full w-64 bg-white border-r border-gray-200 transform transition-transform duration-200 ease-in-out z-30
+
+    sidebar_open = '' if app_state.sidebar_open else '-translate-x-full'
+    button_hidden = 'hidden' if app_state.sidebar_open is False else ''
+
+    return html.aside({"id": "sidebar",
+            "class_name": f"fixed top-0 left-0 h-full w-64 bg-white border-r border-gray-200 transform transition-transform duration-200 ease-in-out z-30 {sidebar_open}",
+            "aria-label": "Sidebar",
+        },
+
+
+        html.div({'class_name': 'flex items-center justify-between h-16 px-4 border-b border-gray-200'},
+            Logo(),
+            html.button({'class_name': f'text-gray-500 hover:text-gray-700 {button_hidden}',
+                'on_click': lambda _: set_app_state(app_state.update(sidebar_open=not app_state.sidebar_open))},
+                Icon_XMark()
+            )
+        ),
+
+
+
         html.div({'class_name': 'relative flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white pt-0'},
             html.div({'class_name': 'flex flex-1 flex-col overflow-y-auto pb-4 pt-5'},
                 html.div({'class_name': 'flex-1 space-y-1 divide-gray-200 divide-y bg-white px-3'},
