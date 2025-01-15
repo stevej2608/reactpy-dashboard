@@ -90,6 +90,8 @@ def TopBar():
 
 
             html.div({'class_name': 'flex items-center gap-4'},
+                OpenSource(),
+                ProUpgrade(),
                 DarkModeButton(),
             )
         )
